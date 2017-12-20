@@ -1,3 +1,5 @@
+package MP3Player;
+
 import de.hsrm.mi.eibo.simpleplayer.SimpleAudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleMinim;
 import java.beans.PropertyChangeListener;
@@ -27,7 +29,7 @@ public class MP3Player {
 
     /**
      * Constructor, creates new minim and audioPlayer.
-     * Also sets a given Playlist active and loads the first song.
+     * Also sets a given MP3Player.Playlist active and loads the first song.
      * Creates propertyChangeSupport to signal song and playing/not playing changes
      * @param actPlaylist the playlist that should be loaded
      */

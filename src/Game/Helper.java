@@ -1,3 +1,5 @@
+package Game;
+
 public class Helper {
 
     private static boolean controls = false;

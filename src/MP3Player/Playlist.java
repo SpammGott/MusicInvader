@@ -1,9 +1,11 @@
+package MP3Player;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Manages Songs in a Playlist
+ * Manages Songs in a MP3Player.Playlist
  */
 public class Playlist {
 
@@ -93,7 +95,7 @@ public class Playlist {
     }
 
     /**
-     * Gets the name of the Playlist
+     * Gets the name of the MP3Player.Playlist
      * @return playlist name
      */
     public String getName() {return name;}

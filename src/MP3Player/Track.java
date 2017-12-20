@@ -1,3 +1,5 @@
+package MP3Player;
+
 import com.mpatric.mp3agic.Mp3File;
 import java.io.File;
 

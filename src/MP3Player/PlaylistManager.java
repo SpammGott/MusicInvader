@@ -1,3 +1,5 @@
+package MP3Player;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
@@ -45,7 +47,7 @@ public class PlaylistManager {
         if(playlist != null) {
             ArrayList<Playlist> old = getPlaylistList();
             playlisten.put(playlist.getName(), playlist);
-            changes.firePropertyChange("Playlist added", old, getPlaylistList());
+            changes.firePropertyChange("MP3Player.Playlist added", old, getPlaylistList());
         }
     }
 
@@ -59,7 +61,7 @@ public class PlaylistManager {
     }
 
     /**
-     * Returns an ArrayList of all Playlist
+     * Returns an ArrayList of all MP3Player.Playlist
      * @return list of playlists
      */
     public ArrayList<Playlist> getPlaylistList(){

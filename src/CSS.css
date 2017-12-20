@@ -21,3 +21,11 @@
     -fx-padding: 0 0 0 0;
     -fx-background-color: transparent;
 }
+
+#Header{
+    -fx-text-fill: white;
+    -fx-font-size: 60;
+    -fx-font-family: Pixeled;
+    -fx-padding: 0 0 0 0;
+    -fx-background-color: transparent;
+}

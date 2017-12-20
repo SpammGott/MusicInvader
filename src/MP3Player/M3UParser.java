@@ -1,3 +1,5 @@
+package MP3Player;
+
 import com.mpatric.mp3agic.Mp3File;
 import java.io.*;
 import java.util.ArrayList;
@@ -25,7 +27,7 @@ public class M3UParser {
     }
 
     /**
-     * Creates a new Playlist
+     * Creates a new MP3Player.Playlist
      * @param raf RandomAccessFile
      * @param f m3u file
      * @return a playlist
