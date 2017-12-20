@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class GameScene extends Scene {
 
     private int speed = 15;
+    private boolean arrowKeys = false;
     //needed to manage movement
     private BooleanProperty up = new SimpleBooleanProperty();
     private BooleanProperty down = new SimpleBooleanProperty();
@@ -36,42 +37,10 @@ public class GameScene extends Scene {
         player.setX((width / 2) - (player.getWidth() / 2));
         player.setY((height - 80));
 
-        setOnKeyPressed(keyEvent -> {
-            //menu
-            if(keyEvent.getCode() == KeyCode.ESCAPE){
-                setCursor(Cursor.DEFAULT);
-                window.setScene(new MenuScene(height, width, window));
-                window.setFullScreen(true);
-            }
-            //to manage movement
-            if(keyEvent.getCode() == KeyCode.W){
-                up.setValue(true);
-            }
-            if(keyEvent.getCode() == KeyCode.A){
-                left.setValue(true);
-            }
-            if(keyEvent.getCode() == KeyCode.S){
-                down.setValue(true);
-            }
-            if(keyEvent.getCode() == KeyCode.D){
-                right.setValue(true);
-            }
-        });
-        setOnKeyReleased(keyEvent -> {
-            //to manage movement
-            if(keyEvent.getCode() == KeyCode.W){
-                up.setValue(false);
-            }
-            if(keyEvent.getCode() == KeyCode.A){
-                left.setValue(false);
-            }
-            if(keyEvent.getCode() == KeyCode.S){
-                down.setValue(false);
-            }
-            if(keyEvent.getCode() == KeyCode.D){
-                right.setValue(false);
-            }
-        });
+        if(!Helper.getControls())
+            wasdKeys(window, height, width);
+        else
+            arrowKeys(window, height, width);
 
         //actual movement
         AnimationTimer shipControls = new AnimationTimer() {
@@ -119,7 +88,7 @@ public class GameScene extends Scene {
                 for(int i = 0; i < projectiles.size(); i++){
                     Ellipse temp = projectiles.get(i);
                     if (temp.getCenterY() < 0) {
-                        temp.setFill(Color.BLACK);
+                        root.getChildren().remove(temp);
                         projectiles.remove(i);
                     }else {
                         temp.setCenterY(temp.getCenterY() - 10);
@@ -134,5 +103,87 @@ public class GameScene extends Scene {
         root.getChildren().add(player);
         root.setStyle("-fx-background-color: black");
         setCursor(Cursor.NONE);
+    }
+
+    private void wasdKeys(Stage window, double height, double width){
+        setOnKeyPressed(keyEvent -> {
+            //menu
+            if(keyEvent.getCode() == KeyCode.ESCAPE){
+                setCursor(Cursor.DEFAULT);
+                window.setScene(new Scene(new MenuScene(height, width, window)));
+                window.setFullScreen(true);
+            }
+            //to manage movement
+            if(keyEvent.getCode() == KeyCode.W){
+                up.setValue(true);
+            }
+            if(keyEvent.getCode() == KeyCode.A){
+                left.setValue(true);
+            }
+            if(keyEvent.getCode() == KeyCode.S){
+                down.setValue(true);
+            }
+            if(keyEvent.getCode() == KeyCode.D){
+                right.setValue(true);
+            }
+        });
+        setOnKeyReleased(keyEvent -> {
+            //to manage movement
+            if(keyEvent.getCode() == KeyCode.W){
+                up.setValue(false);
+            }
+            if(keyEvent.getCode() == KeyCode.A){
+                left.setValue(false);
+            }
+            if(keyEvent.getCode() == KeyCode.S){
+                down.setValue(false);
+            }
+            if(keyEvent.getCode() == KeyCode.D){
+                right.setValue(false);
+            }
+        });
+    }
+
+    private void arrowKeys(Stage window, double height, double width){
+        setOnKeyPressed(keyEvent -> {
+            //menu
+            if(keyEvent.getCode() == KeyCode.ESCAPE){
+                setCursor(Cursor.DEFAULT);
+                window.setScene(new Scene(new MenuScene(height, width, window)));
+                window.setFullScreen(true);
+            }
+            //to manage movement
+            if(keyEvent.getCode() == KeyCode.UP){
+                up.setValue(true);
+            }
+            if(keyEvent.getCode() == KeyCode.LEFT){
+                left.setValue(true);
+            }
+            if(keyEvent.getCode() == KeyCode.DOWN){
+                down.setValue(true);
+            }
+            if(keyEvent.getCode() == KeyCode.RIGHT){
+                right.setValue(true);
+            }
+        });
+        setOnKeyReleased(keyEvent -> {
+            //to manage movement
+            if(keyEvent.getCode() == KeyCode.UP){
+                up.setValue(false);
+            }
+            if(keyEvent.getCode() == KeyCode.LEFT){
+                left.setValue(false);
+            }
+            if(keyEvent.getCode() == KeyCode.DOWN){
+                down.setValue(false);
+            }
+            if(keyEvent.getCode() == KeyCode.RIGHT){
+                right.setValue(false);
+            }
+        });
+    }
+
+    public void setArrowKeys(boolean boo){
+        this.arrowKeys = boo;
     }
 }

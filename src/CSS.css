@@ -5,3 +5,19 @@
     -fx-padding: 0 0 0 0;
     -fx-background-color: transparent;
 }
+
+#PressedMenuButton{
+    -fx-text-fill: white;
+    -fx-font-size: 35;
+    -fx-font-family: Pixeled;
+    -fx-padding: 0 0 0 0;
+    -fx-background-color: transparent;
+}
+
+#Headline{
+    -fx-text-fill: white;
+    -fx-font-size: 45;
+    -fx-font-family: Pixeled;
+    -fx-padding: 0 0 0 0;
+    -fx-background-color: transparent;
+}
