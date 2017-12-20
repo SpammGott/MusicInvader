@@ -92,5 +92,6 @@ public class GameScene extends Scene {
         getStylesheets().add("CSS.css");
         root.getChildren().add(rect);
         root.setStyle("-fx-background-color: black");
+        setCursor(Cursor.NONE);
     }
 }
