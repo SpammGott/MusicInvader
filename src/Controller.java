@@ -3,18 +3,21 @@ import javafx.application.Application;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import java.beans.EventHandler;
+
 
 public class Controller extends Application{
 
-    private int speed = 8;
+    //creates 2D Rectangle with screen width and height
     private Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 
     public static void main(String[] args){
@@ -22,75 +25,62 @@ public class Controller extends Application{
     }
 
     @Override
-    public void start(Stage window) throws Exception{
-        //needed to manage movement
-        BooleanProperty up = new SimpleBooleanProperty();
-        BooleanProperty down = new SimpleBooleanProperty();
-        BooleanProperty left = new SimpleBooleanProperty();
-        BooleanProperty right = new SimpleBooleanProperty();
+    public void start(Stage window){
+        Game game = new Game(primaryScreenBounds.getHeight(), primaryScreenBounds.getWidth());
 
-        //PC
-        Rectangle rect = new Rectangle(10, 10);
-
-        Pane pane = new Pane(rect);
-
-        Scene scene = new Scene(pane, primaryScreenBounds.getWidth(), primaryScreenBounds.getHeight());
-        //manage movement
-        scene.setOnKeyPressed(e -> {
+        Scene gameScene = new Scene(game, primaryScreenBounds.getWidth(), primaryScreenBounds.getHeight());
+        gameScene.getStylesheets().add("CSS.css");
+        gameScene.setCursor(Cursor.NONE);
+        //manages movement
+        gameScene.setOnKeyPressed(e -> {
+            System.out.println("Key Pressed");
             if(e.getCode() == KeyCode.W){
-                up.setValue(true);
+                game.setUp(true);
             }
             if(e.getCode() == KeyCode.A){
-                left.setValue(true);
+                game.setLeft(true);
             }
             if(e.getCode() == KeyCode.S){
-                down.setValue(true);
+                game.setDown(true);
             }
             if(e.getCode() == KeyCode.D){
-                right.setValue(true);
+                game.setRight(true);
             }
         });
-        scene.setOnKeyReleased(e -> {
+        gameScene.setOnKeyReleased(e -> {
             if(e.getCode() == KeyCode.W){
-                up.setValue(false);
+                game.setUp(false);
             }
             if(e.getCode() == KeyCode.A){
-                left.setValue(false);
+                game.setLeft(false);
             }
             if(e.getCode() == KeyCode.S){
-                down.setValue(false);
+                game.setDown(false);
             }
             if(e.getCode() == KeyCode.D){
-                right.setValue(false);
+                game.setRight(false);
             }
         });
 
-        //inital postion of PC
-        rect.setX((scene.getWidth() / 2) - (rect.getWidth() / 2));
-        rect.setY((scene.getHeight() - 80));
 
-        //actual movement
-        AnimationTimer shipControls = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                if (up.get())
-                    rect.setY(rect.getY() - speed);
-                if (left.get())
-                    rect.setX(rect.getX() - speed);
-                if (down.get())
-                    rect.setY(rect.getY() + speed);
-                if (right.get())
-                    rect.setX(rect.getX() + speed);
+        Menu menu = new Menu(window, gameScene);
 
+        Scene menuScene = new Scene(menu, primaryScreenBounds.getWidth(), primaryScreenBounds.getHeight());
+        menuScene.getStylesheets().add("Css.css");
+
+        //menu
+        gameScene.setOnKeyPressed(e -> {
+            if(e.getCode() == KeyCode.ESCAPE){
+                gameScene.setCursor(Cursor.DEFAULT);
+                window.setScene(menuScene);
+                window.setFullScreen(true);
             }
-        };
-        shipControls.start();
+        });
 
-        window.setTitle("Testing");
-        window.setScene(scene);
+        window.setTitle("Music Invader");
+        window.setScene(menuScene);
         window.setFullScreen(true);
+        window.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         window.show();
     }
-
-
 }
