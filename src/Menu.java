@@ -1,14 +1,13 @@
 import javafx.application.Platform;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Menu extends VBox {
 
-    public Menu(Stage window, Scene gameScene){
+    public Menu(Stage window, double height, double width){
         Button exit = new Button("EXIT");
         exit.setOnAction(e -> {
             Platform.exit();
@@ -18,8 +17,7 @@ public class Menu extends VBox {
 
         Button start = new Button("START");
         start.setOnAction(e -> {
-            gameScene.setCursor(Cursor.NONE);
-            window.setScene(gameScene);
+            window.setScene(new GameScene(new Pane(), height, width, window));
             window.setFullScreen(true);
         });
         start.setId("MenuButton");
