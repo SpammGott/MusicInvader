@@ -8,12 +8,6 @@ import javafx.stage.Stage;
 public class Menu extends VBox {
 
     public Menu(Stage window, double height, double width){
-        Button exit = new Button("EXIT");
-        exit.setOnAction(e -> {
-            Platform.exit();
-            System.exit(0);
-        });
-        exit.setId("MenuButton");
 
         Button start = new Button("START");
         start.setOnAction(e -> {
@@ -22,14 +16,24 @@ public class Menu extends VBox {
         });
         start.setId("MenuButton");
 
-        Button options = new Button("OPTIONS");
-        options.setId("MenuButton");
+        Button songs = new Button("SONGS");
+        songs.setId("MenuButton");
 
         Button leaderboards = new Button("LEADERBOARDS");
         leaderboards.setId("MenuButton");
 
+        Button options = new Button("OPTIONS");
+        options.setId("MenuButton");
+
+        Button exit = new Button("EXIT");
+        exit.setOnAction(e -> {
+            Platform.exit();
+            System.exit(0);
+        });
+        exit.setId("MenuButton");
+
         setStyle("-fx-background-color: black");
         setAlignment(Pos.CENTER);
-        getChildren().addAll(start, exit);
+        getChildren().addAll(start, songs, leaderboards, options, exit);
     }
 }
