@@ -99,10 +99,10 @@ public class GameScene extends Scene {
         //creates a projectile every 333ms and adds it to an arraylist
         ArrayList<Ellipse> projectiles = new ArrayList();
         Timeline pcProjectiles = new Timeline(
-                new KeyFrame(Duration.millis(333),
+                new KeyFrame(Duration.millis(100),
                 e -> {
                     Ellipse temp = new Ellipse(8, 15);
-                    temp.setCenterX(player.getX() + player.getWidth() / 2 + temp.getRadiusX() / 2);
+                    temp.setCenterX(player.getX() + player.getWidth() / 2);
                     temp.setCenterY(player.getY());
                     temp.setFill(Color.WHITE);
                     root.getChildren().add(temp);
@@ -112,13 +112,19 @@ public class GameScene extends Scene {
         pcProjectiles.setCycleCount(Animation.INDEFINITE);
         pcProjectiles.play();
 
-        //should go through list of projectiles every frame and advance their movement
+        //goes through list of projectiles every frame and advances their movement
         AnimationTimer projectilMover = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                for(Ellipse temp: projectiles){
-                    temp.setCenterY(temp.getCenterX() + 10);
-                    temp.setFill(Color.WHITE);
+                for(int i = 0; i < projectiles.size(); i++){
+                    Ellipse temp = projectiles.get(i);
+                    if (temp.getCenterY() < 0) {
+                        temp.setFill(Color.BLACK);
+                        projectiles.remove(i);
+                    }else {
+                        temp.setCenterY(temp.getCenterY() - 10);
+                        temp.setFill(Color.WHITE);
+                    }
                 }
             }
         };
