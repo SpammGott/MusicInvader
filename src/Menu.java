@@ -22,6 +22,12 @@ public class Menu extends VBox {
         });
         start.setId("MenuButton");
 
+        Button options = new Button("OPTIONS");
+        options.setId("MenuButton");
+
+        Button leaderboards = new Button("LEADERBOARDS");
+        leaderboards.setId("MenuButton");
+
         setStyle("-fx-background-color: black");
         setAlignment(Pos.CENTER);
         getChildren().addAll(start, exit);

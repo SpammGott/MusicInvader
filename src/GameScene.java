@@ -79,7 +79,7 @@ public class GameScene extends Scene {
                 if (left.get() && x > 5) {
                     rect.setX(x - speed);
                 }
-                if (down.get() && y < height){
+                if (down.get() && y + 15 < height){
                     rect.setY(y + speed);
                 }
                 if (right.get() && x + rect.getWidth() + 5 < width) {
