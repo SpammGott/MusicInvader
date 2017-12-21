@@ -1,10 +1,8 @@
 package Game;
 
 import javafx.application.Application;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
-import javafx.stage.Screen;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 
@@ -17,11 +15,12 @@ public class Controller extends Application{
     @Override
     public void start(Stage window){
 
-        MenuScene menuScene = new MenuScene(window);
-        Scene scene = new Scene(menuScene);
+        BorderPane menuPane = new BorderPane();
+
+        MenuScene menuScene = new MenuScene(window, menuPane);
 
         window.setTitle("Music Invader");
-        window.setScene(scene);
+        window.setScene(menuScene);
         window.setFullScreen(true);
         window.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         window.show();

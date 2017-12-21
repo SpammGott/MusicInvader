@@ -12,7 +12,6 @@ public class Helper {
     private static double width = primaryScreenBounds.getWidth();
     private static double relation = width / height;
     private static double screenRez = 600;
-    private static double scale = screenRez / height;
 
     public static boolean getControls() {
         return controls;
@@ -25,6 +24,4 @@ public class Helper {
     public static double getHeight(){return screenRez;}
 
     public static double getWidth(){return screenRez * relation;}
-
-    public static double getScale(){return scale;}
 }

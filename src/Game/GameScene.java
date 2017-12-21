@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
@@ -21,7 +22,6 @@ import java.util.ArrayList;
 public class GameScene extends Scene {
 
     private int speed = 15;
-    private boolean arrowKeys = false;
     private ArrayList<Ellipse> projectiles = new ArrayList();
     private Rectangle player = new Rectangle(50, 50);
     //needed to manage movement
@@ -32,7 +32,7 @@ public class GameScene extends Scene {
     private double height;
     private double width;
 
-    public GameScene(Pane root, Stage window){
+    public GameScene(Pane root, Stage window, MenuScene menuScene){
         super(root, Helper.getHeight(), Helper.getWidth());
 
         height = Helper.getHeight();
@@ -42,13 +42,13 @@ public class GameScene extends Scene {
         player.setFill(Color.WHITE);
         player.setStyle("-fx-background-color: white");
 
-        player.setX((width / 2) - (player.getWidth() / 2));
-        player.setY((height - 80));
+        player.setX((getWidth() / 2) - (player.getWidth() / 2));
+        player.setY((getHeight() - 80));
 
         if(!Helper.getControls())
-            wasdKeys(window, root);
+            wasdKeys(window, menuScene, root);
         else
-            arrowKeys(window, root);
+            arrowKeys(window, menuScene, root);
 
         //actual movement
         AnimationTimer shipControls = new AnimationTimer() {
@@ -111,20 +111,18 @@ public class GameScene extends Scene {
         };
         projectilMover.start();
 
+        this.setCursor(Cursor.NONE);
         getStylesheets().add("CSS.css");
         root.getChildren().add(player);
         root.setStyle("-fx-background-color: black");
-        setCursor(Cursor.NONE);
     }
 
-    private void wasdKeys(Stage window, Pane root){
+    private void wasdKeys(Stage window, MenuScene menuScene, Pane root){
         setOnKeyPressed(keyEvent -> {
             //menu
             if(keyEvent.getCode() == KeyCode.ESCAPE){
-                reset();
                 setCursor(Cursor.DEFAULT);
-                window.setScene(new Scene(new MenuScene(window)));
-                window.setFullScreen(true);
+                escClicked(window, menuScene, root);
             }
             //to manage movement
             if(keyEvent.getCode() == KeyCode.W){
@@ -157,14 +155,12 @@ public class GameScene extends Scene {
         });
     }
 
-    private void arrowKeys(Stage window, Pane root){
+    private void arrowKeys(Stage window, MenuScene menuScene, Pane root){
         setOnKeyPressed(keyEvent -> {
             //menu
             if(keyEvent.getCode() == KeyCode.ESCAPE){
-                reset();
                 setCursor(Cursor.DEFAULT);
-                window.setScene(new Scene(new MenuScene(window)));
-                window.setFullScreen(true);
+                escClicked(window, menuScene, root);
             }
             //to manage movement
             if(keyEvent.getCode() == KeyCode.UP){
@@ -197,13 +193,18 @@ public class GameScene extends Scene {
         });
     }
 
-    private void reset(){
-        player.setX((width / 2) - (player.getWidth() / 2));
-        player.setY((height - 80));
+    private void escClicked(Stage window, MenuScene menuScene, Pane root){
+        reset(root);
+        window.setScene(menuScene);
+        window.setFullScreen(true);
+    }
+
+    private void reset(Pane root){
+        for(int i = 0; i < projectiles.size(); i++){
+            root.getChildren().remove(projectiles.get(i));
+        }
+        player.setX((getWidth() / 2) - (player.getWidth() / 2));
+        player.setY((getHeight() - 80));
         projectiles.clear();
-    }
-
-    public void setArrowKeys(boolean boo){
-        this.arrowKeys = boo;
     }
 }

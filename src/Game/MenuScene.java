@@ -1,15 +1,19 @@
 package Game;
 
-import javafx.scene.Cursor;
-import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class MenuScene extends BorderPane {
+public class MenuScene extends Scene {
 
-    public MenuScene (Stage window){
-        setCenter(new Menu(window,this));
+    public MenuScene (Stage window, BorderPane menuPane){
+        super(menuPane, Helper.getHeight(), Helper.getWidth());
+
+        Pane root = new Pane();
+        GameScene gameScene = new GameScene(root, window, this);
+
+        menuPane.setCenter(new Menu(window, menuPane, this, gameScene));
         getStylesheets().add("CSS.css");
-        setCursor(Cursor.DEFAULT);
     }
 }

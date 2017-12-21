@@ -2,6 +2,8 @@ package Game;
 
 import javafx.application.Platform;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -12,7 +14,7 @@ import javafx.stage.Stage;
 
 public class Menu extends VBox {
 
-    public Menu(Stage window, BorderPane menuScene){
+    public Menu(Stage window, BorderPane menuPane, MenuScene menuScene, GameScene gameScene){
 
         Text header = new Text("MUSIC INVADER");
         header.setId("Header");
@@ -20,21 +22,21 @@ public class Menu extends VBox {
 
         Button start = new Button("START");
         start.setOnAction(e -> {
-            window.setScene(new GameScene(new Pane(), window));
+            window.setScene(gameScene);
             window.setFullScreen(true);
         });
         start.setId("MenuButton");
 
         Button songs = new Button("SONGS");
-        songs.setOnAction(e -> menuScene.setCenter(new SongsPane(menuScene, this)));
+        songs.setOnAction(e -> menuPane.setCenter(new SongsPane(menuPane, this)));
         songs.setId("MenuButton");
 
         Button leaderboards = new Button("LEADERBOARDS");
-        leaderboards.setOnAction(e -> menuScene.setCenter(new LeaderboardsPane(menuScene, this)));
+        leaderboards.setOnAction(e -> menuPane.setCenter(new LeaderboardsPane(menuPane, this)));
         leaderboards.setId("MenuButton");
 
         Button options = new Button("OPTIONS");
-        options.setOnAction(e -> menuScene.setCenter(new OptionsPane(menuScene, this)));
+        options.setOnAction(e -> menuPane.setCenter(new OptionsPane(menuPane, this)));
         options.setId("MenuButton");
 
         Button exit = new Button("EXIT");
@@ -47,5 +49,8 @@ public class Menu extends VBox {
         setStyle("-fx-background-color: black");
         setAlignment(Pos.CENTER);
         getChildren().addAll(header, start, songs, leaderboards, options, exit);
+        setCursor(Cursor.DEFAULT);
     }
+
+
 }
