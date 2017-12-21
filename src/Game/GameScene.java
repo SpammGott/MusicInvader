@@ -22,19 +22,23 @@ public class GameScene extends Scene {
 
     private int speed = 15;
     private boolean arrowKeys = false;
+    private ArrayList<Ellipse> projectiles = new ArrayList();
+    private Rectangle player = new Rectangle(50, 50);
     //needed to manage movement
     private BooleanProperty up = new SimpleBooleanProperty();
     private BooleanProperty down = new SimpleBooleanProperty();
     private BooleanProperty left = new SimpleBooleanProperty();
     private BooleanProperty right = new SimpleBooleanProperty();
-    private double height = Helper.getHeight();
-    private double width = Helper.getWidth();
+    private double height;
+    private double width;
 
     public GameScene(Pane root, Stage window){
         super(root, Helper.getHeight(), Helper.getWidth());
 
+        height = Helper.getHeight();
+        width = Helper.getWidth();
+
         //PC = PlayerCharacter
-        Rectangle player = new Rectangle(50, 50);
         player.setFill(Color.WHITE);
         player.setStyle("-fx-background-color: white");
 
@@ -42,9 +46,9 @@ public class GameScene extends Scene {
         player.setY((height - 80));
 
         if(!Helper.getControls())
-            wasdKeys(window, height, width);
+            wasdKeys(window, root);
         else
-            arrowKeys(window, height, width);
+            arrowKeys(window, root);
 
         //actual movement
         AnimationTimer shipControls = new AnimationTimer() {
@@ -59,10 +63,10 @@ public class GameScene extends Scene {
                 if (left.get() && x > 5) {
                     player.setX(x - speed);
                 }
-                if (down.get() && y + 15 < height){
+                if (down.get() && y + player.getHeight() * 1.25 < getHeight()){
                     player.setY(y + speed);
                 }
-                if (right.get() && x + player.getWidth() + 5 < width) {
+                if (right.get() && x + player.getWidth() * 1.25 < getWidth()) {
                     player.setX(x + speed);
                 }
             }
@@ -70,7 +74,6 @@ public class GameScene extends Scene {
         shipControls.start();
 
         //creates a projectile every 333ms and adds it to an arraylist
-        ArrayList<Ellipse> projectiles = new ArrayList();
         Timeline pcProjectiles = new Timeline(
                 new KeyFrame(Duration.millis(100),
                 e -> {
@@ -91,13 +94,18 @@ public class GameScene extends Scene {
             public void handle(long now) {
                 for(int i = 0; i < projectiles.size(); i++){
                     Ellipse temp = projectiles.get(i);
-                    if (temp.getCenterY() < 0) {
+                    if (temp.getCenterY() < -temp.getRadiusY() * 2) {
                         root.getChildren().remove(temp);
                         projectiles.remove(i);
                     }else {
                         temp.setCenterY(temp.getCenterY() - 10);
                         temp.setFill(Color.WHITE);
                     }
+                }
+                try{
+                    Thread.sleep(30);
+                }catch (Exception e){
+                    System.out.println("Projectile thread fcked up.");
                 }
             }
         };
@@ -109,10 +117,11 @@ public class GameScene extends Scene {
         setCursor(Cursor.NONE);
     }
 
-    private void wasdKeys(Stage window, double height, double width){
+    private void wasdKeys(Stage window, Pane root){
         setOnKeyPressed(keyEvent -> {
             //menu
             if(keyEvent.getCode() == KeyCode.ESCAPE){
+                reset();
                 setCursor(Cursor.DEFAULT);
                 window.setScene(new Scene(new MenuScene(window)));
                 window.setFullScreen(true);
@@ -148,10 +157,11 @@ public class GameScene extends Scene {
         });
     }
 
-    private void arrowKeys(Stage window, double height, double width){
+    private void arrowKeys(Stage window, Pane root){
         setOnKeyPressed(keyEvent -> {
             //menu
             if(keyEvent.getCode() == KeyCode.ESCAPE){
+                reset();
                 setCursor(Cursor.DEFAULT);
                 window.setScene(new Scene(new MenuScene(window)));
                 window.setFullScreen(true);
@@ -185,6 +195,12 @@ public class GameScene extends Scene {
                 right.setValue(false);
             }
         });
+    }
+
+    private void reset(){
+        player.setX((width / 2) - (player.getWidth() / 2));
+        player.setY((height - 80));
+        projectiles.clear();
     }
 
     public void setArrowKeys(boolean boo){

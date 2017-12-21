@@ -10,6 +10,9 @@ public class Helper {
     private static Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
     private static double height = primaryScreenBounds.getHeight();
     private static double width = primaryScreenBounds.getWidth();
+    private static double relation = width / height;
+    private static double screenRez = 600;
+    private static double scale = screenRez / height;
 
     public static boolean getControls() {
         return controls;
@@ -19,7 +22,9 @@ public class Helper {
         controls = boo;
     }
 
-    public static double getHeight(){return height;}
+    public static double getHeight(){return screenRez;}
 
-    public static double getWidth(){return width;}
+    public static double getWidth(){return screenRez * relation;}
+
+    public static double getScale(){return scale;}
 }
