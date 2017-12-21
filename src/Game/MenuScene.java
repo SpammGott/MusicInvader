@@ -7,9 +7,8 @@ import javafx.stage.Stage;
 
 public class MenuScene extends BorderPane {
 
-    public MenuScene (double heigth, double width, Stage window){
-        //super(new Game.Menu(window, heigth, width), heigth, width);
-        setCenter(new Menu(window, heigth, width, this));
+    public MenuScene (Stage window){
+        setCenter(new Menu(window,this));
         getStylesheets().add("CSS.css");
         setCursor(Cursor.DEFAULT);
     }

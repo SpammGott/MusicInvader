@@ -27,9 +27,11 @@ public class GameScene extends Scene {
     private BooleanProperty down = new SimpleBooleanProperty();
     private BooleanProperty left = new SimpleBooleanProperty();
     private BooleanProperty right = new SimpleBooleanProperty();
+    private double height = Helper.getHeight();
+    private double width = Helper.getWidth();
 
-    public GameScene(Pane root, double height, double width, Stage window){
-        super(root, height, width);
+    public GameScene(Pane root, Stage window){
+        super(root, Helper.getHeight(), Helper.getWidth());
 
         //PC = PlayerCharacter
         Rectangle player = new Rectangle(50, 50);
@@ -112,7 +114,7 @@ public class GameScene extends Scene {
             //menu
             if(keyEvent.getCode() == KeyCode.ESCAPE){
                 setCursor(Cursor.DEFAULT);
-                window.setScene(new Scene(new MenuScene(height, width, window)));
+                window.setScene(new Scene(new MenuScene(window)));
                 window.setFullScreen(true);
             }
             //to manage movement
@@ -151,7 +153,7 @@ public class GameScene extends Scene {
             //menu
             if(keyEvent.getCode() == KeyCode.ESCAPE){
                 setCursor(Cursor.DEFAULT);
-                window.setScene(new Scene(new MenuScene(height, width, window)));
+                window.setScene(new Scene(new MenuScene(window)));
                 window.setFullScreen(true);
             }
             //to manage movement
