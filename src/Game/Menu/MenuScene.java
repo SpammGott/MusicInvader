@@ -1,5 +1,7 @@
-package Game;
+package Game.Menu;
 
+import Game.GameUtils.GameScene;
+import Game.Helper;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;

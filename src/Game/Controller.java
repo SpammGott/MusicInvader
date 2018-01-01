@@ -1,5 +1,6 @@
 package Game;
 
+import Game.Menu.MenuScene;
 import javafx.application.Application;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;

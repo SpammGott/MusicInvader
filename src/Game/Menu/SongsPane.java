@@ -1,4 +1,4 @@
-package Game;
+package Game.Menu;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
