@@ -23,6 +23,7 @@ public class Menu extends VBox {
         start.setOnAction(e -> {
             window.setScene(gameScene);
             window.setFullScreen(true);
+            gameScene.start();
         });
         start.setId("MenuButton");
 

@@ -1,11 +1,11 @@
-package Game;
+package Game.GameUtils.Utils;
 
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 
 public class Helper {
 
-    private static boolean controls = false;
+    private static boolean controls = true;
     //creates 2D Rectangle with screen width and height
     private static Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
     private static double height = primaryScreenBounds.getHeight();

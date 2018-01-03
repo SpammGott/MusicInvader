@@ -1,6 +1,6 @@
 package Game.Menu;
 
-import Game.Helper;
+import Game.GameUtils.Utils.Helper;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,14 +17,14 @@ public class OptionsPane extends VBox {
         text.setId("Headline");
 
         wasd.setOnAction(e -> {
-            Helper.setControls(false);
+            Helper.setControls(true);
             wasd.setId("PressedMenuButton");
             arrows.setId("MenuButton");
         });
         wasd.setId("PressedMenuButton");
 
         arrows.setOnAction(e -> {
-            Helper.setControls(true);
+            Helper.setControls(false);
             arrows.setId("PressedMenuButton");
             wasd.setId("MenuButton");
         });

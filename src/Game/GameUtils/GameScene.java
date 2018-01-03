@@ -1,105 +1,90 @@
 package Game.GameUtils;
 
-import Game.Helper;
+import Game.GameUtils.Entity.Player;
+import Game.GameUtils.Utils.Helper;
+import Game.GameUtils.Utils.ProjectileHandler;
+import Game.GameUtils.Utils.Vector2D;
 import Game.Menu.MenuScene;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class GameScene extends Scene {
 
-    private int speed = 15;
-    private List<Projectile> projectiles = new ArrayList<>();
     private Player player;
-    private double height;
-    private double width;
+    private ProjectileHandler projectileHandler;
+
+    private Pane root;
+    private Stage window;
+    private MenuScene menuScene;
 
     public GameScene(Pane root, Stage window, MenuScene menuScene){
         super(root, Helper.getHeight(), Helper.getWidth());
+        this.root = root;
+        this.window = window;
+        this.menuScene = menuScene;
+    }
 
-        height = Helper.getHeight();
-        width = Helper.getWidth();
-
+    public void start(){
         //PC = PlayerCharacter
-        player = new Player(this, speed);
+        projectileHandler = new ProjectileHandler(root);
+        player = new Player(this, projectileHandler);
 
         //actual movement
-        AnimationTimer shipControls = new AnimationTimer() {
+        AnimationTimer gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                player.movePlayer();
+                player.move();
+                projectileHandler.moveAllProjectiles();
             }
         };
-        shipControls.start();
+        gameLoop.start();
 
         //creates a projectile every 333ms and adds it to an arraylist
         Timeline pcProjectiles = new Timeline(
-                new KeyFrame(Duration.millis(100),
-                e -> {
-                    Projectile temp = player.fireProjectile();
-                    root.getChildren().add(temp);
-                    projectiles.add(temp);
-                })
+                new KeyFrame(Duration.millis(300),
+                        e -> {
+                            player.fireProjectile();
+                        })
         );
         pcProjectiles.setCycleCount(Animation.INDEFINITE);
         pcProjectiles.play();
 
-        //goes through list of projectiles every frame and advances their movement
-        AnimationTimer projectilMover = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                for(int i = 0; i < projectiles.size(); i++){
-                    Ellipse temp = projectiles.get(i);
-                    if (temp.getCenterY() < -temp.getRadiusY() * 2) {
-                        root.getChildren().remove(temp);
-                        projectiles.remove(i);
-                    }else {
-                        temp.setCenterY(temp.getCenterY() - 10);
-                        temp.setFill(Color.WHITE);
-                    }
-                }
-                try{
-                    Thread.sleep(30);
-                }catch (Exception e){
-                    System.out.println("Projectile thread fcked up.");
-                }
+        setOnKeyPressed(keyEvent -> {
+            if(keyEvent.getCode() == KeyCode.ESCAPE){
+                escClicked(window, menuScene, root);
+            } else {
+                player.changeMovement(keyEvent);
             }
-        };
-        projectilMover.start();
+        });
+
+        setOnKeyReleased(keyEvent ->{
+            player.changeMovement(keyEvent);
+        });
 
         this.setCursor(Cursor.NONE);
         getStylesheets().add("CSS.css");
-        root.getChildren().add(player);
+        root.getChildren().add(player.getBody());
         root.setStyle("-fx-background-color: black");
     }
 
     private void escClicked(Stage window, MenuScene menuScene, Pane root){
         reset(root);
+        this.setCursor(Cursor.DEFAULT);
         window.setScene(menuScene);
         window.setFullScreen(true);
     }
 
     private void reset(Pane root){
-        for(int i = 0; i < projectiles.size(); i++){
-            root.getChildren().remove(projectiles.get(i));
-        }
-        player.setX((getWidth() / 2) - (player.getWidth() / 2));
-        player.setY((getHeight() - 80));
-        projectiles.clear();
+        projectileHandler.removeAll();
+        player.setPos(new Vector2D((getWidth() / 2) - (player.getBody().getWidth() / 2), (getHeight()/2)));
     }
 }
