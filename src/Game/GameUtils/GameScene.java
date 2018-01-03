@@ -1,6 +1,7 @@
 package Game.GameUtils;
 
 import Game.GameUtils.Entity.Player;
+import Game.GameUtils.Entity.Spawnpoint;
 import Game.GameUtils.Utils.Helper;
 import Game.GameUtils.Utils.ProjectileHandler;
 import Game.GameUtils.Utils.Vector2D;
@@ -21,6 +22,7 @@ public class GameScene extends Scene {
 
     private Player player;
     private ProjectileHandler projectileHandler;
+    private Spawnpoint spawnpoint[] = {new Spawnpoint(new Vector2D(-1, 500), new Vector2D(1, 0)), new Spawnpoint(new Vector2D(500, 500), new Vector2D(-1, 0))};
 
     private Pane root;
     private Stage window;
