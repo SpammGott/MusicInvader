@@ -16,9 +16,9 @@ public class Spawnpoint {
         this.direction = new Vector2D[direction.length];
         for(Vector2D temp:direction){
             if(temp.getX() != 0)
-                temp.setX(1);
+                temp.setX(temp.getX() > 0 ? 1 : -1);
             if(temp.getY() != 0)
-                temp.setY(1);
+                temp.setY(temp.getY() > 0 ? 1 : -1);
             this.direction[i++] = temp;
         }
     }

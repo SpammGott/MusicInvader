@@ -14,7 +14,7 @@ import Game.GameUtils.Utils.ControllButtons;
 public class Player extends Ship {
 
     private Scene scene;
-    private Rectangle body = new Rectangle(50,50);
+    private Rectangle body = new Rectangle(Helper.getAbsoluteWidth(0.5),Helper.getAbsoluteHeight(0.5));
     //needed to manage movement
     private ProjectileHandler projectileHandler;
     private BooleanProperty up = new SimpleBooleanProperty();
@@ -28,12 +28,11 @@ public class Player extends Ship {
         body.setFill(Color.WHITE);
         body.setStyle("-fx-background-color: white");
 
-        defSpeed = 7;
+        defSpeed = 0.125;
         speed = defSpeed;
-        //pos = new Vector2D((scene.getWidth() / 2) - (body.getWidth() / 2), (scene.getHeight()));
-        pos = new Vector2D((scene.getWidth() / 2) - (body.getWidth() / 2), (scene.getHeight()/2));
-        body.setX(pos.getX());
-        body.setY(pos.getY());
+        pos = new Vector2D(7.45, 16);
+        body.setX(Helper.getAbsoluteWidth(pos.getX()));
+        body.setY(Helper.getAbsoluteHeight(pos.getY()));
     }
 
 
@@ -41,19 +40,19 @@ public class Player extends Ship {
     public void move() {
         if (up.get() && pos.getY() > 0){
             pos.setYAdd(-speed);
-            body.setY(pos.getY());
+            body.setY(Helper.getAbsoluteHeight(pos.getY()));
         }
-        if (left.get() && pos.getX() > -body.getWidth() /2) {
+        if (left.get() && pos.getX() > 0) {
             pos.setXAdd(-speed);
-            body.setX(pos.getX());
+            body.setX(Helper.getAbsoluteWidth(pos.getX()));
         }
-        if (down.get() && pos.getY() + Helper.getHeight() * 1.25 < scene.getHeight()){
+        if (down.get() && pos.getY() < 16){
             pos.setYAdd(speed);
-            body.setY(pos.getY());
+            body.setY(Helper.getAbsoluteHeight(pos.getY()));
         }
-        if (right.get() && pos.getX() + Helper.getWidth() * 1.25 < scene.getWidth()) {
+        if (right.get() && pos.getX() < 16) {
             pos.setXAdd(speed);
-            body.setX(pos.getX());
+            body.setX(Helper.getAbsoluteWidth(pos.getX()));
         }
     }
 
@@ -89,7 +88,7 @@ public class Player extends Ship {
 
     @Override
     public void fireProjectile() {
-        Projectile temp = new Projectile(new Vector2D(pos.getX() + body.getWidth()/2, pos.getY()), new Vector2D(0,-5), true);
+        Projectile temp = new Projectile(new Vector2D(pos.getX()+0.25, pos.getY()), new Vector2D(0,-1), true);
         projectileHandler.addProjectile(temp);
     }
 

@@ -2,6 +2,7 @@ package Game.GameUtils;
 
 import Game.GameUtils.Entity.Player;
 import Game.GameUtils.Entity.Spawnpoint;
+import Game.GameUtils.Utils.EnemyHandler;
 import Game.GameUtils.Utils.Helper;
 import Game.GameUtils.Utils.ProjectileHandler;
 import Game.GameUtils.Utils.Vector2D;
@@ -22,7 +23,8 @@ public class GameScene extends Scene {
 
     private Player player;
     private ProjectileHandler projectileHandler;
-    private Spawnpoint spawnpoint[] = {new Spawnpoint(new Vector2D(-1, 500), new Vector2D(1, 0)), new Spawnpoint(new Vector2D(500, 500), new Vector2D(-1, 0))};
+    private EnemyHandler enemyHandler;
+    private Spawnpoint spawnpoint[] = {new Spawnpoint(new Vector2D(-1, 5), new Vector2D(1, 0), new Vector2D(1, -0.05)), new Spawnpoint(new Vector2D(500, 500), new Vector2D(-1, 0))};
 
     private Pane root;
     private Stage window;
@@ -38,6 +40,7 @@ public class GameScene extends Scene {
     public void start(){
         //PC = PlayerCharacter
         projectileHandler = new ProjectileHandler(root);
+        enemyHandler = new EnemyHandler(root);
         player = new Player(this, projectileHandler);
 
         //actual movement
@@ -45,6 +48,7 @@ public class GameScene extends Scene {
             @Override
             public void handle(long now) {
                 player.move();
+                enemyHandler.moveAll();
                 projectileHandler.moveAllProjectiles();
             }
         };
@@ -55,6 +59,7 @@ public class GameScene extends Scene {
                 new KeyFrame(Duration.millis(300),
                         e -> {
                             player.fireProjectile();
+                            enemyHandler.spawnEnemy(spawnpoint[0]);
                         })
         );
         pcProjectiles.setCycleCount(Animation.INDEFINITE);
@@ -87,6 +92,6 @@ public class GameScene extends Scene {
 
     private void reset(Pane root){
         projectileHandler.removeAll();
-        player.setPos(new Vector2D((getWidth() / 2) - (player.getBody().getWidth() / 2), (getHeight()/2)));
+        player.setPos(new Vector2D((getWidth() / 2) - (player.getBody().getWidth() / 2), (getHeight())));
     }
 }

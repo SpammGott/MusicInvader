@@ -1,5 +1,6 @@
 package Game.GameUtils.Entity;
 
+import Game.GameUtils.Utils.Helper;
 import Game.GameUtils.Utils.Vector2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
@@ -18,29 +19,33 @@ public class Projectile extends Entity {
         if(direction.getY() != 0)
             this.direction.setY(1);
         this.isFromPlayer = false;
-        body.setCenterX(pos.getX());
-        body.setCenterY(pos.getY());
+        body.setCenterX(Helper.getAbsoluteWidth(pos.getX()));
+        body.setCenterY(Helper.getAbsoluteWidth(pos.getY()));
         body.setFill(Color.WHITE);
-        defSpeed = 5;
+        defSpeed = 0.2;
         speed = defSpeed;
     }
 
     public Projectile(Vector2D pos, Vector2D direction, boolean isFromPlayer){
         this.pos = pos;
-        this.direction = direction;
+        if(direction.getX() != 0)
+            this.direction.setX(direction.getX() > 0 ? 1 : -1);
+        if(direction.getY() != 0)
+            this.direction.setY(direction.getY() > 0 ? 1 : -1);
         this.isFromPlayer = isFromPlayer;
-        body.setCenterX(pos.getX());
-        body.setCenterY(pos.getY());
+        body.setCenterX(Helper.getAbsoluteWidth(pos.getX()));
+        body.setCenterY(Helper.getAbsoluteHeight(pos.getY()));
         body.setFill(Color.WHITE);
-
+        defSpeed = 0.2;
+        speed = defSpeed;
     }
 
     @Override
     public void move() {
         pos.setXAdd(direction.getX() * speed);
         pos.setYAdd(direction.getY() * speed);
-        body.setCenterX(pos.getX());
-        body.setCenterY(pos.getY());
+        body.setCenterX(Helper.getAbsoluteWidth(pos.getX()));
+        body.setCenterY(Helper.getAbsoluteHeight(pos.getY()));
         body.setFill(Color.WHITE);
     }
 

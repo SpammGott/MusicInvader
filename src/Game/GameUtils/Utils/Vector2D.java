@@ -22,6 +22,14 @@ public class Vector2D{
         this.y = y;
     }
 
+    public boolean xinRange(double min, double max){
+        return x <= max && x >= min;
+    }
+
+    public boolean yinRange(double min, double max){
+        return y <= max && y >= min;
+    }
+
     public double getX() {return x;}
 
     public void setX(double x) {this.x = x;}
@@ -33,4 +41,8 @@ public class Vector2D{
     public void setY(double y) {this.y = y;}
 
     public void setYAdd(double y){this.y += y;}
+
+    public String toString(){
+        return "X: " + x + " Y: " + y;
+    }
 }
