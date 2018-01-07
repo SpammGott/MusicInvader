@@ -42,6 +42,10 @@ public class Vector2D{
 
     public void setYAdd(double y){this.y += y;}
 
+    public double getVectorLength(){
+        return Math.sqrt(x*x + y*y);
+    }
+
     public String toString(){
         return "X: " + x + " Y: " + y;
     }
