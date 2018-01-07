@@ -15,10 +15,14 @@ public class Spawnpoint {
         //Halb drei Nachts, ist das so richtig?^^
         this.direction = new Vector2D[direction.length];
         for(Vector2D temp:direction){
-            if(temp.getX() != 0)
-                temp.setX(temp.getX() > 0 ? 1 : -1);
-            if(temp.getY() != 0)
-                temp.setY(temp.getY() > 0 ? 1 : -1);
+            if(temp.getX() == 1 || temp.getX() == -1)
+                temp.setX(temp.getX());
+            else if(temp.getX() != 0)
+                temp.setX(temp.getX() - (int)temp.getX());
+            if(temp.getY() == 1 || temp.getY() == -1)
+                temp.setY(temp.getY());
+            else if(temp.getY() != 0)
+                temp.setY(temp.getY() - (int)temp.getY());
             this.direction[i++] = temp;
         }
     }
@@ -27,11 +31,11 @@ public class Spawnpoint {
         return direction[ThreadLocalRandom.current().nextInt(0, direction.length)];
     }
 
-    public void setPos(Vector2D pos) {this.pos = pos;}
+    //public void setPos(Vector2D pos) {this.pos = pos;}
 
     public Vector2D getPos() {return pos;}
 
-    public void setDirection(Vector2D[] direction) {this.direction = direction;}
+    //public void setDirection(Vector2D[] direction) {this.direction = direction;}
 
     public Vector2D[] getDirection() {return direction;}
 

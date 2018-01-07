@@ -24,7 +24,7 @@ public class GameScene extends Scene {
     private Player player;
     private ProjectileHandler projectileHandler;
     private EnemyHandler enemyHandler;
-    private Spawnpoint spawnpoint[] = {new Spawnpoint(new Vector2D(-1, 5), new Vector2D(1, 0), new Vector2D(1, -0.05)), new Spawnpoint(new Vector2D(500, 500), new Vector2D(-1, 0))};
+    private Spawnpoint spawnpoint[] = {new Spawnpoint(new Vector2D(-0.75, 7), new Vector2D(1, 0), new Vector2D(1, -0.05)), new Spawnpoint(new Vector2D(500, 500), new Vector2D(-1, 0))};
 
     private Pane root;
     private Stage window;
@@ -40,8 +40,8 @@ public class GameScene extends Scene {
     public void start(){
         //PC = PlayerCharacter
         projectileHandler = new ProjectileHandler(root);
-        enemyHandler = new EnemyHandler(root);
         player = new Player(this, projectileHandler);
+        enemyHandler = new EnemyHandler(root, projectileHandler, player);
 
         //actual movement
         AnimationTimer gameLoop = new AnimationTimer() {
@@ -56,10 +56,11 @@ public class GameScene extends Scene {
 
         //creates a projectile every 333ms and adds it to an arraylist
         Timeline pcProjectiles = new Timeline(
-                new KeyFrame(Duration.millis(300),
+                new KeyFrame(Duration.millis(1000),
                         e -> {
                             player.fireProjectile();
                             enemyHandler.spawnEnemy(spawnpoint[0]);
+                            enemyHandler.fireAll();
                         })
         );
         pcProjectiles.setCycleCount(Animation.INDEFINITE);

@@ -14,10 +14,14 @@ public class Projectile extends Entity {
 
     public Projectile(Vector2D pos, Vector2D direction){
         this.pos = pos;
-        if(direction.getX() != 0)
-            this.direction.setX(1);
-        if(direction.getY() != 0)
-            this.direction.setY(1);
+        if(direction.getX() == 1 || direction.getX() == -1)
+            this.direction.setX(direction.getX());
+        else if(direction.getX() != 0)
+            this.direction.setX(direction.getX() - (int)direction.getX());
+        if(direction.getY() == 1 || direction.getY() == -1)
+            this.direction.setY(direction.getY());
+        else if(direction.getY() != 0)
+            this.direction.setY(direction.getY() - (int)direction.getY());
         this.isFromPlayer = false;
         body.setCenterX(Helper.getAbsoluteWidth(pos.getX()));
         body.setCenterY(Helper.getAbsoluteWidth(pos.getY()));
@@ -28,10 +32,14 @@ public class Projectile extends Entity {
 
     public Projectile(Vector2D pos, Vector2D direction, boolean isFromPlayer){
         this.pos = pos;
-        if(direction.getX() != 0)
-            this.direction.setX(direction.getX() > 0 ? 1 : -1);
-        if(direction.getY() != 0)
-            this.direction.setY(direction.getY() > 0 ? 1 : -1);
+        if(direction.getX() == 1 || direction.getX() == -1)
+            this.direction.setX(direction.getX());
+        else if(direction.getX() != 0)
+            this.direction.setX(direction.getX() - (int)direction.getX());
+        if(direction.getY() == 1 || direction.getY() == -1)
+            this.direction.setY(direction.getY());
+        else if(direction.getY() != 0)
+            this.direction.setY(direction.getY() - (int)direction.getY());
         this.isFromPlayer = isFromPlayer;
         body.setCenterX(Helper.getAbsoluteWidth(pos.getX()));
         body.setCenterY(Helper.getAbsoluteHeight(pos.getY()));
