@@ -45,7 +45,9 @@ public class ProjectileHandler {
         for(int i = 0; i < list.size(); i++){
             Projectile temp = list.get(i);
             temp.move();
+            //Wird noch nicht gelöscht wenn nach unten fliegt
             if (temp.getBody().getCenterY() < -temp.getBody().getRadiusY() * 2) {
+                System.out.println("agasdfg");
                 root.getChildren().remove(temp.getBody());
                 list.remove(i);
                 i--;

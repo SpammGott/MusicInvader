@@ -38,7 +38,7 @@ public class EnemyHandler {
     public void fireAll(){
         for(int i = 0; i < enemyList.size(); i++){
             Enemy act = enemyList.get(i);
-            act.fireProjectile(new Vector2D((act.getPos().getX() - player.getPos().getX()), (act.getPos().getY() - player.getPos().getY())));
+            act.fireProjectile(new Vector2D(-(act.getPos().getX() - player.getPos().getX()), -(act.getPos().getY() - player.getPos().getY())));
         }
     }
 }

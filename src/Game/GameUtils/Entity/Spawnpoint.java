@@ -28,7 +28,7 @@ public class Spawnpoint {
     }
 
     public Vector2D getRandomDirection(){
-        return direction[ThreadLocalRandom.current().nextInt(0, direction.length)];
+        return direction[ThreadLocalRandom.current().nextInt(0, direction.length)].clone();
     }
 
     //public void setPos(Vector2D pos) {this.pos = pos;}

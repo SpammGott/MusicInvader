@@ -15,7 +15,7 @@ public class Enemy extends Ship {
 
     public Enemy(Spawnpoint homeSpawnPoint, ProjectileHandler projectileHandler){
         this.homeSpawnPoint = homeSpawnPoint;
-        this.pos = this.homeSpawnPoint.getPos();
+        this.pos = this.homeSpawnPoint.getPos().clone();
         this.direction = this.homeSpawnPoint.getRandomDirection();
         this.projectileHandler = projectileHandler;
         body.setX(Helper.getAbsoluteWidth(pos.getX()-0.2));

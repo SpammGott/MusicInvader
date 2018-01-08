@@ -13,7 +13,7 @@ public class Projectile extends Entity {
     private Vector2D direction = new Vector2D();
 
     public Projectile(Vector2D pos, Vector2D direction){
-        this.pos = pos;
+        this.pos = pos.clone();
         if(direction.getX() == 1 || direction.getX() == -1)
             this.direction.setX(direction.getX());
         else if(direction.getX() != 0)
@@ -31,7 +31,7 @@ public class Projectile extends Entity {
     }
 
     public Projectile(Vector2D pos, Vector2D direction, boolean isFromPlayer){
-        this.pos = pos;
+        this.pos = pos.clone();
         if(direction.getX() == 1 || direction.getX() == -1)
             this.direction.setX(direction.getX());
         else if(direction.getX() != 0)

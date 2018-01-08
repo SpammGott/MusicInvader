@@ -30,6 +30,11 @@ public class Vector2D{
         return y <= max && y >= min;
     }
 
+    @Override
+    public Vector2D clone(){
+        return new Vector2D(x, y);
+    }
+
     public double getX() {return x;}
 
     public void setX(double x) {this.x = x;}
