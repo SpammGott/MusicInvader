@@ -4,7 +4,6 @@ import Game.GameUtils.Entity.Enemy;
 import Game.GameUtils.Entity.Player;
 import Game.GameUtils.Entity.Spawnpoint;
 import javafx.scene.layout.Pane;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,5 +39,12 @@ public class EnemyHandler {
             Enemy act = enemyList.get(i);
             act.fireProjectile(new Vector2D(-(act.getPos().getX() - player.getPos().getX()), -(act.getPos().getY() - player.getPos().getY())));
         }
+    }
+
+    public void removeAll(){
+        for(Enemy temp : enemyList){
+            root.getChildren().remove(temp.getBody());
+        }
+        enemyList.clear();
     }
 }

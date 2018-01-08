@@ -17,6 +17,11 @@ public class Vector2D{
         this.y = y;
     }
 
+    public Vector2D(Vector2D vec){
+        this.x = vec.getX();
+        this.y = vec.getY();
+    }
+
     public void setVec(double x, double y){
         this.x = x;
         this.y = y;

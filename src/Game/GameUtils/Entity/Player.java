@@ -27,7 +27,6 @@ public class Player extends Ship {
         this.projectileHandler = projectileHandler;
         body.setFill(Color.WHITE);
         body.setStyle("-fx-background-color: white");
-
         defSpeed = 0.125;
         speed = defSpeed;
         pos = new Vector2D(7.45, 16);

@@ -42,29 +42,24 @@ public class GameScene extends Scene {
         projectileHandler = new ProjectileHandler(root);
         player = new Player(this, projectileHandler);
         enemyHandler = new EnemyHandler(root, projectileHandler, player);
+        enemyHandler.spawnEnemy(spawnpoint[0]);
 
         //actual movement
         AnimationTimer gameLoop = new AnimationTimer() {
+            int frameToShoot = 0;
             @Override
             public void handle(long now) {
                 player.move();
+                if(++frameToShoot == 20){
+                    player.fireProjectile();
+                    enemyHandler.fireAll();
+                    frameToShoot = 0;
+                }
                 enemyHandler.moveAll();
                 projectileHandler.moveAllProjectiles();
             }
         };
         gameLoop.start();
-
-        //creates a projectile every 333ms and adds it to an arraylist
-        Timeline pcProjectiles = new Timeline(
-                new KeyFrame(Duration.millis(1000),
-                        e -> {
-                            player.fireProjectile();
-                            enemyHandler.spawnEnemy(spawnpoint[0]);
-                            enemyHandler.fireAll();
-                        })
-        );
-        pcProjectiles.setCycleCount(Animation.INDEFINITE);
-        pcProjectiles.play();
 
         setOnKeyPressed(keyEvent -> {
             if(keyEvent.getCode() == KeyCode.ESCAPE){
@@ -85,14 +80,15 @@ public class GameScene extends Scene {
     }
 
     private void escClicked(Stage window, MenuScene menuScene, Pane root){
-        reset(root);
+        reset();
         this.setCursor(Cursor.DEFAULT);
         window.setScene(menuScene);
         window.setFullScreen(true);
     }
 
-    private void reset(Pane root){
+    private void reset(){
         projectileHandler.removeAll();
+        enemyHandler.removeAll();
         player.setPos(new Vector2D((getWidth() / 2) - (player.getBody().getWidth() / 2), (getHeight())));
     }
 }

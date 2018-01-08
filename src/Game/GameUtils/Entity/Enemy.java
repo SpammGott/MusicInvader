@@ -15,8 +15,8 @@ public class Enemy extends Ship {
 
     public Enemy(Spawnpoint homeSpawnPoint, ProjectileHandler projectileHandler){
         this.homeSpawnPoint = homeSpawnPoint;
-        this.pos = this.homeSpawnPoint.getPos().clone();
-        this.direction = this.homeSpawnPoint.getRandomDirection();
+        this.pos = new Vector2D(this.homeSpawnPoint.getPos());
+        this.direction = new Vector2D(this.homeSpawnPoint.getRandomDirection());
         this.projectileHandler = projectileHandler;
         body.setX(Helper.getAbsoluteWidth(pos.getX()-0.2));
         body.setY(Helper.getAbsoluteHeight(pos.getY()));
@@ -29,13 +29,13 @@ public class Enemy extends Ship {
     public void move() {
         pos.setXAdd(direction.getX() * speed);
         pos.setYAdd(direction.getY() * speed);
-        if(!pos.xinRange(0, 16) && !pos.yinRange(0, 16)){
+        if(!pos.xinRange(-1, 17) || !pos.yinRange(-1, 17)){
             pos.setVec(homeSpawnPoint.getPos().getX(), homeSpawnPoint.getPos().getY());
         }
         body.setX(Helper.getAbsoluteWidth(pos.getX()));
         body.setY(Helper.getAbsoluteHeight(pos.getY()));
         body.setFill(Color.RED);
-        //System.out.println("Enemy:" + toString() + "\tpos: " + pos.toString() + "\tspeed: " + speed + "\trichtung: " + direction.toString());
+        //System.out.println("\tpos: " + pos.toString() + "\trichtung: " + direction.toString());
     }
 
     @Override
