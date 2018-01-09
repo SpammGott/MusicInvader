@@ -2,21 +2,14 @@ package Game.GameUtils;
 
 import Game.GameUtils.Entity.Player;
 import Game.GameUtils.Entity.Spawnpoint;
-import Game.GameUtils.Utils.EnemyHandler;
-import Game.GameUtils.Utils.Helper;
-import Game.GameUtils.Utils.ProjectileHandler;
-import Game.GameUtils.Utils.Vector2D;
+import Game.GameUtils.Utils.*;
 import Game.Menu.MenuScene;
-import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 
 public class GameScene extends Scene {
@@ -31,7 +24,7 @@ public class GameScene extends Scene {
     private MenuScene menuScene;
 
     public GameScene(Pane root, Stage window, MenuScene menuScene){
-        super(root, Helper.getHeight(), Helper.getWidth());
+        super(root, Helper.getGameHeight(), Helper.getGameWidth());
         this.root = root;
         this.window = window;
         this.menuScene = menuScene;
@@ -40,7 +33,7 @@ public class GameScene extends Scene {
     public void start(){
         //PC = PlayerCharacter
         projectileHandler = new ProjectileHandler(root);
-        player = new Player(this, projectileHandler);
+        player = new Player(projectileHandler);
         enemyHandler = new EnemyHandler(root, projectileHandler, player);
         enemyHandler.spawnEnemy(spawnpoint[0]);
 

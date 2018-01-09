@@ -13,7 +13,6 @@ import Game.GameUtils.Utils.ControllButtons;
 
 public class Player extends Ship {
 
-    private Scene scene;
     private Rectangle body = new Rectangle(Helper.getAbsoluteWidth(0.5),Helper.getAbsoluteHeight(0.5));
     //needed to manage movement
     private ProjectileHandler projectileHandler;
@@ -22,8 +21,7 @@ public class Player extends Ship {
     private BooleanProperty left = new SimpleBooleanProperty();
     private BooleanProperty right = new SimpleBooleanProperty();
 
-    public Player(Scene scene, ProjectileHandler projectileHandler){
-        this.scene = scene;
+    public Player(ProjectileHandler projectileHandler){
         this.projectileHandler = projectileHandler;
         body.setFill(Color.WHITE);
         body.setStyle("-fx-background-color: white");
