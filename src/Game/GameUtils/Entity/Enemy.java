@@ -9,7 +9,6 @@ import javafx.scene.image.ImageView;
 
 public class Enemy extends Ship {
 
-    private ImageView body;
     private Vector2D direction;
     private Spawnpoint homeSpawnPoint;
     private ProjectileHandler projectileHandler;
@@ -18,14 +17,13 @@ public class Enemy extends Ship {
         this.homeSpawnPoint = homeSpawnPoint;
         this.pos = new Vector2D(this.homeSpawnPoint.getPos());
         this.direction = new Vector2D(this.homeSpawnPoint.getRandomDirection());
+        this.projectileHandler = projectileHandler;
         height = 0.4;
         width = 0.4;
-        this.projectileHandler = projectileHandler;
         body = new ImageView(image);
-        body.setX(Helper.getAbsoluteWidth(pos.getX()- width/2));
-        body.setY(Helper.getAbsoluteHeight(pos.getY()));
         defSpeed = 0.05;
         speed = defSpeed;
+        init();
     }
 
     @Override
@@ -37,7 +35,6 @@ public class Enemy extends Ship {
         }
         body.setX(Helper.getAbsoluteWidth(pos.getX()));
         body.setY(Helper.getAbsoluteHeight(pos.getY()));
-        //System.out.println("\tpos: " + pos.toString() + "\trichtung: " + direction.toString());
     }
 
     @Override

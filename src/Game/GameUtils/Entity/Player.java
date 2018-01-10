@@ -32,12 +32,7 @@ public class Player extends Ship {
         init();
     }
 
-    private void init(){
-        //body.setFill(Color.WHITE);
-        //body.setStyle("-fx-background-color: white");
-        body.setX(Helper.getAbsoluteWidth(pos.getX()));
-        body.setY(Helper.getAbsoluteHeight(pos.getY()));
-    }
+
 
 
     @Override
