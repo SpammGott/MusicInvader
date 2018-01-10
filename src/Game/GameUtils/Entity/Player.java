@@ -4,16 +4,16 @@ import Game.GameUtils.Utils.ProjectileHandler;
 import Game.GameUtils.Utils.Vector2D;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import Game.GameUtils.Utils.Helper;
 import Game.GameUtils.Utils.ControllButtons;
 
+
 public class Player extends Ship {
 
-    private Rectangle body = new Rectangle(Helper.getAbsoluteWidth(0.5),Helper.getAbsoluteHeight(0.5));
+    //private Rectangle body;
     //needed to manage movement
     private ProjectileHandler projectileHandler;
     private BooleanProperty up = new SimpleBooleanProperty();
@@ -21,13 +21,20 @@ public class Player extends Ship {
     private BooleanProperty left = new SimpleBooleanProperty();
     private BooleanProperty right = new SimpleBooleanProperty();
 
-    public Player(ProjectileHandler projectileHandler){
+    public Player(ProjectileHandler projectileHandler, Image image){
         this.projectileHandler = projectileHandler;
-        body.setFill(Color.WHITE);
-        body.setStyle("-fx-background-color: white");
+        height = 0.5;
+        width = 0.5;
+        body = new ImageView(image);
         defSpeed = 0.125;
         speed = defSpeed;
-        pos = new Vector2D(7.45, 16);
+        pos = new Vector2D(7.5, 15.5);
+        init();
+    }
+
+    private void init(){
+        //body.setFill(Color.WHITE);
+        //body.setStyle("-fx-background-color: white");
         body.setX(Helper.getAbsoluteWidth(pos.getX()));
         body.setY(Helper.getAbsoluteHeight(pos.getY()));
     }
@@ -43,11 +50,11 @@ public class Player extends Ship {
             pos.setXAdd(-speed);
             body.setX(Helper.getAbsoluteWidth(pos.getX()));
         }
-        if (down.get() && pos.getY() < 16){
+        if (down.get() && pos.getY() < 16 - height){
             pos.setYAdd(speed);
             body.setY(Helper.getAbsoluteHeight(pos.getY()));
         }
-        if (right.get() && pos.getX() < 16) {
+        if (right.get() && pos.getX() < 16 - width) {
             pos.setXAdd(speed);
             body.setX(Helper.getAbsoluteWidth(pos.getX()));
         }
@@ -89,6 +96,6 @@ public class Player extends Ship {
         projectileHandler.addProjectile(temp);
     }
 
-    public Rectangle getBody(){return this.body;}
+    public ImageView getBody(){return this.body;}
 
 }

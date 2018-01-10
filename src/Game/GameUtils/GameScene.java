@@ -5,11 +5,18 @@ import Game.GameUtils.Entity.Spawnpoint;
 import Game.GameUtils.Utils.*;
 import Game.Menu.MenuScene;
 import javafx.animation.AnimationTimer;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
 
 public class GameScene extends Scene {
@@ -20,22 +27,35 @@ public class GameScene extends Scene {
     private Spawnpoint spawnpoint[] = {new Spawnpoint(new Vector2D(-0.75, 7), new Vector2D(1, 0), new Vector2D(1, -0.05)), new Spawnpoint(new Vector2D(500, 500), new Vector2D(-1, 0))};
 
     private Pane root;
+    private HBox mainPane;
+    private Pane game;
+    private Pane left;
+    private Pane gameInfos = new Pane();
     private Stage window;
     private MenuScene menuScene;
 
+    private Image playerImage;
+    private Image enemyImage;
+
     public GameScene(Pane root, Stage window, MenuScene menuScene){
-        super(root, Helper.getGameHeight(), Helper.getGameWidth());
+        super(root, Helper.getHeight(), Helper.getWidth());
         this.root = root;
+        game = new Pane();
+        game.setPrefSize(Helper.getGameWidth(), Helper.getGameHeight());
+        left = new Pane();
+        left.setPrefSize(Helper.getWidth() / 4, Helper.getHeight());
         this.window = window;
         this.menuScene = menuScene;
+        playerImage = loadImage("MirrorFighter_no1.png");
+        enemyImage = loadImage("Triwing_no1.png");
     }
 
     public void start(){
         //PC = PlayerCharacter
-        projectileHandler = new ProjectileHandler(root);
-        player = new Player(projectileHandler);
-        enemyHandler = new EnemyHandler(root, projectileHandler, player);
-        enemyHandler.spawnEnemy(spawnpoint[0]);
+        projectileHandler = new ProjectileHandler(game);
+        player = new Player(projectileHandler, playerImage);
+        enemyHandler = new EnemyHandler(game, projectileHandler, player);
+        enemyHandler.spawnEnemy(spawnpoint[0], enemyImage);
 
         //actual movement
         AnimationTimer gameLoop = new AnimationTimer() {
@@ -56,7 +76,7 @@ public class GameScene extends Scene {
 
         setOnKeyPressed(keyEvent -> {
             if(keyEvent.getCode() == KeyCode.ESCAPE){
-                escClicked(window, menuScene, root);
+                escClicked(window, menuScene);
             } else {
                 player.changeMovement(keyEvent);
             }
@@ -68,11 +88,24 @@ public class GameScene extends Scene {
 
         this.setCursor(Cursor.NONE);
         getStylesheets().add("CSS.css");
-        root.getChildren().add(player.getBody());
-        root.setStyle("-fx-background-color: black");
+        game.getChildren().add(player.getBody());
+        game.setStyle("-fx-background-color: black");
+
+        mainPane = new HBox(left, game, gameInfos);
+        root.getChildren().add(mainPane);
     }
 
-    private void escClicked(Stage window, MenuScene menuScene, Pane root){
+    private Image loadImage(String name){
+        BufferedImage image = null;
+        try (InputStream in = getClass().getClassLoader().getResourceAsStream(name)) {
+            image = ImageIO.read(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return SwingFXUtils.toFXImage(image, null);
+    }
+
+    private void escClicked(Stage window, MenuScene menuScene){
         reset();
         this.setCursor(Cursor.DEFAULT);
         window.setScene(menuScene);
@@ -82,6 +115,6 @@ public class GameScene extends Scene {
     private void reset(){
         projectileHandler.removeAll();
         enemyHandler.removeAll();
-        player.setPos(new Vector2D((getWidth() / 2) - (player.getBody().getWidth() / 2), (getHeight())));
+        player.setPos(new Vector2D((getWidth() / 2) - (player.getWidth() / 2), (getHeight())));
     }
 }
