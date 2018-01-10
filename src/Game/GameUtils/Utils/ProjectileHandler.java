@@ -2,8 +2,6 @@ package Game.GameUtils.Utils;
 
 import Game.GameUtils.Entity.Projectile;
 import javafx.scene.layout.Pane;
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +43,7 @@ public class ProjectileHandler {
         for(int i = 0; i < list.size(); i++){
             Projectile temp = list.get(i);
             temp.move();
-            if (temp.getBody().getCenterY() < -temp.getBody().getRadiusY() * 2) {
+            if (!temp.getPos().xinRange(0, 16) || !temp.getPos().yinRange(0, 16)) {
                 root.getChildren().remove(temp.getBody());
                 list.remove(i);
                 i--;

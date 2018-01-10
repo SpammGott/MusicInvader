@@ -17,6 +17,11 @@ public class Vector2D{
         this.y = y;
     }
 
+    public Vector2D(Vector2D vec){
+        this.x = vec.getX();
+        this.y = vec.getY();
+    }
+
     public void setVec(double x, double y){
         this.x = x;
         this.y = y;
@@ -30,6 +35,11 @@ public class Vector2D{
         return y <= max && y >= min;
     }
 
+    @Override
+    public Vector2D clone(){
+        return new Vector2D(x, y);
+    }
+
     public double getX() {return x;}
 
     public void setX(double x) {this.x = x;}
@@ -41,6 +51,10 @@ public class Vector2D{
     public void setY(double y) {this.y = y;}
 
     public void setYAdd(double y){this.y += y;}
+
+    public double getVectorLength(){
+        return Math.sqrt(x*x + y*y);
+    }
 
     public String toString(){
         return "X: " + x + " Y: " + y;
