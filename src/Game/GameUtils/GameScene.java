@@ -46,8 +46,8 @@ public class GameScene extends Scene {
         left.setPrefSize(Helper.getWidth() / 4, Helper.getHeight());
         this.window = window;
         this.menuScene = menuScene;
-        playerImage = loadImage("MirrorFighter_no1.png");
-        enemyImage = loadImage("Triwing_no1.png");
+        playerImage = loadImage("Assets/MirrorFighter_no1.png");
+        enemyImage = loadImage("Assets/Triwing_no1.png");
     }
 
     public void start(){
