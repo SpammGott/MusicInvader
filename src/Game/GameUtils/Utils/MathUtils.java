@@ -23,4 +23,25 @@ public class MathUtils {
         ret =  Math.toDegrees(Math.acos(ret));
         return ret;
     }
+
+    public static Vector2D addVector(Vector2D a, Vector2D b){
+        Vector2D ret = new Vector2D();
+        ret.setX(a.getX() + b.getX());
+        ret.setY(a.getY() + b.getY());
+        return ret;
+    }
+
+    public static Vector2D multVector(Vector2D a, Vector2D b){
+        Vector2D ret = new Vector2D();
+        ret.setX(a.getX() * b.getX());
+        ret.setY(a.getY() * b.getY());
+        return ret;
+    }
+
+    public static Vector2D multVector(Vector2D a, double multiplikator){
+        Vector2D ret = new Vector2D();
+        ret.setX(a.getX() * multiplikator);
+        ret.setY(a.getY() * multiplikator);
+        return ret;
+    }
 }

@@ -59,4 +59,12 @@ public class Vector2D{
     public String toString(){
         return "X: " + x + " Y: " + y;
     }
+
+    public Vector2D getRightOrthogonal(){
+        return new Vector2D(y, -x);
+    }
+
+    public Vector2D getLeftOrthogonal(){
+        return new Vector2D(-y, x);
+    }
 }

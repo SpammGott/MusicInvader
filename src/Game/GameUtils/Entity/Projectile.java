@@ -13,6 +13,7 @@ public class Projectile extends Entity {
     private boolean isFromPlayer;
     private Rectangle body = new Rectangle(4,8);
     private Vector2D direction;
+    private double rotate;
 
     public Projectile(Vector2D pos, Vector2D direction){
         this.pos = pos.clone();
@@ -21,7 +22,7 @@ public class Projectile extends Entity {
         body.setX(Helper.getAbsoluteWidth(pos.getX()));
         body.setY(Helper.getAbsoluteWidth(pos.getY()));
         body.setFill(Color.WHITE);
-        double rotate = MathUtils.angleForProjectils(direction);
+        rotate = MathUtils.angleForProjectils(direction);
         body.setRotate(direction.getX() >= 0 ? -rotate : rotate);
         defSpeed = 0.1;
         speed = defSpeed;
