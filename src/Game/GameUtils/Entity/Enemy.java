@@ -22,6 +22,8 @@ public class Enemy extends Ship {
         width = 0.4;
         this.projectileHandler = projectileHandler;
         body = new ImageView(image);
+        body.setPreserveRatio(true);
+        body.setFitHeight(70);
         body.setX(Helper.getAbsoluteWidth(pos.getX()- width/2));
         body.setY(Helper.getAbsoluteHeight(pos.getY()));
         defSpeed = 0.05;
