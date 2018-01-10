@@ -3,6 +3,7 @@ package Game.GameUtils.Utils;
 import Game.GameUtils.Entity.Enemy;
 import Game.GameUtils.Entity.Player;
 import Game.GameUtils.Entity.Spawnpoint;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +22,8 @@ public class EnemyHandler {
     }
 
 
-    public void spawnEnemy(Spawnpoint spawnpoint){
-        Enemy temp = new Enemy(spawnpoint, projectileHandler);
+    public void spawnEnemy(Spawnpoint spawnpoint, Image image){
+        Enemy temp = new Enemy(spawnpoint, projectileHandler, image);
         enemyList.add(temp);
         root.getChildren().add(temp.getBody());
         System.out.println(temp.toString2());

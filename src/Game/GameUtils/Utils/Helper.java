@@ -7,7 +7,8 @@ public class Helper {
 
     private static boolean controls = true;
     //creates 2D Rectangle with screen width and height
-    private static Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+    //private static Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+    private static Rectangle2D primaryScreenBounds = Screen.getPrimary().getBounds();
     private static double gameHeight = primaryScreenBounds.getHeight();
     private static double relativeHeight = gameHeight / 16;
     private static double width = primaryScreenBounds.getWidth();

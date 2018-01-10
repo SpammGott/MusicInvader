@@ -4,7 +4,7 @@ import Game.GameUtils.Utils.Helper;
 import Game.GameUtils.Utils.MathUtils;
 import Game.GameUtils.Utils.Vector2D;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Ellipse;
+
 import javafx.scene.shape.Rectangle;
 
 
