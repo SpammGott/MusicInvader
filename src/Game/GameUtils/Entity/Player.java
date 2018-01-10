@@ -26,6 +26,8 @@ public class Player extends Ship {
         height = 0.5;
         width = 0.5;
         body = new ImageView(image);
+        body.setPreserveRatio(true);
+        body.setFitHeight(70);
         defSpeed = 0.125;
         speed = defSpeed;
         pos = new Vector2D(7.5, 15.5);
