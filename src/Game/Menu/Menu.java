@@ -25,26 +25,21 @@ public class Menu extends VBox {
             window.setFullScreen(true);
             gameScene.start();
         });
-        start.setId("MenuButton");
 
         Button songs = new Button("SONGS");
         songs.setOnAction(e -> menuPane.setCenter(new SongsPane(menuPane, this)));
-        songs.setId("MenuButton");
 
         Button leaderboards = new Button("LEADERBOARDS");
         leaderboards.setOnAction(e -> menuPane.setCenter(new LeaderboardsPane(menuPane, this)));
-        leaderboards.setId("MenuButton");
 
         Button options = new Button("OPTIONS");
         options.setOnAction(e -> menuPane.setCenter(new OptionsPane(menuPane, this)));
-        options.setId("MenuButton");
 
         Button exit = new Button("EXIT");
         exit.setOnAction(e -> {
             Platform.exit();
             System.exit(0);
         });
-        exit.setId("MenuButton");
 
         setStyle("-fx-background-color: black");
         setAlignment(Pos.CENTER);

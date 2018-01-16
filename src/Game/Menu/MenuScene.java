@@ -2,6 +2,7 @@ package Game.Menu;
 
 import Game.GameUtils.GameScene;
 import Game.GameUtils.Utils.Helper;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -15,6 +16,7 @@ public class MenuScene extends Scene {
         Pane root = new Pane();
         GameScene gameScene = new GameScene(root, window, this);
 
+        setCursor(Cursor.NONE);
         menuPane.setCenter(new Menu(window, menuPane, this, gameScene));
         getStylesheets().add("CSS.css");
     }

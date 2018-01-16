@@ -1,14 +1,10 @@
-#MenuButton{
-    -fx-text-fill: white;
-    -fx-font-size: 20;
-    -fx-font-family: Pixeled;
-    -fx-padding: 0 0 0 0;
-    -fx-background-color: transparent;
+.button:focused{
+    -fx-text-fill: red;
 }
 
-#PressedMenuButton{
+.button{
     -fx-text-fill: white;
-    -fx-font-size: 35;
+    -fx-font-size: 20;
     -fx-font-family: Pixeled;
     -fx-padding: 0 0 0 0;
     -fx-background-color: transparent;
