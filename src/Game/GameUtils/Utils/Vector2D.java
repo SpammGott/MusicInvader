@@ -2,8 +2,6 @@ package Game.GameUtils.Utils;
 
 public class Vector2D{
 
-
-
     private double x;
     private double y;
 
@@ -67,4 +65,15 @@ public class Vector2D{
     public Vector2D getLeftOrthogonal(){
         return new Vector2D(-y, x);
     }
+
+    public void mult(double a){
+        x = x * a;
+        y = y * a;
+    }
+
+    public Vector2D getInverted(){
+        return new Vector2D(-x, -y);
+    }
+
+
 }
