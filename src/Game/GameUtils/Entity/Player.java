@@ -1,19 +1,15 @@
 package Game.GameUtils.Entity;
 
-import Game.GameUtils.Utils.ProjectileHandler;
-import Game.GameUtils.Utils.Vector2D;
+import Game.GameUtils.Utils.*;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import Game.GameUtils.Utils.Helper;
-import Game.GameUtils.Utils.ControllButtons;
 
 
 public class Player extends Ship {
 
-    //private Rectangle body;
     //needed to manage movement
     private ProjectileHandler projectileHandler;
     private BooleanProperty up = new SimpleBooleanProperty();
@@ -23,15 +19,16 @@ public class Player extends Ship {
 
     public Player(ProjectileHandler projectileHandler, Image image){
         this.projectileHandler = projectileHandler;
-        height = 0.5;
-        width = 0.5;
+        height = 0.7;
+        width = 0.7;
         body = new ImageView(image);
         body.setPreserveRatio(true);
         body.setFitHeight(70);
         defSpeed = 0.125;
         speed = defSpeed;
-        pos = new Vector2D(7.5, 15.5);
+        pos = new Vector2D(7.5-(width/2), 16-height);
         init();
+        hitbox = new Hitbox(pos, 4, height, width);
     }
 
 
@@ -39,22 +36,28 @@ public class Player extends Ship {
 
     @Override
     public void move() {
+        direction = new Vector2D();
         if (up.get() && pos.getY() > 0){
             pos.setYAdd(-speed);
             body.setY(Helper.getAbsoluteHeight(pos.getY()));
+            direction.setYAdd(-speed);
         }
         if (left.get() && pos.getX() > 0) {
             pos.setXAdd(-speed);
             body.setX(Helper.getAbsoluteWidth(pos.getX()));
+            direction.setXAdd(-speed);
         }
         if (down.get() && pos.getY() < 16 - height){
             pos.setYAdd(speed);
             body.setY(Helper.getAbsoluteHeight(pos.getY()));
+            direction.setYAdd(speed);
         }
         if (right.get() && pos.getX() < 16 - width) {
             pos.setXAdd(speed);
             body.setX(Helper.getAbsoluteWidth(pos.getX()));
+            direction.setXAdd(speed);
         }
+        hitbox.update(direction);
     }
 
     public void changeMovement(KeyEvent keyEvent){

@@ -75,5 +75,10 @@ public class Vector2D{
         return new Vector2D(-x, -y);
     }
 
+    public void add(Vector2D a){
+        x += a.getX();
+        y += a.getY();
+    }
+
 
 }

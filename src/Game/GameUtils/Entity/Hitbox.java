@@ -5,27 +5,33 @@ import Game.GameUtils.Utils.Vector2D;
 
 public class Hitbox{
 
+    private double height;
+    private double width;
     private Vector2D center;
     private Vector2D point[];
     private Vector2D axis[];
 
     public Hitbox(Vector2D pos, int anzahlPoints, double height, double width) {
+        this.height = height;
+        this.width = width;
         if(anzahlPoints == 4)
-            viereck(pos, height, width, null);
+            viereck(pos, null);
         else if(anzahlPoints == 3)
-            dreieck(pos, height, width, null);
+            dreieck(pos, null);
         //throws exception?
     }
 
     public Hitbox(Vector2D pos, int anzahlPoints, double height, double width, Vector2D direction){
+        this.height = height;
+        this.width = width;
         if(anzahlPoints == 4)
-            viereck(pos, height, width, direction);
+            viereck(pos, direction);
         else if(anzahlPoints == 3)
-            dreieck(pos, height, width, direction);
+            dreieck(pos, direction);
         //throws exception?
     }
 
-    private void viereck(Vector2D pos, double height, double width, Vector2D direction){
+    private void viereck(Vector2D pos, Vector2D direction){
         point = new Vector2D[4];
         axis = new Vector2D[2];
         if(direction != null){
@@ -57,7 +63,7 @@ public class Hitbox{
         }
     }
 
-    private void dreieck(Vector2D pos, double height, double width, Vector2D direction){
+    private void dreieck(Vector2D pos, Vector2D direction){
         point = new Vector2D[3];
         axis = new Vector2D[3];
         if(direction != null){
@@ -93,7 +99,23 @@ public class Hitbox{
             axis[2] = MathUtils.getEinheitsvektor(new Vector2D(height, width/2)).getRightOrthogonal();
 
         }
-
     }
 
+    public void update(Vector2D direction){
+        center.add(direction);
+        for(Vector2D act:point){
+            act.add(direction);
+        }
+    }
+
+    public void update(Vector2D pos, Vector2D direction){
+        if(point.length == 4)
+            viereck(pos, direction);
+        else if(point.length == 3)
+            dreieck(pos, direction);
+    }
+
+    public void ausgabeHitbox(){
+        System.out.println("Punkt1: " + point[0].toString());
+    }
 }

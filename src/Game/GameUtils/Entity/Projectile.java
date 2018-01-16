@@ -12,7 +12,6 @@ public class Projectile extends Entity {
 
     private boolean isFromPlayer;
     private Rectangle body = new Rectangle(4,8);
-    private Vector2D direction;
     private double rotate;
 
     public Projectile(Vector2D pos, Vector2D direction){
@@ -26,6 +25,7 @@ public class Projectile extends Entity {
         body.setRotate(direction.getX() >= 0 ? -rotate : rotate);
         defSpeed = 0.1;
         speed = defSpeed;
+        hitbox = new Hitbox(pos, 4, height, width, direction);
     }
 
     public Projectile(Vector2D pos, Vector2D direction, boolean isFromPlayer){
@@ -37,12 +37,14 @@ public class Projectile extends Entity {
         body.setFill(Color.WHITE);
         defSpeed = 0.2;
         speed = defSpeed;
+        hitbox = new Hitbox(pos, 4, height, width, direction);
     }
 
     @Override
     public void move() {
-        pos.setXAdd(direction.getX() * speed);
-        pos.setYAdd(direction.getY() * speed);
+        Vector2D tempDirection = MathUtils.multVector(direction, speed);
+        pos.add(tempDirection);
+        hitbox.update(tempDirection);
         body.setX(Helper.getAbsoluteWidth(pos.getX()));
         body.setY(Helper.getAbsoluteHeight(pos.getY()));
         body.setFill(Color.WHITE);

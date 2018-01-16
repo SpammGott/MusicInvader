@@ -1,7 +1,6 @@
 package Game.GameUtils.Entity;
 
 import Game.GameUtils.Utils.Vector2D;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 
@@ -10,11 +9,11 @@ public abstract class Entity {
     protected double defSpeed;
     protected double speed;
     protected Vector2D pos;
+    protected Vector2D direction;
     protected double height;
     protected double width;
     protected ImageView body;
-    protected Image image;
-    //private Hitbox hitbox;
+    protected Hitbox hitbox;
 
     public abstract void move();
 

@@ -24,6 +24,7 @@ public class Controller extends Application{
 
         try {
             PlaylistManager playlistManager = new PlaylistManager("C:/Users/Josh/IdeaProjects/MusicInvaderGIT/res/Songs");
+            //PlaylistManager playlistManager = new PlaylistManager("D:/Benutzer/Jens/IdeaProjects/MusicInvader/res/Songs");
             player = new MP3Player(playlistManager.getPlaylist("titlesong"));
             player.play();
 
