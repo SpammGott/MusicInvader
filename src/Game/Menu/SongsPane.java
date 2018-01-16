@@ -15,7 +15,6 @@ public class SongsPane extends VBox {
 
         Button back = new Button("BACK");
         back.setOnAction(e -> menuScene.setCenter(menu));
-        back.setId("MenuButton");
 
         getChildren().addAll(text, back);
         setStyle("-fx-background-color: black");

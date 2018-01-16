@@ -23,8 +23,10 @@ public class PlaylistManager {
      * @param dir directory
      */
     public PlaylistManager(String dir) {
-       M3UParser.defaultPlaylist(dir);
-       addPlaylists(M3UParser.getPlaylist(dir));
+        System.out.println("PlaylistManager");
+        M3UParser.defaultPlaylist(dir);
+        M3UParser.titleSongPlaylist(dir);
+        addPlaylists(M3UParser.getPlaylist(dir));
         this.changes = new PropertyChangeSupport(getPlaylistList());
     }
 

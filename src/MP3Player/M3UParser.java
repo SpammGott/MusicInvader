@@ -54,9 +54,10 @@ public class M3UParser {
      * @param path where the default playlist should be created
      */
     public static void defaultPlaylist(String path){
+        System.out.println("defaultPlaylistCreator");
         Mp3File temp;
         try {
-            PrintWriter writer = new PrintWriter(path + "defaultPlaylist.m3u", "UTF-8");
+            PrintWriter writer = new PrintWriter(path + "/defaultPlaylist.m3u", "UTF-8");
             ArrayList<Track> tracks = getSongs(path);
             for (int i = 0; i < tracks.size(); i++){
                 temp = tracks.get(i).getMp3file();
@@ -65,6 +66,31 @@ public class M3UParser {
                     writer.println(temp.getFilename());
             }
             writer.close();
+            System.out.println("Got it");
+        }catch (Exception e){
+            System.out.println("File couldn't be created.");
+            //e.printStackTrace();
+        }
+    }
+
+    /**
+     * Creates a default playlist (contains all songs in a directory)
+     * @param path where the default playlist should be created
+     */
+    public static void titleSongPlaylist(String path){
+        System.out.println("defaultPlaylistCreator");
+        Mp3File temp;
+        try {
+            PrintWriter writer = new PrintWriter(path + "/titlesong.m3u", "UTF-8");
+            ArrayList<Track> tracks = getSongs(path + "/Titlesong");
+            for (int i = 0; i < tracks.size(); i++){
+                temp = tracks.get(i).getMp3file();
+                //checks for empty entrys (happens when track can't be created)
+                if(temp != null)
+                    writer.println(temp.getFilename());
+            }
+            writer.close();
+            System.out.println("Got it");
         }catch (Exception e){
             System.out.println("File couldn't be created.");
             //e.printStackTrace();

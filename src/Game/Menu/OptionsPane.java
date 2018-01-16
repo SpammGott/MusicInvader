@@ -18,21 +18,18 @@ public class OptionsPane extends VBox {
 
         wasd.setOnAction(e -> {
             Helper.setControls(true);
-            wasd.setId("PressedMenuButton");
-            arrows.setId("MenuButton");
+            wasd.setStyle("-fx-font-size: 35");
+            arrows.setStyle("-fx-font-size: 25");
         });
-        wasd.setId("PressedMenuButton");
 
         arrows.setOnAction(e -> {
             Helper.setControls(false);
-            arrows.setId("PressedMenuButton");
-            wasd.setId("MenuButton");
+            arrows.setStyle("-fx-font-size: 35");
+            wasd.setStyle("-fx-font-size: 25");
         });
-        arrows.setId("MenuButton");
 
         Button back = new Button("BACK");
         back.setOnAction(e -> menuScene.setCenter(menu));
-        back.setId("MenuButton");
 
         getChildren().addAll(text, wasd, arrows, back);
         setStyle("-fx-background-color: black");
