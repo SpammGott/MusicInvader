@@ -58,7 +58,7 @@ public class MP3Player {
      * Plays current song
      */
     public void play(){
-        if(hasSong && !audioPlayer.isPlaying()) {
+        if(hasSong) {
             audioPlayer.play();
             playing.firePropertyChange("Song is now playing", !audioPlayer.isPlaying(), audioPlayer.isPlaying());
         }
@@ -204,4 +204,6 @@ public class MP3Player {
      * @return playing status
      */
     public boolean isPlaying(){return audioPlayer.isPlaying();}
+
+    public void setActPlaylist(Playlist actPlaylist){this.actPlaylist = actPlaylist;}
 }

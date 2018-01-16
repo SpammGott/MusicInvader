@@ -1,6 +1,8 @@
 package Game.Menu;
 
 import Game.GameUtils.GameScene;
+import MP3Player.MP3Player;
+import MP3Player.PlaylistManager;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -13,7 +15,7 @@ import javafx.stage.Stage;
 
 public class Menu extends VBox {
 
-    public Menu(Stage window, BorderPane menuPane, MenuScene menuScene, GameScene gameScene){
+    public Menu(Stage window, BorderPane menuPane, MenuScene menuScene, GameScene gameScene, MP3Player player, PlaylistManager playlistManager){
 
         Text header = new Text("MUSIC INVADER");
         header.setId("Header");
@@ -23,6 +25,9 @@ public class Menu extends VBox {
         start.setOnAction(e -> {
             window.setScene(gameScene);
             window.setFullScreen(true);
+            player.stop();
+            player.setActPlaylist(playlistManager.getPlaylist("defaultPlaylist"));
+            player.play();
             gameScene.start();
         });
 
