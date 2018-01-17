@@ -23,8 +23,7 @@ public class Controller extends Application{
         MP3Player player;
 
         try {
-            PlaylistManager playlistManager = new PlaylistManager("C:/Users/Josh/IdeaProjects/MusicInvaderGIT/res/Songs");
-            //PlaylistManager playlistManager = new PlaylistManager("D:/Benutzer/Jens/IdeaProjects/MusicInvader/res/Songs");
+            PlaylistManager playlistManager = new PlaylistManager(System.getProperty("user.dir") + "/res/Songs");
             player = new MP3Player(playlistManager.getPlaylist("titlesong"));
             player.play();
 

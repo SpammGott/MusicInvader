@@ -26,13 +26,13 @@ public class Menu extends VBox {
             window.setScene(gameScene);
             window.setFullScreen(true);
             player.stop();
-            player.setActPlaylist(playlistManager.getPlaylist("defaultPlaylist"));
-            player.play();
+            player.changePlaylist(playlistManager.getPlaylist("defaultPlaylist"));
+            player.play(0);
             gameScene.start();
         });
 
         Button songs = new Button("SONGS");
-        songs.setOnAction(e -> menuPane.setCenter(new SongsPane(menuPane, this)));
+        songs.setOnAction(e -> menuPane.setCenter(new SongsPane(menuPane, this, playlistManager.getAllSongs("defaultPlaylist"), player, playlistManager)));
 
         Button leaderboards = new Button("LEADERBOARDS");
         leaderboards.setOnAction(e -> menuPane.setCenter(new LeaderboardsPane(menuPane, this)));

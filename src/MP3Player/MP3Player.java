@@ -70,6 +70,8 @@ public class MP3Player {
      */
     public void play(int index){
         stop();
+        System.out.println(index);
+        System.out.println(actPlaylist.getTrack(index).getName());
         Track oldTrack = actPlaylist.getTrack();
         Track newTrack = actPlaylist.getTrack(index);
         if(newTrack != null)
@@ -204,6 +206,4 @@ public class MP3Player {
      * @return playing status
      */
     public boolean isPlaying(){return audioPlayer.isPlaying();}
-
-    public void setActPlaylist(Playlist actPlaylist){this.actPlaylist = actPlaylist;}
 }
