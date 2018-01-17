@@ -11,7 +11,6 @@ import javafx.scene.image.ImageView;
 public class Enemy extends Ship {
 
     private Spawnpoint homeSpawnPoint;
-    private ProjectileHandler projectileHandler;
 
     public Enemy(Spawnpoint homeSpawnPoint, ProjectileHandler projectileHandler, Image image){
         this.homeSpawnPoint = homeSpawnPoint;

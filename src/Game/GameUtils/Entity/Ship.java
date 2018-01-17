@@ -14,5 +14,9 @@ public abstract class Ship extends Entity{
         body.setY(Helper.getAbsoluteHeight(pos.getY()));
     }
 
+    protected boolean isHit(Hitbox hitbox2){
+        return hitbox.isHit(hitbox2);
+    }
+
     //public abstract boolean isHit(Hitbox enemyHitbox);
 }

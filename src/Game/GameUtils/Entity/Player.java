@@ -11,7 +11,6 @@ import javafx.scene.input.KeyEvent;
 public class Player extends Ship {
 
     //needed to manage movement
-    private ProjectileHandler projectileHandler;
     private BooleanProperty up = new SimpleBooleanProperty();
     private BooleanProperty down = new SimpleBooleanProperty();
     private BooleanProperty left = new SimpleBooleanProperty();

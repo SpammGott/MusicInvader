@@ -1,5 +1,6 @@
 package Game.GameUtils.Entity;
 
+import Game.GameUtils.Utils.ProjectileHandler;
 import Game.GameUtils.Utils.Vector2D;
 import javafx.scene.image.ImageView;
 
@@ -14,6 +15,7 @@ public abstract class Entity {
     protected double width;
     protected ImageView body;
     protected Hitbox hitbox;
+    protected ProjectileHandler projectileHandler;
 
     public abstract void move();
 

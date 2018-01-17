@@ -115,7 +115,55 @@ public class Hitbox{
             dreieck(pos, direction);
     }
 
+    public boolean isHit(Hitbox box2) {
+        boolean isHit = true;
+        Vector2D box2point[] = box2.getPoints();
+        Vector2D box2axis[] = box2.getAxis();
+        if(!isOverlappingWithAxis(axis, point, box2point))
+            isHit = false;
+        if(!isOverlappingWithAxis(box2axis, point, box2point))
+            isHit = false;
+        return isHit;
+    }
+
+    private boolean isOverlappingWithAxis(Vector2D axis[], Vector2D box1points[], Vector2D box2points[]){
+        boolean isOverlapping = true;
+        for (Vector2D actAxis : axis) {
+            //suche min max Projektionen für Box1
+            double temp[] = getMinMaxProjection(box1points, actAxis);
+            double maxProjectionBox1 = temp[0];
+            double minProjectionBox1 = temp[1];
+
+            //suche min max Projektionen für Bpx2
+            temp = getMinMaxProjection(box2points, actAxis);
+            double maxProjectionBox2 = temp[0];
+            double minProjectionBox2 = temp[1];
+
+            if(maxProjectionBox1 < minProjectionBox2 || minProjectionBox1 > maxProjectionBox2)
+                isOverlapping = false;
+        }
+        return isOverlapping;
+    }
+
+    private double[] getMinMaxProjection(Vector2D points[], Vector2D axis){
+        double ret[] = new double[2];
+        ret[0] = MathUtils.skalarprodukt(points[0], axis);
+        ret[1] = ret[0];
+        for(int i = 1; i < points.length; i++){
+            double actProjection = MathUtils.skalarprodukt(points[i], axis);
+            if(actProjection < ret[1])
+                ret[1] = actProjection;
+            else if(actProjection > ret[0])
+                ret[0] = actProjection;
+        }
+        return ret;
+    }
+
     public void ausgabeHitbox(){
         System.out.println("Punkt1: " + point[0].toString());
     }
+
+    public Vector2D[] getPoints(){return point;}
+
+    public Vector2D[] getAxis() {return axis;}
 }

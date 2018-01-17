@@ -1,5 +1,6 @@
 package Game.GameUtils.Utils;
 
+import Game.GameUtils.Entity.Player;
 import Game.GameUtils.Entity.Projectile;
 import javafx.scene.layout.Pane;
 import java.util.ArrayList;
@@ -50,4 +51,5 @@ public class ProjectileHandler {
             }
         }
     }
+
 }
