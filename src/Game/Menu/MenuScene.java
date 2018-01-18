@@ -16,7 +16,7 @@ public class MenuScene extends Scene {
         super(menuPane, Helper.getHeight(), Helper.getWidth());
 
         Pane root = new Pane();
-        GameScene gameScene = new GameScene(root, window, this);
+        GameScene gameScene = new GameScene(root, window, this, player, playlistManager);
 
         setCursor(Cursor.NONE);
         menuPane.setCenter(new Menu(window, menuPane, this, gameScene, player, playlistManager));
