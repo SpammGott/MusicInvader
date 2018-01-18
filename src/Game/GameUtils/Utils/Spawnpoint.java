@@ -1,4 +1,4 @@
-package Game.GameUtils.Entity;
+package Game.GameUtils.Utils;
 
 import Game.GameUtils.Utils.MathUtils;
 import Game.GameUtils.Utils.Vector2D;

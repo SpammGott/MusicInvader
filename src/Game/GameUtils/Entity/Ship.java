@@ -1,18 +1,13 @@
 package Game.GameUtils.Entity;
 
 import Game.GameUtils.Utils.Helper;
+import Game.GameUtils.Utils.Hitbox;
+import javafx.scene.image.Image;
 
 public abstract class Ship extends Entity{
 
-    public abstract void fireProjectile();
+    public abstract Projectile fireProjectile(Image image);
 
-    protected void init(){
-        body.setPreserveRatio(true);
-        body.setFitWidth(Helper.getAbsoluteWidth(width));
-        body.setFitHeight(Helper.getAbsoluteHeight(height));
-        body.setX(Helper.getAbsoluteWidth(pos.getX()));
-        body.setY(Helper.getAbsoluteHeight(pos.getY()));
-    }
 
     protected boolean isHit(Hitbox hitbox2){
         return hitbox.isHit(hitbox2);

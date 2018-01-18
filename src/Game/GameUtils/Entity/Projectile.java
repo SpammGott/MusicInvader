@@ -1,8 +1,11 @@
 package Game.GameUtils.Entity;
 
 import Game.GameUtils.Utils.Helper;
+import Game.GameUtils.Utils.Hitbox;
 import Game.GameUtils.Utils.MathUtils;
 import Game.GameUtils.Utils.Vector2D;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 import javafx.scene.shape.Rectangle;
@@ -11,32 +14,37 @@ import javafx.scene.shape.Rectangle;
 public class Projectile extends Entity {
 
     private boolean isFromPlayer;
-    private Rectangle body = new Rectangle(4,8);
     private double rotate;
 
-    public Projectile(Vector2D pos, Vector2D direction){
+    public Projectile(Vector2D pos, Vector2D direction, Image image){
         this.pos = pos.clone();
         this.direction = MathUtils.getEinheitsvektor(direction);
         this.isFromPlayer = false;
+        height = 0.01;
+        width = 0.005;
+        body = new ImageView(image);
         body.setX(Helper.getAbsoluteWidth(pos.getX()));
         body.setY(Helper.getAbsoluteWidth(pos.getY()));
-        body.setFill(Color.WHITE);
         rotate = MathUtils.angleForProjectils(direction);
         body.setRotate(direction.getX() >= 0 ? -rotate : rotate);
         defSpeed = 0.1;
         speed = defSpeed;
+        init();
         hitbox = new Hitbox(pos, 4, height, width, direction);
     }
 
-    public Projectile(Vector2D pos, Vector2D direction, boolean isFromPlayer){
+    public Projectile(Vector2D pos, Vector2D direction, Image image, boolean isFromPlayer){
         this.pos = pos.clone();
         this.direction = MathUtils.getEinheitsvektor(direction);
         this.isFromPlayer = isFromPlayer;
+        height = 0.01;
+        width = 0.005;
+        body = new ImageView(image);
         body.setX(Helper.getAbsoluteWidth(pos.getX()));
         body.setY(Helper.getAbsoluteHeight(pos.getY()));
-        body.setFill(Color.WHITE);
         defSpeed = 0.2;
         speed = defSpeed;
+        init();
         hitbox = new Hitbox(pos, 4, height, width, direction);
     }
 
@@ -47,10 +55,8 @@ public class Projectile extends Entity {
         hitbox.update(tempDirection);
         body.setX(Helper.getAbsoluteWidth(pos.getX()));
         body.setY(Helper.getAbsoluteHeight(pos.getY()));
-        body.setFill(Color.WHITE);
+        center.add(tempDirection);
     }
 
     public boolean isFromPlayer(){return this.isFromPlayer;}
-
-    public Rectangle getBody(){return this.body;}
 }

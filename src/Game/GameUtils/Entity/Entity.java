@@ -1,6 +1,7 @@
 package Game.GameUtils.Entity;
 
-import Game.GameUtils.Utils.ProjectileHandler;
+import Game.GameUtils.Utils.Helper;
+import Game.GameUtils.Utils.Hitbox;
 import Game.GameUtils.Utils.Vector2D;
 import javafx.scene.image.ImageView;
 
@@ -11,15 +12,24 @@ public abstract class Entity {
     protected double speed;
     protected Vector2D pos;
     protected Vector2D direction;
+    protected Vector2D center;
     protected double height;
     protected double width;
     protected ImageView body;
     protected Hitbox hitbox;
-    protected ProjectileHandler projectileHandler;
 
     public abstract void move();
 
     //public abstract void changeSpeed(double x);
+
+    protected void init(){
+        body.setPreserveRatio(true);
+        body.setFitWidth(Helper.getAbsoluteWidth(width));
+        body.setFitHeight(Helper.getAbsoluteHeight(height));
+        body.setX(Helper.getAbsoluteWidth(pos.getX()));
+        body.setY(Helper.getAbsoluteHeight(pos.getY()));
+        center = new Vector2D(pos.getX() + width/2, pos.getY() + height/2);
+    }
 
 
     public double getDefSpeed() {return defSpeed;}
@@ -39,4 +49,10 @@ public abstract class Entity {
     public double getWidth() {return width;}
 
     //public void setWidth(double width) {this.width = width;}
+
+    public ImageView getBody() {return body;}
+
+    //public void setBody(ImageView body) {this.body = body;}
+
+    public Hitbox getHitbox() {return hitbox;}
 }

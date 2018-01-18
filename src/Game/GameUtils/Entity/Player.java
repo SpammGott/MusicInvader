@@ -16,8 +16,7 @@ public class Player extends Ship {
     private BooleanProperty left = new SimpleBooleanProperty();
     private BooleanProperty right = new SimpleBooleanProperty();
 
-    public Player(ProjectileHandler projectileHandler, Image image){
-        this.projectileHandler = projectileHandler;
+    public Player(Image image){
         height = 0.7;
         width = 0.7;
         body = new ImageView(image);
@@ -57,6 +56,7 @@ public class Player extends Ship {
             direction.setXAdd(speed);
         }
         hitbox.update(direction);
+        center.add(direction);
     }
 
     public void changeMovement(KeyEvent keyEvent){
@@ -90,9 +90,9 @@ public class Player extends Ship {
     }
 
     @Override
-    public void fireProjectile() {
-        Projectile temp = new Projectile(new Vector2D(pos.getX()+0.25, pos.getY()), new Vector2D(0,-1), true);
-        projectileHandler.addProjectile(temp);
+    public Projectile fireProjectile(Image image) {
+        Projectile temp = new Projectile(center, new Vector2D(0,-1), image, true);
+       return temp;
     }
 
     public ImageView getBody(){return this.body;}

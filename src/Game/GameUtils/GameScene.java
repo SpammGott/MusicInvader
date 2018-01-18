@@ -1,7 +1,8 @@
 package Game.GameUtils;
 
+import Game.GameUtils.Entity.EntityHandler;
 import Game.GameUtils.Entity.Player;
-import Game.GameUtils.Entity.Spawnpoint;
+import Game.GameUtils.Utils.Spawnpoint;
 import Game.GameUtils.Utils.*;
 import Game.Menu.MenuScene;
 import MP3Player.MP3Player;
@@ -25,9 +26,7 @@ public class GameScene extends Scene {
     private MP3Player mp3Player;
     private PlaylistManager playlistManager;
 
-    private Player player;
-    private ProjectileHandler projectileHandler;
-    private EnemyHandler enemyHandler;
+    private EntityHandler entityHandler;
     private Spawnpoint spawnpoint[] = {new Spawnpoint(new Vector2D(-0.75, 7), new Vector2D(1, 0), new Vector2D(1, -0.05)), new Spawnpoint(new Vector2D(500, 500), new Vector2D(-1, 0))};
 
     private Pane root;
@@ -40,6 +39,7 @@ public class GameScene extends Scene {
 
     private Image playerImage;
     private Image enemyImage;
+    private Image projectileImage;
 
     public GameScene(Pane root, Stage window, MenuScene menuScene, MP3Player player, PlaylistManager playlistManager){
         super(root, Helper.getHeight(), Helper.getWidth());
@@ -54,54 +54,64 @@ public class GameScene extends Scene {
         this.menuScene = menuScene;
         playerImage = loadImage("Assets/MirrorFighter_no1.png");
         enemyImage = loadImage("Assets/Triwing_no1.png");
+        projectileImage = loadImage("Assets/ProjektilFüller.png");
     }
 
     public void start(){
         //PC = PlayerCharacter
-        projectileHandler = new ProjectileHandler(game);
-        player = new Player(projectileHandler, playerImage);
-        enemyHandler = new EnemyHandler(game, projectileHandler, player);
-        enemyHandler.spawnEnemy(spawnpoint[0], enemyImage);
+        entityHandler = new EntityHandler(game, playerImage, enemyImage, projectileImage);
+        entityHandler.spawnEnemy(spawnpoint[0]);
 
         //actual movement
         AnimationTimer gameLoop = new AnimationTimer() {
             int frameToShoot = 0;
             @Override
             public void handle(long now) {
-                player.move();
+                entityHandler.updateEntitys();
                 if(++frameToShoot == 20){
-                    player.fireProjectile();
-                    enemyHandler.fireAll();
+                    entityHandler.firePlayer();
+                    entityHandler.fireAllEnemys();
                     frameToShoot = 0;
                 }
-                enemyHandler.moveAll();
-                projectileHandler.moveAllProjectiles();
             }
         };
         gameLoop.start();
 
         setOnKeyPressed(keyEvent -> {
             if(keyEvent.getCode() == KeyCode.ESCAPE){
+                gameLoop.stop();
                 mp3Player.stop();
                 mp3Player.changePlaylist(playlistManager.getPlaylist("titlesong"));
                 mp3Player.play(0);
                 escClicked(window, menuScene);
             } else {
-                player.changeMovement(keyEvent);
+                entityHandler.getPlayer().changeMovement(keyEvent);
             }
         });
 
         setOnKeyReleased(keyEvent ->{
-            player.changeMovement(keyEvent);
+            entityHandler.getPlayer().changeMovement(keyEvent);
         });
 
         this.setCursor(Cursor.NONE);
         getStylesheets().add("CSS.css");
-        game.getChildren().add(player.getBody());
         game.setStyle("-fx-background-color: black");
 
         mainPane = new HBox(left, game, gameInfos);
         root.getChildren().add(mainPane);
+    }
+
+    private void escClicked(Stage window, MenuScene menuScene){
+        this.setCursor(Cursor.DEFAULT);
+        window.setScene(menuScene);
+        window.setFullScreen(true);
+        reset();
+    }
+
+    private void reset(){
+        entityHandler.removeAllEnemys();
+        entityHandler.removeAllProjectiles();
+        entityHandler.getPlayer().setPos(new Vector2D((getWidth() / 2) - (entityHandler.getPlayer().getWidth() / 2), (getHeight())));
     }
 
     private Image loadImage(String name){
@@ -112,18 +122,5 @@ public class GameScene extends Scene {
             e.printStackTrace();
         }
         return SwingFXUtils.toFXImage(image, null);
-    }
-
-    private void escClicked(Stage window, MenuScene menuScene){
-        reset();
-        this.setCursor(Cursor.DEFAULT);
-        window.setScene(menuScene);
-        window.setFullScreen(true);
-    }
-
-    private void reset(){
-        projectileHandler.removeAll();
-        enemyHandler.removeAll();
-        player.setPos(new Vector2D((getWidth() / 2) - (player.getWidth() / 2), (getHeight())));
     }
 }

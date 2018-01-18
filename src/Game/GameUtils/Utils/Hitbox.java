@@ -1,7 +1,4 @@
-package Game.GameUtils.Entity;
-
-import Game.GameUtils.Utils.MathUtils;
-import Game.GameUtils.Utils.Vector2D;
+package Game.GameUtils.Utils;
 
 public class Hitbox{
 
