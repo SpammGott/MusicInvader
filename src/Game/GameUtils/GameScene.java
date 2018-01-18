@@ -4,6 +4,8 @@ import Game.GameUtils.Entity.Player;
 import Game.GameUtils.Entity.Spawnpoint;
 import Game.GameUtils.Utils.*;
 import Game.Menu.MenuScene;
+import MP3Player.MP3Player;
+import MP3Player.PlaylistManager;
 import javafx.animation.AnimationTimer;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Cursor;
@@ -20,6 +22,8 @@ import java.io.InputStream;
 
 
 public class GameScene extends Scene {
+    private MP3Player mp3Player;
+    private PlaylistManager playlistManager;
 
     private Player player;
     private ProjectileHandler projectileHandler;
@@ -37,9 +41,11 @@ public class GameScene extends Scene {
     private Image playerImage;
     private Image enemyImage;
 
-    public GameScene(Pane root, Stage window, MenuScene menuScene){
+    public GameScene(Pane root, Stage window, MenuScene menuScene, MP3Player player, PlaylistManager playlistManager){
         super(root, Helper.getHeight(), Helper.getWidth());
         this.root = root;
+        this.mp3Player = player;
+        this.playlistManager = playlistManager;
         game = new Pane();
         game.setPrefSize(Helper.getGameWidth(), Helper.getGameHeight());
         left = new Pane();
@@ -76,6 +82,9 @@ public class GameScene extends Scene {
 
         setOnKeyPressed(keyEvent -> {
             if(keyEvent.getCode() == KeyCode.ESCAPE){
+                mp3Player.stop();
+                mp3Player.changePlaylist(playlistManager.getPlaylist("titlesong"));
+                mp3Player.play(0);
                 escClicked(window, menuScene);
             } else {
                 player.changeMovement(keyEvent);
