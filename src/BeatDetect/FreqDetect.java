@@ -21,8 +21,8 @@ public class FreqDetect {
 
 	public void start(){
 		MinimInput mi = new MinimInput();
-		mi.sketchPath("D:\\Benutzer\\Jens\\IdeaProjects\\res\\01-02- Initiation [Explicit].mp3");
-		mi.createInput("D:\\Benutzer\\Jens\\IdeaProjects\\res\\01-02- Initiation [Explicit].mp3");
+		mi.sketchPath("C:\\Users\\Josh\\IdeaProjects\\MusicInvaderGIT\\res\\Songs\\BoxCat_Games_-_03_-_Battle_Special.mp3");
+		mi.createInput("C:\\Users\\Josh\\IdeaProjects\\MusicInvaderGIT\\res\\Songs\\BoxCat_Games_-_03_-_Battle_Special.mp3");
 		run();
 	}
 	
@@ -43,7 +43,7 @@ public class FreqDetect {
 		public void run() {
 	        Minim minim = new Minim(new MinimHelper());
 
-	        song = minim.loadFile("D:\\Benutzer\\Jens\\IdeaProjects\\res\\01-02- Initiation [Explicit].mp3", 1024);
+	        song = minim.loadFile("C:\\Users\\Josh\\IdeaProjects\\MusicInvaderGIT\\res\\Songs\\BoxCat_Games_-_03_-_Battle_Special.mp3");
 			song.play();
 	        AudioInput input = minim.getLineIn(Minim.STEREO, 1024); //Tried differen values here
 	        BeatDetect beatDetect = new BeatDetect(1024, 44100.0f);

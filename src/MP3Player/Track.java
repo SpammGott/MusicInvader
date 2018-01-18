@@ -29,7 +29,7 @@ public class Track {
         }
 
         if(hasWorked) {
-            length = mp3file.getLengthInSeconds();
+            length = mp3file.getLengthInMilliseconds();
             String seperator = String.valueOf(File.separatorChar);
             if(seperator.equals("\\"))
                     seperator = seperator + seperator;

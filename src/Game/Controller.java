@@ -10,7 +10,6 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-
 public class Controller extends Application{
 
     public static void main(String[] args){
@@ -25,7 +24,7 @@ public class Controller extends Application{
         try {
             PlaylistManager playlistManager = new PlaylistManager(System.getProperty("user.dir") + "/res/Songs");
             player = new MP3Player(playlistManager.getPlaylist("titlesong"));
-            player.play();
+            player.play(0);
 
             BorderPane menuPane = new BorderPane();
 

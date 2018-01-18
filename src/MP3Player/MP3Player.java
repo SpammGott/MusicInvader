@@ -4,6 +4,10 @@ import de.hsrm.mi.eibo.simpleplayer.SimpleAudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleMinim;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Handles all the actions directly related with the song
@@ -78,6 +82,15 @@ public class MP3Player {
             audioPlayer = minim.loadMP3File(newTrack.getFilename());
         play();
         changes.firePropertyChange(oldTrack.getFilename(), oldTrack, newTrack);
+        Runnable timer = new Runnable() {
+            @Override
+            public void run() {
+                skip();
+                System.out.println("skipped");
+            }
+        };
+        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+        executor.scheduleAtFixedRate(timer, 0, getActualTrack().getLength(), TimeUnit.MILLISECONDS);
     }
 
     /**
