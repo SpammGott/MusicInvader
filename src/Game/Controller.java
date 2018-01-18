@@ -19,26 +19,22 @@ public class Controller extends Application{
     @Override
     public void start(Stage window){
 
-        MP3Player player;
+         MP3Player player;
+         PlaylistManager playlistManager = new PlaylistManager(System.getProperty("user.dir") + "/res/Songs");
+         player = new MP3Player(playlistManager.getPlaylist("titlesong"));
+         player.play(0);
 
-        try {
-            PlaylistManager playlistManager = new PlaylistManager(System.getProperty("user.dir") + "/res/Songs");
-            player = new MP3Player(playlistManager.getPlaylist("titlesong"));
-            player.play(0);
+        BorderPane menuPane = new BorderPane();
 
-            BorderPane menuPane = new BorderPane();
+        MenuScene menuScene = new MenuScene(window, menuPane, player, playlistManager);
+        menuScene.setCursor(Cursor.NONE);
 
-            MenuScene menuScene = new MenuScene(window, menuPane, player, playlistManager);
-            menuScene.setCursor(Cursor.NONE);
-
-            window.setScene(menuScene);
-        }catch (Exception e){
-            System.out.println("Probably need to update music path in Controller:24");
-        }
+        window.setScene(menuScene);
 
         window.setTitle("Music Invader");
         window.setFullScreen(true);
         window.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         window.show();
+
     }
 }

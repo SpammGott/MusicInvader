@@ -1,4 +1,4 @@
-package BeatDetect;
+package BeatDetector;
 
 import ddf.minim.*;
 import ddf.minim.analysis.*;
@@ -53,7 +53,7 @@ public class FreqDetec extends Frame {
         // which is essentially no damping. If you try to set the sensitivity to a negative value,
         // an error will be reported and it will be set to 10 instead.
         // note that what sensitivity you choose will depend a lot on what kind of audio
-        // you are analyzing. in this example, we use the same BeatDetect object for
+        // you are analyzing. in this example, we use the same BeatDetector object for
         // detecting kick, snare, and hat, but that this sensitivity is not especially great
         // for detecting snare reliably (though it's also possible that the range of frequencies
         // used by the isSnare method are not appropriate for the song).

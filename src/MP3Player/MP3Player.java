@@ -1,5 +1,6 @@
 package MP3Player;
 
+import ddf.minim.analysis.BeatDetect;
 import de.hsrm.mi.eibo.simpleplayer.SimpleAudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleMinim;
 import java.beans.PropertyChangeListener;
@@ -64,6 +65,12 @@ public class MP3Player {
     public void play(){
         if(hasSong) {
             audioPlayer.play();
+            System.out.println(actPlaylist.getName());
+            if (!actPlaylist.getName().equals("titlesong")) {
+                new Thread(() ->{
+                    BeatDetector.FreqDetect beater = new BeatDetector.FreqDetect(System.getProperty("user.dir") + "/res/Songs/" + getActualTrack().getName() + ".mp3");
+                }).start();
+            }
             playing.firePropertyChange("Song is now playing", !audioPlayer.isPlaying(), audioPlayer.isPlaying());
         }
     }
