@@ -6,6 +6,7 @@ import java.io.InputStream;
 import ddf.minim.*;
 import ddf.minim.analysis.*;
 import ddf.minim.AudioBuffer;
+import de.hsrm.mi.eibo.simpleplayer.MinimHelper;
 
 public class FreqDetect {
 
@@ -40,9 +41,9 @@ public class FreqDetect {
 		}
 	}
 		public void run() {
-	        Minim minim = new Minim(new MinimInput());
+	        Minim minim = new Minim(new MinimHelper());
 
-	        song = minim.loadFile("", 1024);
+	        song = minim.loadFile("D:\\Benutzer\\Jens\\IdeaProjects\\res\\01-02- Initiation [Explicit].mp3", 1024);
 			song.play();
 	        AudioInput input = minim.getLineIn(Minim.STEREO, 1024); //Tried differen values here
 	        BeatDetect beatDetect = new BeatDetect(1024, 44100.0f);
