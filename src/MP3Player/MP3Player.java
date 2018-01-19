@@ -73,16 +73,6 @@ public class MP3Player {
             audioPlayer.play();
             System.out.println(actPlaylist.getName());
             playing.firePropertyChange("Song is now playing", !audioPlayer.isPlaying(), audioPlayer.isPlaying());
-            if (!actPlaylist.getName().equals("titlesong")) {
-                Task task = new Task<Void>() {
-                    @Override
-                    protected Void call() throws Exception {
-                        BeatDetector.FreqDetect beater = new BeatDetector.FreqDetect(System.getProperty("user.dir") + "/res/Songs/" + getActualTrack().getName() + ".mp3", gameScene);
-                        return null;
-                    }
-                };
-                new Thread(task).start();
-            }
         }
     }
 
@@ -259,5 +249,9 @@ public class MP3Player {
 
     public void setGameScene(GameScene gameScene) {
         this.gameScene = gameScene;
+    }
+
+    public GameScene getGameScene() {
+        return gameScene;
     }
 }

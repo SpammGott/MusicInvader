@@ -8,6 +8,7 @@ import Game.Menu.MenuScene;
 import MP3Player.MP3Player;
 import MP3Player.PlaylistManager;
 import javafx.animation.AnimationTimer;
+import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
@@ -79,6 +80,20 @@ public class GameScene extends Scene {
             }
         };
         gameLoop.start();
+
+        BeatDetector.FreqDetect beater = new BeatDetector.FreqDetect(System.getProperty("user.dir") + "/res/Songs/" + mp3Player.getActualTrack().getName() + ".mp3", mp3Player.getGameScene());
+
+        Task task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                System.out.println("Task started");
+                beater.run();
+                return null;
+            }
+        };
+        Thread beatDet = new Thread(task);
+        beatDet.setDaemon(true);
+        beatDet.start();
 
         setOnKeyPressed(keyEvent -> {
             if(keyEvent.getCode() == KeyCode.ESCAPE){
