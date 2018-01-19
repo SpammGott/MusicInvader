@@ -28,7 +28,9 @@ public class GameScene extends Scene {
     private PlaylistManager playlistManager;
 
     private EntityHandler entityHandler;
-    private Spawnpoint spawnpoint[] = {new Spawnpoint(new Vector2D(-0.75, 7), new Vector2D(1, 0), new Vector2D(1, -0.05)), new Spawnpoint(new Vector2D(500, 500), new Vector2D(-1, 0))};
+    //first spawn is top left, to the right slightly downwards
+    //second spawn as first just inverted
+    private Spawnpoint spawnpoint[] = {new Spawnpoint(new Vector2D(-0.75, 1), new Vector2D(1, 0.1)), new Spawnpoint(new Vector2D(17, 1), new Vector2D(-1, 0.1))};
 
     private Pane root;
     private HBox mainPane;
@@ -61,7 +63,7 @@ public class GameScene extends Scene {
     public void start(){
         //PC = PlayerCharacter
         entityHandler = new EntityHandler(game, playerImage, enemyImage, projectileImage);
-        entityHandler.spawnEnemy(spawnpoint[0]);
+        //entityHandler.spawnEnemy(spawnpoint[0]);
 
         //actual movement
         AnimationTimer gameLoop = new AnimationTimer() {
@@ -69,10 +71,9 @@ public class GameScene extends Scene {
             @Override
             public void handle(long now) {
                 entityHandler.updateEntitys();
-                if(frameToShoot == 10)
+                if(frameToShoot % 10 == 0)
                     entityHandler.firePlayer();
-                if(frameToShoot == 20){
-                    entityHandler.firePlayer();
+                if(frameToShoot == 35){
                     entityHandler.fireAllEnemys();
                     frameToShoot = 0;
                 }
@@ -143,6 +144,6 @@ public class GameScene extends Scene {
     }
 
     public void spawnEnemy(){
-        entityHandler.spawnEnemy(spawnpoint[0]);
+        entityHandler.spawnEnemy(spawnpoint[(int)(Math.random() * spawnpoint.length)]);
     }
 }

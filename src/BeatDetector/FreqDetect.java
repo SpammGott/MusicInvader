@@ -21,7 +21,7 @@ public class FreqDetect {
 		minim.loadFile(path, 1024);
 		AudioInput input = minim.getLineIn(Minim.STEREO, 1024); //Tried different values here
 		BeatDetect beatDetect = new BeatDetect(1024, 44100.0f);
-		beatDetect.setSensitivity(800); //10 = defaultValue
+		beatDetect.setSensitivity(1000); //10 = defaultValue
 		while (true) {
 			beatDetect.detect(input.mix);
 
@@ -38,7 +38,11 @@ public class FreqDetect {
 					@Override
 					public void run() {
 						gameScene.spawnEnemy();
-						System.out.println("Spawned");
+						try{
+						    Thread.sleep(10);
+                        }catch (Exception e){
+						    System.out.println("Thread sleeper in FreqDetect run() fcked up");
+                        }
 					}
 				});
 

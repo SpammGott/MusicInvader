@@ -202,8 +202,12 @@ public class MP3Player {
      * @param newPlaylist playlist that will be set to active
      */
     public void changePlaylist(Playlist newPlaylist){
-        if(newPlaylist != null)
+        if(newPlaylist != null) {
+            Track oldTrack = getActualTrack();
+            Track newTrack = newPlaylist.getTrack(0);
+            changes.firePropertyChange(oldTrack.getFilename(), oldTrack, newTrack);
             actPlaylist = newPlaylist;
+        }
     }
 
     /**
@@ -217,6 +221,7 @@ public class MP3Player {
      * @param propChngListn a property Change Listener
      */
     public void addPropertyChangeListenerSongInfos(PropertyChangeListener propChngListn){
+        System.out.println("CHANGE FIRED!");
         changes.addPropertyChangeListener(propChngListn);
     }
     /**

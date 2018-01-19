@@ -1,6 +1,7 @@
 package Game.GameUtils;
 
 import MP3Player.MP3Player;
+import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -22,9 +23,14 @@ public class LeftGamePane extends Pane {
         Label actSong = new Label(player.getActualTrack().getName());
         Label actNextSong = new Label(player.getActPlaylist().getNextTrackWithoutChangingIndex().getName());
         player.addPropertyChangeListenerSongInfos(e -> {
-            System.out.println("CHANGE FIRED AND RECEIVED!");
-            actSong.setText(player.getActualTrack().getName());
-            actNextSong.setText(player.getActPlaylist().getNextTrackWithoutChangingIndex().getName());
+            System.out.println("CHANGE RECEIVED!");
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    actSong.setText(player.getActualTrack().getName());
+                    actNextSong.setText(player.getActPlaylist().getNextTrackWithoutChangingIndex().getName());
+                }
+            });
         });
 
         Label currentSong = new Label("CURRENT SONG: ");
