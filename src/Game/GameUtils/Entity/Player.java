@@ -29,9 +29,6 @@ public class Player extends Ship {
         hitbox = new Hitbox(pos, 4, height, width);
     }
 
-
-
-
     @Override
     public void move() {
         direction = new Vector2D();
@@ -92,7 +89,7 @@ public class Player extends Ship {
     @Override
     public Projectile fireProjectile(Image image) {
         Projectile temp = new Projectile(center, new Vector2D(0,-1), image, true);
-       return temp;
+        return temp;
     }
 
     public ImageView getBody(){return this.body;}
