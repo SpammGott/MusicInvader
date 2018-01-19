@@ -37,13 +37,15 @@ public class Enemy extends Ship {
     }
 
     @Override
-    public Projectile fireProjectile(Image image) {
-        return new Projectile(center, new Vector2D(0, -1), image);
+    public Projectile[] fireProjectile(Image image) {
+        Projectile temp[] = {new Projectile(center, new Vector2D(0, -1), image)};
+        return temp;
 
     }
 
-    public Projectile fireProjectile(Image image, Vector2D direction){
-        return new Projectile(center, direction, image);
+    public Projectile[] fireProjectile(Image image, Vector2D direction){
+        Projectile temp[] = {new Projectile(center, direction, image)};
+        return temp;
     }
 
     public ImageView getBody(){return this.body;}

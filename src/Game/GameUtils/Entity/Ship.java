@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 
 public abstract class Ship extends Entity{
 
-    public abstract Projectile fireProjectile(Image image);
+    public abstract Projectile[] fireProjectile(Image image);
 
 
     protected boolean isHit(Hitbox hitbox2){

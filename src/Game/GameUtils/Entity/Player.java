@@ -92,8 +92,10 @@ public class Player extends Ship {
     }
 
     @Override
-    public Projectile fireProjectile(Image image) {
-        Projectile temp = new Projectile(center, new Vector2D(0,-1), image, true);
+    public Projectile[] fireProjectile(Image image) {
+        Projectile temp[] = new Projectile[2];
+        temp[0] = new Projectile(new Vector2D((center.getX() - width/4), (center.getY() - width/4)), new Vector2D(0,-1), image, true);
+        temp[1] = new Projectile(new Vector2D((center.getX() + width/4), (center.getY() + width/4)), new Vector2D(0,-1), image, true);
         return temp;
     }
 
