@@ -2,13 +2,17 @@ package Game.GameUtils.Entity;
 
 import Game.GameUtils.Utils.*;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 
 
 public class Player extends Ship {
+
+    private IntegerProperty hp = new SimpleIntegerProperty();
 
     //needed to manage movement
     private BooleanProperty up = new SimpleBooleanProperty();
@@ -17,6 +21,7 @@ public class Player extends Ship {
     private BooleanProperty right = new SimpleBooleanProperty();
 
     public Player(Image image){
+        hp.setValue(3);
         height = 0.7;
         width = 0.7;
         body = new ImageView(image);
@@ -94,4 +99,7 @@ public class Player extends Ship {
 
     public ImageView getBody(){return this.body;}
 
+    public IntegerProperty getHp(){return hp;}
+
+    public void decHp(){hp.setValue(hp.get() - 1);}
 }

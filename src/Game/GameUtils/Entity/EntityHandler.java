@@ -3,6 +3,7 @@ package Game.GameUtils.Entity;
 
 import Game.GameUtils.Utils.Spawnpoint;
 import Game.GameUtils.Utils.Vector2D;
+import javafx.beans.property.IntegerProperty;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
@@ -34,7 +35,8 @@ public class EntityHandler {
         moveAllProjectiles();
         moveAllEnemys();
         if(playerIsHit()) {
-            //System.out.println("getroffen!!!!!!");
+            if(player.getHp().get() > 0)
+                player.decHp();
         }
     }
 
@@ -117,4 +119,6 @@ public class EntityHandler {
         }
     }
     public Player getPlayer(){return player;}
+
+    public IntegerProperty getHp(){return player.getHp();}
 }

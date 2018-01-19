@@ -1,20 +1,30 @@
 package Game.GameUtils;
 
+import Game.GameUtils.Entity.EntityHandler;
 import MP3Player.MP3Player;
 import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class LeftGamePane extends Pane {
 
-    public LeftGamePane(MP3Player player){
+    public LeftGamePane(MP3Player player, EntityHandler entityHandler){
         setStyle("-fx-background-color: #333333");
 
         Label lifePoints = new Label("LIFEPOINTS: ");
         lifePoints.setId("SideText");
-        HBox hp = new HBox(lifePoints);
+        Label actLifePoints = new Label("3");
+        actLifePoints.setId("SideText");
+
+
+        entityHandler.getHp().addListener(e -> actLifePoints.setText(entityHandler.getHp().toString()));
+        HBox hp = new HBox(lifePoints, actLifePoints);
+
 
         Label points = new Label("POINTS: ");
         points.setId("SideText");

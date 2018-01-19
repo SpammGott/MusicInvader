@@ -8,6 +8,7 @@ import Game.Menu.MenuScene;
 import MP3Player.MP3Player;
 import MP3Player.PlaylistManager;
 import javafx.animation.AnimationTimer;
+import javafx.beans.property.IntegerProperty;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Cursor;
@@ -18,6 +19,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,8 +54,6 @@ public class GameScene extends Scene {
         this.playlistManager = playlistManager;
         game = new Pane();
         game.setPrefSize(Helper.getGameWidth(), Helper.getGameHeight());
-        left = new LeftGamePane(player);
-        left.setPrefSize(Helper.getWidth() / 4, Helper.getHeight());
         gameInfos.setStyle("-fx-background-color: #333333");
         gameInfos.setPrefSize(Helper.getWidth() / 4, Helper.getHeight());
         this.window = window;
@@ -60,12 +61,12 @@ public class GameScene extends Scene {
         playerImage = loadImage("Assets/MirrorFighter_no1.png");
         enemyImage = loadImage("Assets/Triwing_no1.png");
         projectileImage = loadImage("Assets/ProjektilFüller.png");
+        entityHandler = new EntityHandler(game, playerImage, enemyImage, projectileImage);
+        left = new LeftGamePane(player, entityHandler);
+        left.setPrefSize(Helper.getWidth() / 4, Helper.getHeight());
     }
 
     public void start(){
-        //PC = PlayerCharacter
-        entityHandler = new EntityHandler(game, playerImage, enemyImage, projectileImage);
-        //entityHandler.spawnEnemy(spawnpoint[0]);
 
         //actual movement
         AnimationTimer gameLoop = new AnimationTimer() {
@@ -97,6 +98,17 @@ public class GameScene extends Scene {
         Thread beatDet = new Thread(task);
         beatDet.setDaemon(true);
         beatDet.start();
+
+        entityHandler.getHp().addListener(e -> {
+            if (entityHandler.getHp().get() == 0){
+                try{
+                    Robot r = new Robot();
+                    r.keyPress(KeyEvent.VK_ESCAPE);
+                }catch (Exception ex){
+                    System.out.println("Robot in GameScene fcked up.");
+                }
+            }
+        });
 
         setOnKeyPressed(keyEvent -> {
             if(keyEvent.getCode() == KeyCode.ESCAPE){
@@ -147,5 +159,9 @@ public class GameScene extends Scene {
 
     public void spawnEnemy(){
         entityHandler.spawnEnemy(spawnpoint[(int)(Math.random() * spawnpoint.length)]);
+    }
+
+    public EntityHandler getEntityHandler() {
+        return entityHandler;
     }
 }
