@@ -48,7 +48,7 @@ public class GameScene extends Scene {
         this.playlistManager = playlistManager;
         game = new Pane();
         game.setPrefSize(Helper.getGameWidth(), Helper.getGameHeight());
-        left = new Pane();
+        left = new LeftGamePane(player);
         left.setPrefSize(Helper.getWidth() / 4, Helper.getHeight());
         this.window = window;
         this.menuScene = menuScene;
@@ -125,5 +125,9 @@ public class GameScene extends Scene {
             e.printStackTrace();
         }
         return SwingFXUtils.toFXImage(image, null);
+    }
+
+    public void spawnEnemy(){
+        entityHandler.spawnEnemy(spawnpoint[0]);
     }
 }

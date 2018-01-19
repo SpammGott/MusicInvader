@@ -1,5 +1,6 @@
 package BeatDetector;
 
+import Game.GameUtils.GameScene;
 import ddf.minim.*;
 import ddf.minim.analysis.*;
 import de.hsrm.mi.eibo.simpleplayer.MinimHelper;
@@ -7,9 +8,11 @@ import de.hsrm.mi.eibo.simpleplayer.MinimHelper;
 public class FreqDetect {
 
 	private String path;
+	private GameScene gameScene;
 
-	public FreqDetect(String path){
+	public FreqDetect(String path, GameScene scene){
 		this.path = path;
+		this.gameScene = scene;
 		run();
 	}
 
@@ -21,17 +24,18 @@ public class FreqDetect {
 		beatDetect.setSensitivity(300); //10 = defaultValue
 		while (true) {
 			beatDetect.detect(input.mix);
-			/*
+
 			if(beatDetect.isHat()) {
-				System.out.println("HAT");
+				//System.out.println("HAT");
 			}
 			if(beatDetect.isSnare()) {
-				System.out.println("SNARE");
+				//System.out.println("SNARE");
 			}
 			if (beatDetect.isKick()) {
-				System.out.println("KICK");
+				gameScene.spawnEnemy();
+				System.out.println("Spawned");
 			}
-			*/
+
 		}
 	}
 }

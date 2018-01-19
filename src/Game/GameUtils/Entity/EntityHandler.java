@@ -33,8 +33,9 @@ public class EntityHandler {
         player.move();
         moveAllProjectiles();
         moveAllEnemys();
-        if(playerIsHit())
-            System.out.println("getroffen!!!!!!");
+        if(playerIsHit()) {
+            //System.out.println("getroffen!!!!!!");
+        }
     }
 
     public void firePlayer(){
