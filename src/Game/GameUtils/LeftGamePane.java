@@ -18,7 +18,6 @@ public class LeftGamePane extends Pane {
         Label actLifePoints = new Label("3");
         actLifePoints.setId("SideText");
 
-        System.out.println(entityHandler.getHp().toString());
         entityHandler.getHp().addListener(e -> actLifePoints.setText(String.valueOf(entityHandler.getHp().get())));
         HBox hp = new HBox(lifePoints, actLifePoints);
 
@@ -29,7 +28,6 @@ public class LeftGamePane extends Pane {
         Label actSong = new Label(player.getActualTrack().getName());
         Label actNextSong = new Label(player.getActPlaylist().getNextTrackWithoutChangingIndex().getName());
         player.addPropertyChangeListenerSongInfos(e -> {
-            System.out.println("CHANGE RECEIVED!");
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {

@@ -8,6 +8,7 @@ import Game.Menu.MenuScene;
 import MP3Player.MP3Player;
 import MP3Player.PlaylistManager;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
@@ -101,12 +102,23 @@ public class GameScene extends Scene {
 
         entityHandler.getHp().addListener(e -> {
             if (entityHandler.getHp().get() == 0){
+                gameLoop.stop();
+                reset();
+                mp3Player.stop();
+                mp3Player.changePlaylist(playlistManager.getPlaylist("titlesong"));
+                mp3Player.play(0);
+                DefeatScene defeat = new DefeatScene(root, window, menuScene);
+                window.setScene(defeat);
+                window.setFullScreen(true);
+
+                /*
                 try{
                     Robot r = new Robot();
                     r.keyPress(KeyEvent.VK_ESCAPE);
                 }catch (Exception ex){
                     System.out.println("Robot in GameScene fcked up.");
                 }
+                */
             }
         });
 
