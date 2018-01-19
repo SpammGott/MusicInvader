@@ -39,8 +39,8 @@ public class GameScene extends Scene {
     private Pane root;
     private HBox mainPane;
     private Pane game;
-    private Pane left;
-    private Pane gameInfos = new Pane();
+    private Pane left  = new Pane();
+    private Pane gameInfos;
     private Stage window;
     private MenuScene menuScene;
 
@@ -55,16 +55,16 @@ public class GameScene extends Scene {
         this.playlistManager = playlistManager;
         game = new Pane();
         game.setPrefSize(Helper.getGameWidth(), Helper.getGameHeight());
-        gameInfos.setStyle("-fx-background-color: #333333");
-        gameInfos.setPrefSize(Helper.getWidth() / 4, Helper.getHeight());
+        left.setStyle("-fx-background-color: #333333");
+        left.setPrefSize(Helper.getWidth() / 4, Helper.getHeight());
         this.window = window;
         this.menuScene = menuScene;
         playerImage = loadImage("Assets/MirrorFighter_no1.png");
         enemyImage = loadImage("Assets/Triwing_no1.png");
         projectileImage = loadImage("Assets/ProjektilFüller.png");
         entityHandler = new EntityHandler(game, playerImage, enemyImage, projectileImage);
-        left = new LeftGamePane(player, entityHandler);
-        left.setPrefSize(Helper.getWidth() / 4, Helper.getHeight());
+        gameInfos = new LeftGamePane(player, entityHandler);
+        gameInfos.setPrefSize(Helper.getWidth() / 4, Helper.getHeight());
     }
 
     public void start(){
@@ -77,7 +77,7 @@ public class GameScene extends Scene {
                 entityHandler.updateEntitys();
                 if(frameToShoot % 10 == 0)
                     entityHandler.firePlayer();
-                if(frameToShoot == 35){
+                if(frameToShoot == 20){
                     entityHandler.fireAllEnemys();
                     frameToShoot = 0;
                 }
