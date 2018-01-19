@@ -3,13 +3,10 @@ package Game.GameUtils;
 import Game.GameUtils.Entity.EntityHandler;
 import MP3Player.MP3Player;
 import javafx.application.Platform;
-import javafx.beans.property.IntegerProperty;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-
-import java.lang.reflect.InvocationTargetException;
 
 public class LeftGamePane extends Pane {
 
@@ -21,10 +18,9 @@ public class LeftGamePane extends Pane {
         Label actLifePoints = new Label("3");
         actLifePoints.setId("SideText");
 
-
-        entityHandler.getHp().addListener(e -> actLifePoints.setText(entityHandler.getHp().toString()));
+        System.out.println(entityHandler.getHp().toString());
+        entityHandler.getHp().addListener(e -> actLifePoints.setText(String.valueOf(entityHandler.getHp().get())));
         HBox hp = new HBox(lifePoints, actLifePoints);
-
 
         Label points = new Label("POINTS: ");
         points.setId("SideText");

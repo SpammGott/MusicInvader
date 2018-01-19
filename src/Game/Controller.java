@@ -30,7 +30,6 @@ public class Controller extends Application{
 
         BorderPane menuPane = new BorderPane();
 
-
         MenuScene menuScene = new MenuScene(window, menuPane, player, playlistManager);
         menuScene.setCursor(Cursor.NONE);
         menuScene.getStylesheets().add("CSS.css");
