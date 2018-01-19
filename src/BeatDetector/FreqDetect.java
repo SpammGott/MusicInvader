@@ -21,6 +21,7 @@ public class FreqDetect {
 		beatDetect.setSensitivity(300); //10 = defaultValue
 		while (true) {
 			beatDetect.detect(input.mix);
+			/*
 			if(beatDetect.isHat()) {
 				System.out.println("HAT");
 			}
@@ -30,6 +31,7 @@ public class FreqDetect {
 			if (beatDetect.isKick()) {
 				System.out.println("KICK");
 			}
+			*/
 		}
 	}
 }

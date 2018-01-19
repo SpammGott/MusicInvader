@@ -68,11 +68,20 @@ public class GameScene extends Scene {
             @Override
             public void handle(long now) {
                 entityHandler.updateEntitys();
+                //if(++frameToShoot == 10)
+                   // entityHandler.firePlayer();
                 if(++frameToShoot == 20){
                     entityHandler.firePlayer();
                     entityHandler.fireAllEnemys();
                     frameToShoot = 0;
                 }
+                /*
+                try {
+                    Thread.sleep(10);
+                }catch (Exception e){
+
+                }
+                */
             }
         };
         gameLoop.start();

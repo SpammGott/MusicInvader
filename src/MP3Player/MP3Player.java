@@ -19,6 +19,7 @@ public class MP3Player {
     private Playlist actPlaylist;
     private PropertyChangeSupport changes;
     private PropertyChangeSupport playing;
+    private int dontAskMeWhy;
 
     private boolean hasSong;
 
@@ -66,12 +67,12 @@ public class MP3Player {
         if(hasSong) {
             audioPlayer.play();
             System.out.println(actPlaylist.getName());
+            playing.firePropertyChange("Song is now playing", !audioPlayer.isPlaying(), audioPlayer.isPlaying());
             if (!actPlaylist.getName().equals("titlesong")) {
                 new Thread(() ->{
                     BeatDetector.FreqDetect beater = new BeatDetector.FreqDetect(System.getProperty("user.dir") + "/res/Songs/" + getActualTrack().getName() + ".mp3");
                 }).start();
             }
-            playing.firePropertyChange("Song is now playing", !audioPlayer.isPlaying(), audioPlayer.isPlaying());
         }
     }
 
@@ -81,7 +82,6 @@ public class MP3Player {
      */
     public void play(int index){
         stop();
-        System.out.println(index);
         System.out.println(actPlaylist.getTrack(index).getName());
         Track oldTrack = actPlaylist.getTrack();
         Track newTrack = actPlaylist.getTrack(index);
@@ -92,12 +92,24 @@ public class MP3Player {
         Runnable timer = new Runnable() {
             @Override
             public void run() {
-                skip();
+                if (dontAskMeWhy == 0) {
+                    dontAskMeWhy = 1;
+                }else {
+                    if (dontAskMeWhy % 2 != 0) {
+                        skip();
+                    }
+                    dontAskMeWhy++;
+                }
                 System.out.println("skipped");
             }
         };
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-        executor.scheduleAtFixedRate(timer, 0, getActualTrack().getLength(), TimeUnit.MILLISECONDS);
+        try {
+            Thread.sleep(50);
+        }catch (Exception e){
+            System.out.println("Threadsleeper in Play(index) fcked up");
+        }
+        executor.scheduleAtFixedRate(timer, 0, actPlaylist.getNextTrackWithoutChangingIndex().getLength(), TimeUnit.MILLISECONDS);
     }
 
     /**
@@ -226,4 +238,6 @@ public class MP3Player {
      * @return playing status
      */
     public boolean isPlaying(){return audioPlayer.isPlaying();}
+
+    public void setDontAskMeWhy(int i){dontAskMeWhy = i;}
 }
