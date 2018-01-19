@@ -53,6 +53,8 @@ public class GameScene extends Scene {
         game.setPrefSize(Helper.getGameWidth(), Helper.getGameHeight());
         left = new LeftGamePane(player);
         left.setPrefSize(Helper.getWidth() / 4, Helper.getHeight());
+        gameInfos.setStyle("-fx-background-color: #333333");
+        gameInfos.setPrefSize(Helper.getWidth() / 4, Helper.getHeight());
         this.window = window;
         this.menuScene = menuScene;
         playerImage = loadImage("Assets/MirrorFighter_no1.png");
