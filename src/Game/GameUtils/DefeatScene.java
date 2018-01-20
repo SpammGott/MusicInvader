@@ -39,6 +39,6 @@ public class DefeatScene extends Scene {
         Pane pane = new Pane(vBox);
         pane.setStyle("-fx-background-color: black");
 
-        root.getChildren().add(pane);
+        //root.getChildren().add(pane);
     }
 }

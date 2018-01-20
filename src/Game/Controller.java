@@ -8,6 +8,8 @@ import MP3Player.MP3Player;
 import MP3Player.Playlist;
 import MP3Player.PlaylistManager;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.scene.Cursor;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
@@ -27,6 +29,17 @@ public class Controller extends Application{
         PlaylistManager playlistManager = new PlaylistManager(System.getProperty("user.dir") + "/res/Songs");
         player = new MP3Player(playlistManager.getPlaylist("titlesong"));
         player.play(0);
+
+        Task task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                player.startAutomaticSkipper();
+                return null;
+            }
+        };
+        Thread repeater = new Thread(task);
+        repeater.setDaemon(true);
+        repeater.start();
 
         BorderPane menuPane = new BorderPane();
 

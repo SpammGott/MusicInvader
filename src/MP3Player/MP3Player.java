@@ -26,6 +26,9 @@ public class MP3Player {
     private int dontAskMeWhy;
     private GameScene gameScene;
 
+    private Runnable timer;
+    private ScheduledExecutorService executor;
+
     private boolean hasSong;
 
     /**
@@ -76,13 +79,36 @@ public class MP3Player {
         }
     }
 
+    public void startAutomaticSkipper(){
+        while (true){
+            try{
+                Thread.sleep(getActualTrack().getLength());
+                skip();
+            }catch (Exception e){
+
+            }
+        }
+    }
+
+    /*
+    public void stopAutomaticSkipper(){
+        timer = new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        };
+        timer.run();
+    }
+    */
+
     /**
      * Plays a song out of a playlist
      * @param index the position of the song to be played
      */
     public void play(int index){
         stop();
-        System.out.println(actPlaylist.getTrack(index).getName());
+        //System.out.println(actPlaylist.getTrack(index).getName());
         Track oldTrack = actPlaylist.getTrack();
         Track newTrack = actPlaylist.getTrack(index);
         if(newTrack != null) {
@@ -90,28 +116,21 @@ public class MP3Player {
         }
         play();
         changes.firePropertyChange(oldTrack.getFilename(), oldTrack, newTrack);
+    }
 
-        Runnable timer = new Runnable() {
-            @Override
-            public void run() {
-                if (dontAskMeWhy == 0) {
-                    dontAskMeWhy = 1;
-                }else {
-                    if (dontAskMeWhy % 2 != 0) {
-                        skip();
-                    }
-                    dontAskMeWhy++;
-                }
-                System.out.println("skipped");
-            }
-        };
-        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-        try {
-            Thread.sleep(50);
-        }catch (Exception e){
-            System.out.println("Threadsleeper in Play(index) fcked up");
+    public void playOnce(int index){
+        stop();
+        Track oldTrack = actPlaylist.getTrack();
+        Track newTrack = actPlaylist.getTrack(index);
+        if(newTrack != null) {
+            audioPlayer = minim.loadMP3File(newTrack.getFilename());
         }
-        executor.scheduleAtFixedRate(timer, 0, actPlaylist.getNextTrackWithoutChangingIndex().getLength(), TimeUnit.MILLISECONDS);
+        if(hasSong) {
+            audioPlayer.play();
+            System.out.println(actPlaylist.getName());
+            playing.firePropertyChange("Song is now playing", !audioPlayer.isPlaying(), audioPlayer.isPlaying());
+        }
+        changes.firePropertyChange(oldTrack.getFilename(), oldTrack, newTrack);
     }
 
     /**

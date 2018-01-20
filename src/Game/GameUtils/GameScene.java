@@ -102,23 +102,12 @@ public class GameScene extends Scene {
 
         entityHandler.getHp().addListener(e -> {
             if (entityHandler.getHp().get() == 0){
-                gameLoop.stop();
-                reset();
-                mp3Player.stop();
-                mp3Player.changePlaylist(playlistManager.getPlaylist("titlesong"));
-                mp3Player.play(0);
-                DefeatScene defeat = new DefeatScene(root, window, menuScene);
-                window.setScene(defeat);
-                window.setFullScreen(true);
-
-                /*
                 try{
                     Robot r = new Robot();
-                    r.keyPress(KeyEvent.VK_ESCAPE);
+                    r.keyPress(KeyEvent.VK_F4);
                 }catch (Exception ex){
                     System.out.println("Robot in GameScene fcked up.");
                 }
-                */
             }
         });
 
@@ -129,6 +118,16 @@ public class GameScene extends Scene {
                 mp3Player.changePlaylist(playlistManager.getPlaylist("titlesong"));
                 mp3Player.play(0);
                 escClicked(window, menuScene);
+            }else if(keyEvent.getCode() == KeyCode.F4){
+                gameLoop.stop();
+                reset();
+                mp3Player.stop();
+                mp3Player.changePlaylist(playlistManager.getPlaylist("titlesong"));
+                mp3Player.play(0);
+
+                DefeatScene defeat = new DefeatScene(root, window, menuScene);
+                window.setScene(defeat);
+                window.setFullScreen(true);
             } else {
                 entityHandler.getPlayer().changeMovement(keyEvent);
             }
