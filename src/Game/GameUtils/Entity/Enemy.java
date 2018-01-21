@@ -49,8 +49,4 @@ public class Enemy extends Ship {
     }
 
     public ImageView getBody(){return this.body;}
-
-    public String toString2(){
-        return "Enemy:" + toString() + "\tpos: " + pos.toString() + "\tspeed: " + speed + "\trichtung: " + direction.toString();
-    }
 }

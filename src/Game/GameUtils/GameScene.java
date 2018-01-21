@@ -1,15 +1,12 @@
 package Game.GameUtils;
 
+import Game.GameLoop;
 import Game.GameUtils.Entity.EntityHandler;
-import Game.GameUtils.Entity.Player;
 import Game.GameUtils.Utils.Spawnpoint;
 import Game.GameUtils.Utils.*;
 import Game.Menu.MenuScene;
 import MP3Player.MP3Player;
 import MP3Player.PlaylistManager;
-import javafx.animation.AnimationTimer;
-import javafx.application.Platform;
-import javafx.beans.property.IntegerProperty;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Cursor;
@@ -48,6 +45,8 @@ public class GameScene extends Scene {
     private Image enemyImage;
     private Image projectileImage;
 
+    private GameLoop gameLoop;
+
     public GameScene(Pane root, Stage window, MenuScene menuScene, MP3Player player, PlaylistManager playlistManager){
         super(root, Helper.getHeight(), Helper.getWidth());
         this.root = root;
@@ -69,21 +68,8 @@ public class GameScene extends Scene {
 
     public void start(){
 
-        //actual movement
-        AnimationTimer gameLoop = new AnimationTimer() {
-            int frameToShoot = 0;
-            @Override
-            public void handle(long now) {
-                entityHandler.updateEntitys();
-                if(frameToShoot % 10 == 0)
-                    entityHandler.firePlayer();
-                if(frameToShoot == 20){
-                    entityHandler.fireAllEnemys();
-                    frameToShoot = 0;
-                }
-                frameToShoot++;
-            }
-        };
+
+        gameLoop = new GameLoop(entityHandler);
         gameLoop.start();
 
         BeatDetector.FreqDetect beater = new BeatDetector.FreqDetect(System.getProperty("user.dir") + "/res/Songs/" + mp3Player.getActualTrack().getName() + ".mp3", mp3Player.getGameScene());
@@ -113,14 +99,15 @@ public class GameScene extends Scene {
 
         setOnKeyPressed(keyEvent -> {
             if(keyEvent.getCode() == KeyCode.ESCAPE){
+                reset();
                 gameLoop.stop();
                 mp3Player.stop();
                 mp3Player.changePlaylist(playlistManager.getPlaylist("titlesong"));
                 mp3Player.play(0);
                 escClicked(window, menuScene);
             }else if(keyEvent.getCode() == KeyCode.F4){
-                gameLoop.stop();
                 reset();
+                gameLoop.stop();
                 mp3Player.stop();
                 mp3Player.changePlaylist(playlistManager.getPlaylist("titlesong"));
                 mp3Player.play(0);
@@ -153,8 +140,7 @@ public class GameScene extends Scene {
     }
 
     private void reset(){
-        entityHandler.removeAllEnemys();
-        entityHandler.removeAllProjectiles();
+        gameLoop.removeAll();
         entityHandler.getPlayer().setPos(new Vector2D((getWidth() / 2) - (entityHandler.getPlayer().getWidth() / 2), (getHeight())));
     }
 
@@ -169,7 +155,7 @@ public class GameScene extends Scene {
     }
 
     public void spawnEnemy(){
-        entityHandler.spawnEnemy(spawnpoint[(int)(Math.random() * spawnpoint.length)]);
+        gameLoop.spawnEnemy(spawnpoint[(int)(Math.random() * spawnpoint.length)]);
     }
 
     public EntityHandler getEntityHandler() {

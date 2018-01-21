@@ -38,11 +38,11 @@ public class FreqDetect {
 					@Override
 					public void run() {
 						gameScene.spawnEnemy();
-						try{
-						    Thread.sleep(10);
-                        }catch (Exception e){
-						    System.out.println("Thread sleeper in FreqDetect run() fcked up");
-                        }
+						//try{
+						//    Thread.sleep(10);
+                        //}catch (Exception e){
+						//    System.out.println("Thread sleeper in FreqDetect run() fcked up");
+                        //}
 					}
 				});
 

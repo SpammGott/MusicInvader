@@ -1,6 +1,5 @@
 package Game.GameUtils.Entity;
 
-import Game.GameUtils.Utils.Helper;
 import Game.GameUtils.Utils.Hitbox;
 import javafx.scene.image.Image;
 

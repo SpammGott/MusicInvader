@@ -26,7 +26,7 @@ public class EntityHandler {
         this.playerImage = playerImage;
         this.enemyImage = enemyImage;
         this.projectileImage = projectileImage;
-        this.player = new Player(playerImage);
+        this.player = new Player(this.playerImage);
         root.getChildren().add(player.getBody());
     }
 
@@ -95,7 +95,6 @@ public class EntityHandler {
         Enemy temp = new Enemy(spawnpoint, enemyImage);
         enemyList.add(temp);
         root.getChildren().add(temp.getBody());
-        System.out.println(temp.toString2());
     }
 
     public void moveAllEnemys(){
