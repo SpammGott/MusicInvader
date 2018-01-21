@@ -8,6 +8,7 @@ import MP3Player.MP3Player;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import MP3Player.Soundplayer;
 
 import javafx.scene.shape.Rectangle;
 
@@ -16,7 +17,7 @@ public class Projectile extends Entity {
 
     private boolean isFromPlayer;
     private double rotate;
-    private MP3Player player = new MP3Player();
+    private Soundplayer player = new Soundplayer();
 
     public Projectile(Vector2D pos, Vector2D direction, Image image){
         this.pos = pos.clone();
