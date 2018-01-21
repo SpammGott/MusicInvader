@@ -4,7 +4,8 @@ import Game.GameUtils.Utils.Helper;
 import Game.GameUtils.Utils.Hitbox;
 import Game.GameUtils.Utils.MathUtils;
 import Game.GameUtils.Utils.Vector2D;
-import MP3Player.MP3Player;
+
+import MP3Player.SoundPlayer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -13,7 +14,7 @@ public class Projectile extends Entity {
 
     private boolean isFromPlayer;
     private double rotate;
-    private MP3Player.SoundPlayer player = new MP3Player.SoundPlayer();
+    private SoundPlayer player = new SoundPlayer();
 
     public Projectile(Vector2D pos, Vector2D direction, Image image){
         this.pos = pos.clone();
