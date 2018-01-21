@@ -1,4 +1,4 @@
-package Game;
+package Game.GameUtils;
 
 import Game.GameUtils.Entity.EntityHandler;
 import Game.GameUtils.Utils.Spawnpoint;

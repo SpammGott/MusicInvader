@@ -34,7 +34,7 @@ public class Projectile extends Entity {
         init();
         hitbox = new Hitbox(pos, 4, height, width, direction);
 
-        player.play("/res/Sounds/playerShot1.mp3");
+        player.play(System.getProperty("user.dir") + "/res/Sounds/playerShot1.mp3");
     }
 
     public Projectile(Vector2D pos, Vector2D direction, Image image, boolean isFromPlayer){
@@ -54,7 +54,7 @@ public class Projectile extends Entity {
         init();
         hitbox = new Hitbox(pos, 4, height, width, direction);
 
-        player.play("/res/Sounds/enemyShot1.mp3");
+        player.play(System.getProperty("user.dir") +  "/res/Sounds/enemyShot1.mp3");
     }
 
     @Override

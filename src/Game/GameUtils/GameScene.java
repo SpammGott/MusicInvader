@@ -1,6 +1,5 @@
 package Game.GameUtils;
 
-import Game.GameLoop;
 import Game.GameUtils.Entity.EntityHandler;
 import Game.GameUtils.Utils.Spawnpoint;
 import Game.GameUtils.Utils.*;
