@@ -43,7 +43,10 @@ public class Projectile extends Entity {
         body.setX(Helper.getAbsoluteWidth(pos.getX()));
         body.setY(Helper.getAbsoluteHeight(pos.getY()));
         defSpeed = 0.2;
-        speed = defSpeed;
+        if(isFromPlayer)
+            speed = defSpeed;
+        else
+            speed = defSpeed / 2;
         init();
         hitbox = new Hitbox(pos, 4, height, width, direction);
     }

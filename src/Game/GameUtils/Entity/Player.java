@@ -2,13 +2,17 @@ package Game.GameUtils.Entity;
 
 import Game.GameUtils.Utils.*;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 
 
 public class Player extends Ship {
+
+    private IntegerProperty hp = new SimpleIntegerProperty();
 
     //needed to manage movement
     private BooleanProperty up = new SimpleBooleanProperty();
@@ -17,6 +21,7 @@ public class Player extends Ship {
     private BooleanProperty right = new SimpleBooleanProperty();
 
     public Player(Image image){
+        hp.setValue(3);
         height = 0.7;
         width = 0.7;
         body = new ImageView(image);
@@ -87,11 +92,16 @@ public class Player extends Ship {
     }
 
     @Override
-    public Projectile fireProjectile(Image image) {
-        Projectile temp = new Projectile(center, new Vector2D(0,-1), image, true);
+    public Projectile[] fireProjectile(Image image) {
+        Projectile temp[] = new Projectile[2];
+        temp[0] = new Projectile(new Vector2D((center.getX() - width/4), (center.getY() - width/4)), new Vector2D(0,-1), image, true);
+        temp[1] = new Projectile(new Vector2D((center.getX() + width/4), (center.getY() + width/4)), new Vector2D(0,-1), image, true);
         return temp;
     }
 
     public ImageView getBody(){return this.body;}
 
+    public IntegerProperty getHp(){return hp;}
+
+    public void decHp(){hp.setValue(hp.get() - 1);}
 }

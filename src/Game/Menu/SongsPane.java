@@ -27,22 +27,22 @@ public class SongsPane extends VBox {
         Button firstSong = new Button(tracks.get(0).getName());
         firstSong.setOnAction(event -> {
             player.stop();
-            player.changePlaylist(playlistManager.getPlaylist("defaultPlaylist"));
+            //player.changePlaylist(playlistManager.getPlaylist("defaultPlaylist"));
             player.play(0);
         });
 
         Button secondSong = new Button(tracks.get(1).getName());
         secondSong.setOnAction(event -> {
             player.stop();
-            player.changePlaylist(playlistManager.getPlaylist("defaultPlaylist"));
-            player.play(1);
+            //player.changePlaylist(playlistManager.getPlaylist("defaultPlaylist"));
+            player.playOnce(1);
         });
 
         Button back = new Button("BACK");
         back.setOnAction(e -> {
             player.stop();
             player.changePlaylist(playlistManager.getPlaylist("titlesong"));
-            player.play(0);
+            player.playOnce(0);
             menuScene.setCenter(menu);
         });
 

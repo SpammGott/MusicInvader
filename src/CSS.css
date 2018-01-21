@@ -10,6 +10,14 @@
     -fx-background-color: transparent;
 }
 
+#SideText{
+    -fx-text-fill: white;
+    -fx-font-size: 15;
+    -fx-font-family: Pixeled;
+    -fx-padding: 0 0 0 10;
+    -fx-background-color: transparent;
+}
+
 #Headline{
     -fx-text-fill: white;
     -fx-font-size: 45;

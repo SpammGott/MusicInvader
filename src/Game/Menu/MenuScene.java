@@ -12,14 +12,7 @@ import javafx.stage.Stage;
 
 public class MenuScene extends Scene {
 
-    public MenuScene (Stage window, BorderPane menuPane, MP3Player player, PlaylistManager playlistManager){
+    public MenuScene (Stage window, BorderPane menuPane, MP3Player player, PlaylistManager playlistManager) {
         super(menuPane, Helper.getHeight(), Helper.getWidth());
-
-        Pane root = new Pane();
-        GameScene gameScene = new GameScene(root, window, this, player, playlistManager);
-
-        setCursor(Cursor.NONE);
-        menuPane.setCenter(new Menu(window, menuPane, this, gameScene, player, playlistManager));
-        getStylesheets().add("CSS.css");
     }
 }

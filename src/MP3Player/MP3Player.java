@@ -1,8 +1,12 @@
 package MP3Player;
 
+import Game.GameUtils.GameScene;
 import ddf.minim.analysis.BeatDetect;
 import de.hsrm.mi.eibo.simpleplayer.SimpleAudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleMinim;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.TimerTask;
@@ -20,6 +24,10 @@ public class MP3Player {
     private PropertyChangeSupport changes;
     private PropertyChangeSupport playing;
     private int dontAskMeWhy;
+    private GameScene gameScene;
+
+    private Runnable timer;
+    private ScheduledExecutorService executor;
 
     private boolean hasSong;
 
@@ -68,13 +76,31 @@ public class MP3Player {
             audioPlayer.play();
             System.out.println(actPlaylist.getName());
             playing.firePropertyChange("Song is now playing", !audioPlayer.isPlaying(), audioPlayer.isPlaying());
-            if (!actPlaylist.getName().equals("titlesong")) {
-                new Thread(() ->{
-                    BeatDetector.FreqDetect beater = new BeatDetector.FreqDetect(System.getProperty("user.dir") + "/res/Songs/" + getActualTrack().getName() + ".mp3");
-                }).start();
+        }
+    }
+
+    public void startAutomaticSkipper(){
+        while (true){
+            try{
+                Thread.sleep(getActualTrack().getLength());
+                skip();
+            }catch (Exception e){
+
             }
         }
     }
+
+    /*
+    public void stopAutomaticSkipper(){
+        timer = new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        };
+        timer.run();
+    }
+    */
 
     /**
      * Plays a song out of a playlist
@@ -82,34 +108,29 @@ public class MP3Player {
      */
     public void play(int index){
         stop();
-        System.out.println(actPlaylist.getTrack(index).getName());
+        //System.out.println(actPlaylist.getTrack(index).getName());
         Track oldTrack = actPlaylist.getTrack();
         Track newTrack = actPlaylist.getTrack(index);
-        if(newTrack != null)
+        if(newTrack != null) {
             audioPlayer = minim.loadMP3File(newTrack.getFilename());
+        }
         play();
         changes.firePropertyChange(oldTrack.getFilename(), oldTrack, newTrack);
-        Runnable timer = new Runnable() {
-            @Override
-            public void run() {
-                if (dontAskMeWhy == 0) {
-                    dontAskMeWhy = 1;
-                }else {
-                    if (dontAskMeWhy % 2 != 0) {
-                        skip();
-                    }
-                    dontAskMeWhy++;
-                }
-                System.out.println("skipped");
-            }
-        };
-        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-        try {
-            Thread.sleep(50);
-        }catch (Exception e){
-            System.out.println("Threadsleeper in Play(index) fcked up");
+    }
+
+    public void playOnce(int index){
+        stop();
+        Track oldTrack = actPlaylist.getTrack();
+        Track newTrack = actPlaylist.getTrack(index);
+        if(newTrack != null) {
+            audioPlayer = minim.loadMP3File(newTrack.getFilename());
         }
-        executor.scheduleAtFixedRate(timer, 0, actPlaylist.getNextTrackWithoutChangingIndex().getLength(), TimeUnit.MILLISECONDS);
+        if(hasSong) {
+            audioPlayer.play();
+            System.out.println(actPlaylist.getName());
+            playing.firePropertyChange("Song is now playing", !audioPlayer.isPlaying(), audioPlayer.isPlaying());
+        }
+        changes.firePropertyChange(oldTrack.getFilename(), oldTrack, newTrack);
     }
 
     /**
@@ -200,8 +221,12 @@ public class MP3Player {
      * @param newPlaylist playlist that will be set to active
      */
     public void changePlaylist(Playlist newPlaylist){
-        if(newPlaylist != null)
+        if(newPlaylist != null) {
+            Track oldTrack = getActualTrack();
+            Track newTrack = newPlaylist.getTrack(0);
+            changes.firePropertyChange(oldTrack.getFilename(), oldTrack, newTrack);
             actPlaylist = newPlaylist;
+        }
     }
 
     /**
@@ -215,6 +240,7 @@ public class MP3Player {
      * @param propChngListn a property Change Listener
      */
     public void addPropertyChangeListenerSongInfos(PropertyChangeListener propChngListn){
+        System.out.println("CHANGE FIRED!");
         changes.addPropertyChangeListener(propChngListn);
     }
     /**
@@ -240,4 +266,16 @@ public class MP3Player {
     public boolean isPlaying(){return audioPlayer.isPlaying();}
 
     public void setDontAskMeWhy(int i){dontAskMeWhy = i;}
+
+    public Playlist getActPlaylist() {
+        return actPlaylist;
+    }
+
+    public void setGameScene(GameScene gameScene) {
+        this.gameScene = gameScene;
+    }
+
+    public GameScene getGameScene() {
+        return gameScene;
+    }
 }

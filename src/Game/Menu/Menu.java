@@ -33,7 +33,11 @@ public class Menu extends VBox {
         });
 
         Button songs = new Button("SONGS");
-        songs.setOnAction(e -> menuPane.setCenter(new SongsPane(menuPane, this, playlistManager.getAllSongs("defaultPlaylist"), player, playlistManager)));
+        songs.setOnAction(e -> {
+            menuPane.setCenter(new SongsPane(menuPane, this, playlistManager.getAllSongs("defaultPlaylist"), player, playlistManager));
+            player.stop();
+            player.changePlaylist(playlistManager.getPlaylist("defaultPlaylist"));
+        });
 
         Button leaderboards = new Button("LEADERBOARDS");
         leaderboards.setOnAction(e -> menuPane.setCenter(new LeaderboardsPane(menuPane, this)));

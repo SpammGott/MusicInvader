@@ -8,6 +8,9 @@ import Game.Menu.MenuScene;
 import MP3Player.MP3Player;
 import MP3Player.PlaylistManager;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
@@ -17,6 +20,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,13 +32,15 @@ public class GameScene extends Scene {
     private PlaylistManager playlistManager;
 
     private EntityHandler entityHandler;
-    private Spawnpoint spawnpoint[] = {new Spawnpoint(new Vector2D(-0.75, 7), new Vector2D(1, 0), new Vector2D(1, -0.05)), new Spawnpoint(new Vector2D(500, 500), new Vector2D(-1, 0))};
+    //first spawn is top left, to the right slightly downwards
+    //second spawn as first just inverted
+    private Spawnpoint spawnpoint[] = {new Spawnpoint(new Vector2D(-0.75, 1), new Vector2D(1, 0.1)), new Spawnpoint(new Vector2D(17, 1), new Vector2D(-1, 0.1))};
 
     private Pane root;
     private HBox mainPane;
     private Pane game;
-    private Pane left;
-    private Pane gameInfos = new Pane();
+    private Pane left  = new Pane();
+    private Pane gameInfos;
     private Stage window;
     private MenuScene menuScene;
 
@@ -48,19 +55,19 @@ public class GameScene extends Scene {
         this.playlistManager = playlistManager;
         game = new Pane();
         game.setPrefSize(Helper.getGameWidth(), Helper.getGameHeight());
-        left = new Pane();
+        left.setStyle("-fx-background-color: #333333");
         left.setPrefSize(Helper.getWidth() / 4, Helper.getHeight());
         this.window = window;
         this.menuScene = menuScene;
         playerImage = loadImage("Assets/MirrorFighter_no1.png");
         enemyImage = loadImage("Assets/Triwing_no1.png");
         projectileImage = loadImage("Assets/ProjektilFüller.png");
+        entityHandler = new EntityHandler(game, playerImage, enemyImage, projectileImage);
+        gameInfos = new LeftGamePane(player, entityHandler);
+        gameInfos.setPrefSize(Helper.getWidth() / 4, Helper.getHeight());
     }
 
     public void start(){
-        //PC = PlayerCharacter
-        entityHandler = new EntityHandler(game, playerImage, enemyImage, projectileImage);
-        entityHandler.spawnEnemy(spawnpoint[0]);
 
         //actual movement
         AnimationTimer gameLoop = new AnimationTimer() {
@@ -68,10 +75,9 @@ public class GameScene extends Scene {
             @Override
             public void handle(long now) {
                 entityHandler.updateEntitys();
-                if(frameToShoot == 10)
+                if(frameToShoot % 10 == 0)
                     entityHandler.firePlayer();
                 if(frameToShoot == 20){
-                    entityHandler.firePlayer();
                     entityHandler.fireAllEnemys();
                     frameToShoot = 0;
                 }
@@ -80,6 +86,31 @@ public class GameScene extends Scene {
         };
         gameLoop.start();
 
+        BeatDetector.FreqDetect beater = new BeatDetector.FreqDetect(System.getProperty("user.dir") + "/res/Songs/" + mp3Player.getActualTrack().getName() + ".mp3", mp3Player.getGameScene());
+
+        Task task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                System.out.println("Task started");
+                beater.run();
+                return null;
+            }
+        };
+        Thread beatDet = new Thread(task);
+        beatDet.setDaemon(true);
+        beatDet.start();
+
+        entityHandler.getHp().addListener(e -> {
+            if (entityHandler.getHp().get() == 0){
+                try{
+                    Robot r = new Robot();
+                    r.keyPress(KeyEvent.VK_F4);
+                }catch (Exception ex){
+                    System.out.println("Robot in GameScene fcked up.");
+                }
+            }
+        });
+
         setOnKeyPressed(keyEvent -> {
             if(keyEvent.getCode() == KeyCode.ESCAPE){
                 gameLoop.stop();
@@ -87,6 +118,16 @@ public class GameScene extends Scene {
                 mp3Player.changePlaylist(playlistManager.getPlaylist("titlesong"));
                 mp3Player.play(0);
                 escClicked(window, menuScene);
+            }else if(keyEvent.getCode() == KeyCode.F4){
+                gameLoop.stop();
+                reset();
+                mp3Player.stop();
+                mp3Player.changePlaylist(playlistManager.getPlaylist("titlesong"));
+                mp3Player.play(0);
+
+                DefeatScene defeat = new DefeatScene(root, window, menuScene);
+                window.setScene(defeat);
+                window.setFullScreen(true);
             } else {
                 entityHandler.getPlayer().changeMovement(keyEvent);
             }
@@ -125,5 +166,13 @@ public class GameScene extends Scene {
             e.printStackTrace();
         }
         return SwingFXUtils.toFXImage(image, null);
+    }
+
+    public void spawnEnemy(){
+        entityHandler.spawnEnemy(spawnpoint[(int)(Math.random() * spawnpoint.length)]);
+    }
+
+    public EntityHandler getEntityHandler() {
+        return entityHandler;
     }
 }

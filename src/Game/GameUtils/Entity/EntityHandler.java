@@ -3,6 +3,7 @@ package Game.GameUtils.Entity;
 
 import Game.GameUtils.Utils.Spawnpoint;
 import Game.GameUtils.Utils.Vector2D;
+import javafx.beans.property.IntegerProperty;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
@@ -33,23 +34,30 @@ public class EntityHandler {
         player.move();
         moveAllProjectiles();
         moveAllEnemys();
-        if(playerIsHit())
-            System.out.println("getroffen!!!!!!");
+        if(playerIsHit()) {
+            if(player.getHp().get() > 0)
+                player.decHp();
+        }
+        enemyIsHit();
     }
 
     public void firePlayer(){
-        Projectile temp = player.fireProjectile(projectileImage);
-        playerP.add(temp);
-        root.getChildren().add(temp.getBody());
+        Projectile temp[] = player.fireProjectile(projectileImage);
+        for(Projectile act:temp) {
+            playerP.add(act);
+            root.getChildren().add(act.getBody());
+        }
     }
 
     public void fireAllEnemys(){
-        Projectile temp;
+        Projectile temp[];
         for(int i = 0; i < enemyList.size(); i++){
             Enemy act = enemyList.get(i);
             temp = act.fireProjectile(projectileImage, new Vector2D(-(act.getPos().getX() - player.getPos().getX()), -(act.getPos().getY() - player.getPos().getY())));
-            enemyP.add(temp);
-            root.getChildren().add(temp.getBody());
+            for(Projectile actPro:temp) {
+                enemyP.add(actPro);
+                root.getChildren().add(actPro.getBody());
+            }
         }
     }
 
@@ -64,6 +72,22 @@ public class EntityHandler {
         }
         removeProjectile(enemyP, tempList);
         return isHit;
+    }
+
+    private void enemyIsHit(){
+        List<Projectile> tempProjectileList = new LinkedList<>();
+        for(int i = 0; i < enemyList.size(); i++){
+            Enemy act = enemyList.get(i);
+            for(Projectile actPro: playerP){
+                if(act.isHit(actPro.getHitbox())){
+                    tempProjectileList.add(actPro);
+                    enemyList.remove(i);
+                    root.getChildren().remove(act.getBody());
+                    i--;
+                }
+            }
+        }
+        removeProjectile(playerP, tempProjectileList);
     }
 
 
@@ -116,4 +140,6 @@ public class EntityHandler {
         }
     }
     public Player getPlayer(){return player;}
+
+    public IntegerProperty getHp(){return player.getHp();}
 }
