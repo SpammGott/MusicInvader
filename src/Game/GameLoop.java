@@ -49,4 +49,12 @@ public class GameLoop extends AnimationTimer {
     public void removeAll(){
         removeAll = true;
     }
+
+    public void pause(){
+        pause = true;
+    }
+
+    public void continueLoop(){
+        pause = false;
+    }
 }

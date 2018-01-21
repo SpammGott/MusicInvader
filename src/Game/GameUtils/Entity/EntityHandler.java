@@ -76,15 +76,20 @@ public class EntityHandler {
 
     private void enemyIsHit(){
         List<Projectile> tempProjectileList = new LinkedList<>();
+        boolean isHit;
         for(int i = 0; i < enemyList.size(); i++){
+            isHit = false;
             Enemy act = enemyList.get(i);
             for(Projectile actPro: playerP){
                 if(act.isHit(actPro.getHitbox())){
                     tempProjectileList.add(actPro);
-                    enemyList.remove(i);
-                    root.getChildren().remove(act.getBody());
-                    i--;
+                    isHit = true;
                 }
+            }
+            if(isHit){
+                enemyList.remove(i);
+                root.getChildren().remove(act.getBody());
+                i--;
             }
         }
         removeProjectile(playerP, tempProjectileList);
