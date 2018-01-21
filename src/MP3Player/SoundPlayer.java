@@ -1,25 +1,25 @@
 package MP3Player;
 
-import ddf.minim.AudioPlayer;
+import de.hsrm.mi.eibo.simpleplayer.SimpleAudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleMinim;
 
 
-public class Soundplayer {
+public class SoundPlayer {
 
     private SimpleMinim minim;
-    private AudioPlayer audioPlayer;
+    private SimpleAudioPlayer audioPlayer;
     private boolean hasSong;
 
 
-    public Soundplayer(){
+    public SoundPlayer(){
         minim = new SimpleMinim(true);
-        hasSong = true;
     }
 
     public void play(String fileName){
-        if(hasSong == true)
+        if(hasSong)
             stop();
         audioPlayer = minim.loadMP3File(fileName);
+        hasSong = true;
         audioPlayer.play();
     }
 

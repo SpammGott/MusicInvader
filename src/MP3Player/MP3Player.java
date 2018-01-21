@@ -1,18 +1,12 @@
 package MP3Player;
 
 import Game.GameUtils.GameScene;
-import ddf.minim.analysis.BeatDetect;
 import de.hsrm.mi.eibo.simpleplayer.SimpleAudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleMinim;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+
 
 /**
  * Handles all the actions directly related with the song
@@ -23,11 +17,7 @@ public class MP3Player {
     private Playlist actPlaylist;
     private PropertyChangeSupport changes;
     private PropertyChangeSupport playing;
-    private int dontAskMeWhy;
     private GameScene gameScene;
-
-    private Runnable timer;
-    private ScheduledExecutorService executor;
 
     private boolean hasSong;
 
@@ -263,8 +253,6 @@ public class MP3Player {
      * @return playing status
      */
     public boolean isPlaying(){return audioPlayer.isPlaying();}
-
-    public void setDontAskMeWhy(int i){dontAskMeWhy = i;}
 
     public Playlist getActPlaylist() {
         return actPlaylist;

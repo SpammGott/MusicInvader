@@ -27,7 +27,6 @@ public class Menu extends VBox {
             window.setFullScreen(true);
             player.stop();
             player.changePlaylist(playlistManager.getPlaylist("defaultPlaylist"));
-            player.setDontAskMeWhy(0);
             player.play(0);
             gameScene.start();
         });

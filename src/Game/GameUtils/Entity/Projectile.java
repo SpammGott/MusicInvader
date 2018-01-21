@@ -7,17 +7,13 @@ import Game.GameUtils.Utils.Vector2D;
 import MP3Player.MP3Player;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import MP3Player.Soundplayer;
-
-import javafx.scene.shape.Rectangle;
 
 
 public class Projectile extends Entity {
 
     private boolean isFromPlayer;
     private double rotate;
-    private Soundplayer player = new Soundplayer();
+    private MP3Player.SoundPlayer player = new MP3Player.SoundPlayer();
 
     public Projectile(Vector2D pos, Vector2D direction, Image image){
         this.pos = pos.clone();
