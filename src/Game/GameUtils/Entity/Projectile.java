@@ -4,6 +4,7 @@ import Game.GameUtils.Utils.Helper;
 import Game.GameUtils.Utils.Hitbox;
 import Game.GameUtils.Utils.MathUtils;
 import Game.GameUtils.Utils.Vector2D;
+import MP3Player.MP3Player;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -15,6 +16,7 @@ public class Projectile extends Entity {
 
     private boolean isFromPlayer;
     private double rotate;
+    private MP3Player player = new MP3Player();
 
     public Projectile(Vector2D pos, Vector2D direction, Image image){
         this.pos = pos.clone();
@@ -31,6 +33,8 @@ public class Projectile extends Entity {
         speed = defSpeed;
         init();
         hitbox = new Hitbox(pos, 4, height, width, direction);
+
+        player.play("/res/Sounds/playerShot1.mp3");
     }
 
     public Projectile(Vector2D pos, Vector2D direction, Image image, boolean isFromPlayer){
@@ -49,6 +53,8 @@ public class Projectile extends Entity {
             speed = defSpeed / 2;
         init();
         hitbox = new Hitbox(pos, 4, height, width, direction);
+
+        player.play("/res/Sounds/enemyShot1.mp3");
     }
 
     @Override

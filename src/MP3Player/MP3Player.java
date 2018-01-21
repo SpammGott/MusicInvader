@@ -36,9 +36,8 @@ public class MP3Player {
      */
     public MP3Player(){
         minim  = new SimpleMinim(true);
-        audioPlayer = minim.loadMP3File("res/test.mp3");
-        hasSong = true;
-
+        //audioPlayer = minim.loadMP3File("res/test.mp3");
+        //hasSong = true;
     }
 
     /**
@@ -60,10 +59,11 @@ public class MP3Player {
      * Plays a given song
      * @param fileName path of the song to be played
      */
-    private void play(String fileName){
-        stop();
+    public void play(String fileName){
+       if(hasSong == true)
+           stop();
         audioPlayer = minim.loadMP3File(fileName);
-        hasSong = true;
+        //hasSong = true;
         play();
         playing.firePropertyChange("Song is now playing", !audioPlayer.isPlaying(), audioPlayer.isPlaying());
     }
