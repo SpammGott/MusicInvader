@@ -32,6 +32,7 @@ public class LeftGamePane extends Pane {
         Label actSong = new Label(player.getActualTrack().getName());
         Label actNextSong = new Label(player.getActPlaylist().getNextTrackWithoutChangingIndex().getName());
         player.addPropertyChangeListenerSongInfos(e -> {
+            System.out.println("CHANGE RECEIVED");
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {

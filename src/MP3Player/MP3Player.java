@@ -82,6 +82,10 @@ public class MP3Player {
             try{
                 Thread.sleep(getActualTrack().getLength());
                 skip();
+                Track oldTrack = actPlaylist.getTrack();
+                Track newTrack = actPlaylist.getNextTrackWithoutChangingIndex();
+                changes.firePropertyChange(oldTrack.getFilename(), oldTrack, newTrack);
+                System.out.println("WHYYYYYYYYY");
             }catch (Exception e){
 
             }

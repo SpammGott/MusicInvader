@@ -21,7 +21,7 @@ public class Player extends Ship {
     private BooleanProperty right = new SimpleBooleanProperty();
 
     public Player(Image image){
-        hp.setValue(3);
+        hp.setValue(3654165);
         height = 0.7;
         width = 0.7;
         body = new ImageView(image);
