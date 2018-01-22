@@ -79,18 +79,6 @@ public class MP3Player {
         }
     }
 
-    /*
-    public void stopAutomaticSkipper(){
-        timer = new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        };
-        timer.run();
-    }
-    */
-
     /**
      * Plays a song out of a playlist
      * @param index the position of the song to be played

@@ -120,7 +120,7 @@ public class GameScene extends Scene {
                 mp3Player.play(0);
 
                 Pane test = new Pane();
-                DefeatScene defeat = new DefeatScene(test, window, menuScene);
+                DefeatScene defeat = new DefeatScene(test, window, menuScene, entityHandler);
                 window.setScene(defeat);
                 window.setFullScreen(true);
             } else {

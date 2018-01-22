@@ -1,5 +1,6 @@
 package Game.GameUtils;
 
+import Game.GameUtils.Entity.EntityHandler;
 import Game.GameUtils.Utils.Helper;
 import Game.Menu.MenuScene;
 import javafx.geometry.Pos;
@@ -14,12 +15,14 @@ public class DefeatScene extends Scene {
     private Stage window;
     private MenuScene menuScene;
     private Pane root;
+    private EntityHandler entityHandler;
 
-    public DefeatScene(Pane root, Stage window, MenuScene menuScene){
+    public DefeatScene(Pane root, Stage window, MenuScene menuScene, EntityHandler entityHandler){
         super(root, Helper.getHeight(), Helper.getWidth());
         this.root = root;
         this.window = window;
         this.menuScene = menuScene;
+        this.entityHandler = entityHandler;
         start();
     }
 
@@ -32,15 +35,14 @@ public class DefeatScene extends Scene {
         HBox.setHgrow(reg1, Priority.ALWAYS);
         HBox.setHgrow(reg2, Priority.ALWAYS);
 
-
         Label points = new Label("POINTS: ");
         points.setId("SideText");
-        Label actPoints = new Label("0");
+        Label actPoints = new Label(String.valueOf(entityHandler.getPoints().get()));
         actPoints.setId("SideText");
         HBox pointCont = new HBox(reg1, points, actPoints, reg2);
 
-        //entityHandler.getPoints().addListener(e -> actPoints.setText(String.valueOf(entityHandler.getPoints().get())));
-
+        entityHandler.getPoints().setValue(0);
+        entityHandler.getHp().setValue(3);
 
         Button back = new Button("BACK TO MENU");
         back.setOnAction(e -> {
