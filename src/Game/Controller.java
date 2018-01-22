@@ -16,6 +16,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.io.*;
+
 public class Controller extends Application{
 
     public static void main(String[] args){
@@ -24,6 +27,16 @@ public class Controller extends Application{
 
     @Override
     public void start(Stage window){
+
+        try {
+            InputStream myStream = new BufferedInputStream(new FileInputStream(System.getProperty("user.dir") + "/res/Pixeled.ttf"));
+            Font ttfBase = Font.createFont(Font.TRUETYPE_FONT, myStream);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(ttfBase);
+        } catch (IOException |FontFormatException e) {
+            //Handle exception
+            e.printStackTrace();
+        }
 
         MP3Player player;
         PlaylistManager playlistManager = new PlaylistManager(System.getProperty("user.dir") + "/res/Songs");
