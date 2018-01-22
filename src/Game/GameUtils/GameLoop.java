@@ -1,8 +1,10 @@
 package Game.GameUtils;
 
 import Game.GameUtils.Entity.EntityHandler;
+import Game.GameUtils.Utils.Helper;
 import Game.GameUtils.Utils.Spawnpoint;
 import javafx.animation.AnimationTimer;
+import javafx.scene.image.ImageView;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -14,9 +16,12 @@ public class GameLoop extends AnimationTimer {
     private boolean pause = false;
     private ConcurrentLinkedQueue<Spawnpoint> spawnQueue = new ConcurrentLinkedQueue<>();
 
-    public GameLoop(EntityHandler entityHandler){
+    private ImageView background;
+
+    public GameLoop(EntityHandler entityHandler, ImageView background){
         super();
         this.entityHandler = entityHandler;
+        this.background = background;
     }
 
     @Override
@@ -26,7 +31,8 @@ public class GameLoop extends AnimationTimer {
                 entityHandler.spawnEnemy(spawnQueue.poll());
 
             if (frameToShoot % 10 == 0)
-                entityHandler.firePlayer();
+                if (!entityHandler.isPlayerWasHit())
+                    entityHandler.firePlayer();
             if (frameToShoot == 30) {
                 entityHandler.fireAllEnemys();
                 frameToShoot = 0;
@@ -34,6 +40,8 @@ public class GameLoop extends AnimationTimer {
             frameToShoot++;
 
             entityHandler.updateEntitys();
+
+            background.setY(background.getY() + Helper.getAbsoluteHeight(0.05));
 
             if(removeAll) {
                 entityHandler.removeAllProjectiles();
