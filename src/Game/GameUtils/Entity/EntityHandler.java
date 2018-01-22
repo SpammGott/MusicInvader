@@ -36,7 +36,7 @@ public class EntityHandler {
         this.projectileImage = projectileImage;
         this.player = new Player(this.playerImageHeil);
         root.getChildren().add(player.getBody());
-        playerSound.volume(0.5f);
+        playerSound.volume(0.4f);
     }
 
     public void updateEntitys(){
@@ -46,7 +46,7 @@ public class EntityHandler {
         if(!playerWasHit){
             if(playerIsHit()) {
                 playerWasHit = true;
-                frameToRespawn = 120;
+                frameToRespawn = 80;
                 player.changeImage(playerImageKaputt);
                 if (player.getHp().get() > 0)
                     player.decHp();
@@ -167,4 +167,6 @@ public class EntityHandler {
     public Player getPlayer(){return player;}
 
     public IntegerProperty getHp(){return player.getHp();}
+
+    public boolean isPlayerWasHit(){return playerWasHit;}
 }

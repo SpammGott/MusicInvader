@@ -11,6 +11,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -39,11 +40,13 @@ public class GameScene extends Scene {
     private Pane gameInfos;
     private Stage window;
     private MenuScene menuScene;
+    private ImageView background;
 
     private Image playerImage;
     private Image playerImageKaputt;
     private Image enemyImage;
     private Image projectileImage;
+    private Image backgroundImage;
 
     private GameLoop gameLoop;
 
@@ -52,7 +55,12 @@ public class GameScene extends Scene {
         this.root = root;
         this.mp3Player = player;
         this.playlistManager = playlistManager;
-        game = new Pane();
+        backgroundImage = loadImage("Stars1.png");
+        background = new ImageView(backgroundImage);
+        background.setPreserveRatio(true);
+        background.setFitWidth(Helper.getAbsoluteWidth(16));
+        //background.setY(-(background.getFitHeight()/2));
+        game = new Pane(background);
         game.setPrefSize(Helper.getGameWidth(), Helper.getGameHeight());
         left.setStyle("-fx-background-color: #333333");
         left.setPrefSize(Helper.getWidth() / 4, Helper.getHeight());
@@ -68,9 +76,7 @@ public class GameScene extends Scene {
     }
 
     public void start(){
-
-
-        gameLoop = new GameLoop(entityHandler);
+        gameLoop = new GameLoop(entityHandler, background);
         gameLoop.start();
 
         BeatDetector.FreqDetect beater = new BeatDetector.FreqDetect(System.getProperty("user.dir") + "/res/Songs/" + mp3Player.getActualTrack().getName() + ".mp3", mp3Player.getGameScene());
