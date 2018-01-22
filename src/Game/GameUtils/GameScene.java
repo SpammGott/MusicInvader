@@ -94,6 +94,8 @@ public class GameScene extends Scene {
         beatDet.start();
 
         entityHandler.getHp().addListener(e -> {
+            //mp3Player.setTickrate(1 + 0.1f * entityHandler.getHp().get());
+            mp3Player.setTickrate(4);
             if (entityHandler.getHp().get() == 0){
                 try{
                     Robot r = new Robot();
