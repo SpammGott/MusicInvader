@@ -27,7 +27,7 @@ public class GameLoop extends AnimationTimer {
 
             if (frameToShoot % 10 == 0)
                 entityHandler.firePlayer();
-            if (frameToShoot == 20) {
+            if (frameToShoot == 30) {
                 entityHandler.fireAllEnemys();
                 frameToShoot = 0;
             }

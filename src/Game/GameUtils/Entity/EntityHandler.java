@@ -3,6 +3,7 @@ package Game.GameUtils.Entity;
 
 import Game.GameUtils.Utils.Spawnpoint;
 import Game.GameUtils.Utils.Vector2D;
+import MP3Player.SoundPlayer;
 import javafx.beans.property.IntegerProperty;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -12,7 +13,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class EntityHandler {
-    private Image playerImage;
+    private Image playerImageHeil;
+    private Image playerImageKaputt;
     private Image enemyImage;
     private Image projectileImage;
     private List<Enemy> enemyList = new ArrayList<>();
@@ -20,23 +22,40 @@ public class EntityHandler {
     private Player player;
     private List<Projectile> playerP = new ArrayList<>();
     private List<Projectile> enemyP = new ArrayList<>();
+    private boolean playerWasHit = false;
+    private int frameToRespawn = 0;
 
-    public EntityHandler(Pane root, Image playerImage, Image enemyImage, Image projectileImage){
+    private SoundPlayer playerSound = new SoundPlayer(System.getProperty("user.dir") + "/res/Sounds/playerShot1.mp3");
+    private SoundPlayer enemeySound = new SoundPlayer(System.getProperty("user.dir") + "/res/Sounds/enemyShot1.mp3");
+
+    public EntityHandler(Pane root, Image playerImageHeil, Image playerImageKaputt, Image enemyImage, Image projectileImage){
         this.root = root;
-        this.playerImage = playerImage;
+        this.playerImageHeil = playerImageHeil;
+        this.playerImageKaputt = playerImageKaputt;
         this.enemyImage = enemyImage;
         this.projectileImage = projectileImage;
-        this.player = new Player(this.playerImage);
+        this.player = new Player(this.playerImageHeil);
         root.getChildren().add(player.getBody());
+        playerSound.volume(0.5f);
     }
 
     public void updateEntitys(){
         player.move();
         moveAllProjectiles();
         moveAllEnemys();
-        if(playerIsHit()) {
-            if(player.getHp().get() > 0)
-                player.decHp();
+        if(!playerWasHit){
+            if(playerIsHit()) {
+                playerWasHit = true;
+                frameToRespawn = 120;
+                player.changeImage(playerImageKaputt);
+                if (player.getHp().get() > 0)
+                    player.decHp();
+            }
+        } else{
+            if(frameToRespawn-- == 0){
+                playerWasHit = false;
+                player.changeImage(playerImageHeil);
+            }
         }
         enemyIsHit();
     }
@@ -46,6 +65,7 @@ public class EntityHandler {
         for(Projectile act:temp) {
             playerP.add(act);
             root.getChildren().add(act.getBody());
+            playerSound.play();
         }
     }
 
@@ -58,6 +78,7 @@ public class EntityHandler {
                 enemyP.add(actPro);
                 root.getChildren().add(actPro.getBody());
             }
+            enemeySound.play();
         }
     }
 

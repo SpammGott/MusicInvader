@@ -104,4 +104,8 @@ public class Player extends Ship {
     public IntegerProperty getHp(){return hp;}
 
     public void decHp(){hp.setValue(hp.get() - 1);}
+
+    public void changeImage(Image image){
+        body.setImage(image);
+    }
 }

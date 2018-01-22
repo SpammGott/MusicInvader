@@ -41,6 +41,7 @@ public class GameScene extends Scene {
     private MenuScene menuScene;
 
     private Image playerImage;
+    private Image playerImageKaputt;
     private Image enemyImage;
     private Image projectileImage;
 
@@ -58,9 +59,10 @@ public class GameScene extends Scene {
         this.window = window;
         this.menuScene = menuScene;
         playerImage = loadImage("Assets/MirrorFighter_no1.png");
+        playerImageKaputt = loadImage("Assets/MirrorFighter_no1-red.png");
         enemyImage = loadImage("Assets/Triwing_no1.png");
         projectileImage = loadImage("Assets/ProjektilFüller.png");
-        entityHandler = new EntityHandler(game, playerImage, enemyImage, projectileImage);
+        entityHandler = new EntityHandler(game, playerImage, playerImageKaputt, enemyImage, projectileImage);
         gameInfos = new LeftGamePane(player, entityHandler);
         gameInfos.setPrefSize(Helper.getWidth() / 4, Helper.getHeight());
     }

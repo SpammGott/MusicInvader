@@ -14,7 +14,7 @@ public class Projectile extends Entity {
 
     private boolean isFromPlayer;
     private double rotate;
-    private SoundPlayer player = new SoundPlayer();
+    //private SoundPlayer player = new SoundPlayer();
 
     public Projectile(Vector2D pos, Vector2D direction, Image image){
         this.pos = pos.clone();
@@ -32,7 +32,7 @@ public class Projectile extends Entity {
         init();
         hitbox = new Hitbox(pos, 4, height, width, direction);
 
-        player.play(System.getProperty("user.dir") + "/res/Sounds/playerShot1.mp3");
+        //player.play(System.getProperty("user.dir") + "/res/Sounds/playerShot1.mp3");
     }
 
     public Projectile(Vector2D pos, Vector2D direction, Image image, boolean isFromPlayer){
@@ -52,7 +52,7 @@ public class Projectile extends Entity {
         init();
         hitbox = new Hitbox(pos, 4, height, width, direction);
 
-        player.play(System.getProperty("user.dir") +  "/res/Sounds/enemyShot1.mp3");
+        //player.play(System.getProperty("user.dir") +  "/res/Sounds/enemyShot1.mp3");
     }
 
     @Override

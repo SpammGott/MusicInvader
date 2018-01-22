@@ -11,16 +11,16 @@ public class SoundPlayer {
     private boolean hasSong;
 
 
-    public SoundPlayer(){
+    public SoundPlayer(String fileName){
         minim = new SimpleMinim(true);
-    }
-
-    public void play(String fileName){
-        if(hasSong)
-            stop();
         audioPlayer = minim.loadMP3File(fileName);
         hasSong = true;
-        audioPlayer.play();
+    }
+
+    public void play(){
+        if(hasSong)
+            stop();
+        audioPlayer.play(0);
     }
 
     public void stop(){
