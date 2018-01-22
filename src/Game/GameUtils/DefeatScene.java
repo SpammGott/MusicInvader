@@ -32,9 +32,14 @@ public class DefeatScene extends Scene {
         HBox.setHgrow(reg1, Priority.ALWAYS);
         HBox.setHgrow(reg2, Priority.ALWAYS);
 
+
         Label points = new Label("POINTS: ");
         points.setId("SideText");
-        HBox pointCont = new HBox(reg1, points, reg2);
+        Label actPoints = new Label("0");
+        actPoints.setId("SideText");
+        HBox pointCont = new HBox(reg1, points, actPoints, reg2);
+
+        //entityHandler.getPoints().addListener(e -> actPoints.setText(String.valueOf(entityHandler.getPoints().get())));
 
 
         Button back = new Button("BACK TO MENU");

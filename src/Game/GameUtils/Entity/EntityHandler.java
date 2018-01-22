@@ -5,6 +5,7 @@ import Game.GameUtils.Utils.Spawnpoint;
 import Game.GameUtils.Utils.Vector2D;
 import MP3Player.SoundPlayer;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
@@ -24,6 +25,8 @@ public class EntityHandler {
     private List<Projectile> enemyP = new ArrayList<>();
     private boolean playerWasHit = false;
     private int frameToRespawn = 0;
+
+    private IntegerProperty points = new SimpleIntegerProperty();
 
     private SoundPlayer playerSound = new SoundPlayer(System.getProperty("user.dir") + "/res/Sounds/playerShot1.mp3");
     private SoundPlayer enemeySound = new SoundPlayer(System.getProperty("user.dir") + "/res/Sounds/enemyShot1.mp3");
@@ -111,6 +114,7 @@ public class EntityHandler {
                 enemyList.remove(i);
                 root.getChildren().remove(act.getBody());
                 i--;
+                points.setValue(points.getValue() + 1);
             }
         }
         removeProjectile(playerP, tempProjectileList);
@@ -167,4 +171,8 @@ public class EntityHandler {
     public Player getPlayer(){return player;}
 
     public IntegerProperty getHp(){return player.getHp();}
+
+    public IntegerProperty getPoints(){return points;}
+
+    public void resetPoints(){points.setValue(0);}
 }

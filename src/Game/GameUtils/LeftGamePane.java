@@ -23,7 +23,11 @@ public class LeftGamePane extends Pane {
 
         Label points = new Label("POINTS: ");
         points.setId("SideText");
-        HBox pointCont = new HBox(points);
+        Label actPoints = new Label("0");
+        actPoints.setId("SideText");
+        HBox pointCont = new HBox(points, actPoints);
+
+        entityHandler.getPoints().addListener(e -> actPoints.setText(String.valueOf(entityHandler.getPoints().get())));
 
         Label actSong = new Label(player.getActualTrack().getName());
         Label actNextSong = new Label(player.getActPlaylist().getNextTrackWithoutChangingIndex().getName());
