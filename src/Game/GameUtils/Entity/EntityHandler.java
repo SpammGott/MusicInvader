@@ -39,7 +39,7 @@ public class EntityHandler {
         this.projectileImage = projectileImage;
         this.player = new Player(this.playerImageHeil);
         root.getChildren().add(player.getBody());
-        playerSound.volume(0.5f);
+        playerSound.volume(0.2f);
     }
 
     public void updateEntitys(){
@@ -175,4 +175,6 @@ public class EntityHandler {
     public IntegerProperty getPoints(){return points;}
 
     public void resetPoints(){points.setValue(0);}
+
+    public boolean isPlayerWasHit(){return playerWasHit; }
 }
