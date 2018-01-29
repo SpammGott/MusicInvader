@@ -13,19 +13,20 @@ public class OptionsPane extends VBox {
         Label text = new Label("CONTROLS:");
         Button wasd = new Button("WASD");
         Button arrows = new Button("ARROW KEYS");
+        arrows.setStyle("-fx-font-size: 30");
 
         text.setId("Headline");
 
         wasd.setOnAction(e -> {
             Helper.setControls(true);
-            wasd.setStyle("-fx-font-size: 35");
-            arrows.setStyle("-fx-font-size: 25");
+            wasd.setStyle("-fx-font-size: 30");
+            arrows.setStyle("-fx-font-size: 20");
         });
 
         arrows.setOnAction(e -> {
             Helper.setControls(false);
-            arrows.setStyle("-fx-font-size: 35");
-            wasd.setStyle("-fx-font-size: 25");
+            arrows.setStyle("-fx-font-size: 30");
+            wasd.setStyle("-fx-font-size: 20");
         });
 
         Button back = new Button("BACK");
