@@ -177,4 +177,11 @@ public class EntityHandler {
     public void resetPoints(){points.setValue(0);}
 
     public boolean isPlayerWasHit(){return playerWasHit; }
+
+    public boolean isLeer(){
+        if(enemyList.size() == 0 && enemyP.size() == 0 && playerP.size() == 0){
+            return true;
+        }
+        return false;
+    }
 }

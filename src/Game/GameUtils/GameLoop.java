@@ -42,11 +42,10 @@ public class GameLoop extends AnimationTimer {
             entityHandler.updateEntitys();
 
             background.setY(background.getY() + Helper.getAbsoluteHeight(0.05));
-
-            if(removeAll) {
-                entityHandler.removeAllProjectiles();
-                entityHandler.removeAllEnemys();
-            }
+        }
+        if(removeAll) {
+            entityHandler.removeAllProjectiles();
+            entityHandler.removeAllEnemys();
         }
     }
 
@@ -60,6 +59,14 @@ public class GameLoop extends AnimationTimer {
 
     public void pause(){
         pause = true;
+    }
+
+    public void stopGameLoop(){
+        pause();
+        while(!entityHandler.isLeer()){
+
+        }
+        stop();
     }
 
     public void continueLoop(){
