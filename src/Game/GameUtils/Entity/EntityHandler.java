@@ -180,6 +180,8 @@ public class EntityHandler {
 
     public IntegerProperty getPoints(){return points;}
 
+    public void setPoints(int i){points.set(i);}
+
     public void reset(){
         points.setValue(0);
         player.resetHp();

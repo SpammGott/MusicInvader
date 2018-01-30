@@ -45,6 +45,11 @@ public class LeftGamePane extends Pane {
         a.addListener(e -> {
             actSong.setText(player.getActualTrack().getName());
             actNextSong.setText(player.getActPlaylist().getNextTrackWithoutChangingIndex().getName());
+            //controlls how often the player looses a point 100 = 10sec
+            if(a.get() > 100){
+                entityHandler.setPoints(entityHandler.getPoints().get() - 1);
+                a.set(0);
+            }
         });
 
         Label currentSong = new Label("CURRENT SONG: ");
