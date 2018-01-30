@@ -40,7 +40,13 @@ public abstract class Entity {
 
     public Vector2D getPos() {return pos;}
 
-    public void setPos(Vector2D pos) {this.pos = pos;}
+    public void setPos(Vector2D pos) {
+        this.pos = pos;
+        body.setX(Helper.getAbsoluteWidth(pos.getX()));
+        body.setY(Helper.getAbsoluteHeight(pos.getY()));
+        center = new Vector2D(pos.getX() + width/2, pos.getY() + height/2);
+        hitbox = new Hitbox(pos, 4, height, width);
+    }
 
     public double getHeight() {return height;}
 

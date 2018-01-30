@@ -2,15 +2,22 @@ package Game.GameUtils;
 
 import Game.GameUtils.Entity.EntityHandler;
 import MP3Player.MP3Player;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 public class LeftGamePane extends Pane {
 
     public LeftGamePane(MP3Player player, EntityHandler entityHandler){
+        IntegerProperty a = new SimpleIntegerProperty(0);
         setStyle("-fx-background-color: #333333");
 
         Label lifePoints = new Label("LIFEPOINTS: ");
@@ -29,17 +36,15 @@ public class LeftGamePane extends Pane {
 
         entityHandler.getPoints().addListener(e -> actPoints.setText(String.valueOf(entityHandler.getPoints().get())));
 
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> a.setValue(a.getValue() + 1)));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+
         Label actSong = new Label(player.getActualTrack().getName());
         Label actNextSong = new Label(player.getActPlaylist().getNextTrackWithoutChangingIndex().getName());
-        player.addPropertyChangeListenerSongInfos(e -> {
-            System.out.println("CHANGE RECEIVED");
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    actSong.setText(player.getActualTrack().getName());
-                    actNextSong.setText(player.getActPlaylist().getNextTrackWithoutChangingIndex().getName());
-                }
-            });
+        a.addListener(e -> {
+            actSong.setText(player.getActualTrack().getName());
+            actNextSong.setText(player.getActPlaylist().getNextTrackWithoutChangingIndex().getName());
         });
 
         Label currentSong = new Label("CURRENT SONG: ");

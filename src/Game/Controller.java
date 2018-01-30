@@ -15,6 +15,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.io.File;
+
 public class Controller extends Application{
 
     public static void main(String[] args){
@@ -23,7 +25,7 @@ public class Controller extends Application{
 
     @Override
     public void start(Stage window){
-        Font.loadFont(Controller.class.getResource("../PIXELED.TTF").toExternalForm(), 10);
+        Font.loadFont(Controller.class.getResource(".." + File.separatorChar + "PIXELED.TTF").toExternalForm(), 10);
 
         MP3Player player;
         PlaylistManager playlistManager = new PlaylistManager(System.getProperty("user.dir") + "/res/Songs");
