@@ -15,8 +15,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.io.File;
-
 public class Controller extends Application{
 
     public static void main(String[] args){

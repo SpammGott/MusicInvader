@@ -10,6 +10,19 @@
     -fx-background-color: transparent;
 }
 
+.scroll-pane{
+    -fx-background: black;
+    -fx-border-color: black;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+.scroll-pane:focused {
+    -fx-background-insets: 0;
+}
+.scroll-pane .corner {
+    -fx-background-insets: 0;
+}
+
 #SideText{
     -fx-text-fill: white;
     -fx-font-size: 15;

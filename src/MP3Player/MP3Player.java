@@ -1,8 +1,6 @@
 package MP3Player;
 
 import Game.GameUtils.GameScene;
-import ddf.minim.AudioPlayer;
-import ddf.minim.Minim;
 import ddf.minim.ugens.TickRate;
 import de.hsrm.mi.eibo.simpleplayer.SimpleAudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleMinim;

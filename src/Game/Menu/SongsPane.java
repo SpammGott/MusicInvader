@@ -6,12 +6,12 @@ import MP3Player.Track;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import MP3Player.PlaylistManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SongsPane extends VBox {
@@ -24,19 +24,30 @@ public class SongsPane extends VBox {
         Label text = new Label("SONGS:");
         text.setId("Headline");
 
-        Button firstSong = new Button(tracks.get(0).getName());
-        firstSong.setOnAction(event -> {
-            player.stop();
-            //player.changePlaylist(playlistManager.getPlaylist("defaultPlaylist"));
-            player.play(0);
-        });
+        Button buttons[] = new Button[tracks.size()];
+        VBox songs = new VBox();
+        songs.setAlignment(Pos.CENTER);
 
-        Button secondSong = new Button(tracks.get(1).getName());
-        secondSong.setOnAction(event -> {
-            player.stop();
-            //player.changePlaylist(playlistManager.getPlaylist("defaultPlaylist"));
-            player.playOnce(1);
-        });
+        for(int i = 0; i < tracks.size(); i++){
+            Button temp = new Button(tracks.get(i).getName());
+            temp.setOnAction(event -> {
+                int pos = -1;
+                for(int j = 0; j < buttons.length || pos == -1; j++){
+                    if(buttons[j] == temp)
+                        pos = j;
+                }
+                player.stop();
+                //player.changePlaylist(playlistManager.getPlaylist("defaultPlaylist"));
+                player.play(pos);
+            });
+            buttons[i] = temp;
+            songs.getChildren().add(temp);
+        }
+        ScrollPane sp = new ScrollPane();
+        sp.setHbarPolicy(ScrollBarPolicy.NEVER);
+        sp.setVbarPolicy(ScrollBarPolicy.NEVER);
+        sp.setContent(songs);
+        sp.setFitToWidth(true);
 
         Button back = new Button("BACK");
         back.setOnAction(e -> {
@@ -46,7 +57,11 @@ public class SongsPane extends VBox {
             menuScene.setCenter(menu);
         });
 
-        getChildren().addAll(text, firstSong, secondSong, back);
+        getChildren().addAll(text, sp);
+        //for(Button temp:buttons){
+        //    getChildren().add(temp);
+        //}
+        getChildren().addAll(back);
         setStyle("-fx-background-color: black");
         setAlignment(Pos.CENTER);
     }

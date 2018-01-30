@@ -14,6 +14,7 @@ public class GameLoop extends AnimationTimer {
     private int frameToShoot = 0;
     private boolean removeAll = false;
     private boolean pause = false;
+    private boolean stop = false;
     private ConcurrentLinkedQueue<Spawnpoint> spawnQueue = new ConcurrentLinkedQueue<>();
 
     private ImageView background;
@@ -46,7 +47,12 @@ public class GameLoop extends AnimationTimer {
         if(removeAll) {
             entityHandler.removeAllProjectiles();
             entityHandler.removeAllEnemys();
-            stop();
+        }
+        if(stop){
+            if(entityHandler.isLeer()){
+                stop = false;
+                stop();
+            }
         }
     }
 
@@ -66,6 +72,7 @@ public class GameLoop extends AnimationTimer {
         pause();
         entityHandler.reset();
         removeAll();
+        stop = true;
     }
 
     public void continueLoop(){
