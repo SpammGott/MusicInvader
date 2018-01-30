@@ -42,11 +42,11 @@ public class GameLoop extends AnimationTimer {
             entityHandler.updateEntitys();
 
             background.setY(background.getY() + Helper.getAbsoluteHeight(0.05));
-
-            if(removeAll) {
-                entityHandler.removeAllProjectiles();
-                entityHandler.removeAllEnemys();
-            }
+        }
+        if(removeAll) {
+            entityHandler.removeAllProjectiles();
+            entityHandler.removeAllEnemys();
+            stop();
         }
     }
 
@@ -54,12 +54,18 @@ public class GameLoop extends AnimationTimer {
         spawnQueue.add(spawnpoint);
     }
 
-    public void removeAll(){
+    private void removeAll(){
         removeAll = true;
     }
 
-    public void pause(){
+    private void pause(){
         pause = true;
+    }
+
+    public void stopGameLoop(){
+        pause();
+        entityHandler.reset();
+        removeAll();
     }
 
     public void continueLoop(){

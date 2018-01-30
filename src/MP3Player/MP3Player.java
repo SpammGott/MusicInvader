@@ -23,6 +23,7 @@ public class MP3Player {
     private GameScene gameScene;
     private TickRate tickRate = new TickRate(1);
 
+
     private boolean hasSong;
 
     /**
