@@ -110,18 +110,13 @@ public class GameScene extends Scene {
         setOnKeyPressed(keyEvent -> {
             if(keyEvent.getCode() == KeyCode.ESCAPE){
                 reset();
-                gameLoop.stop();
+                gameLoop.stopGameLoop();
                 mp3Player.stop();
-                mp3Player.changePlaylist(playlistManager.getPlaylist("titlesong"));
-                mp3Player.play(0);
                 escClicked(window, menuScene);
             }else if(keyEvent.getCode() == KeyCode.F4){
                 reset();
-                gameLoop.stop();
+                gameLoop.stopGameLoop();
                 mp3Player.stop();
-                mp3Player.changePlaylist(playlistManager.getPlaylist("titlesong"));
-                mp3Player.play(0);
-
                 Pane test = new Pane();
                 DefeatScene defeat = new DefeatScene(test, window, menuScene, entityHandler);
                 window.setScene(defeat);
@@ -147,12 +142,12 @@ public class GameScene extends Scene {
         this.setCursor(Cursor.DEFAULT);
         window.setScene(menuScene);
         window.setFullScreen(true);
-        reset();
     }
 
     private void reset(){
-        gameLoop.removeAll();
-        entityHandler.getPlayer().setPos(new Vector2D((getWidth() / 2) - (entityHandler.getPlayer().getWidth() / 2), (getHeight())));
+        entityHandler.getPlayer().setPos(new Vector2D(8 - (entityHandler.getPlayer().getWidth() / 2), 16 - (entityHandler.getPlayer().getHeight() /2)));
+        mp3Player.changePlaylist(playlistManager.getPlaylist("titlesong"));
+        mp3Player.play(0);
     }
 
     private Image loadImage(String name){

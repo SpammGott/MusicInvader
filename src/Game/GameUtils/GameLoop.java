@@ -46,6 +46,7 @@ public class GameLoop extends AnimationTimer {
         if(removeAll) {
             entityHandler.removeAllProjectiles();
             entityHandler.removeAllEnemys();
+            stop();
         }
     }
 
@@ -53,20 +54,18 @@ public class GameLoop extends AnimationTimer {
         spawnQueue.add(spawnpoint);
     }
 
-    public void removeAll(){
+    private void removeAll(){
         removeAll = true;
     }
 
-    public void pause(){
+    private void pause(){
         pause = true;
     }
 
     public void stopGameLoop(){
         pause();
-        while(!entityHandler.isLeer()){
-
-        }
-        stop();
+        entityHandler.reset();
+        removeAll();
     }
 
     public void continueLoop(){

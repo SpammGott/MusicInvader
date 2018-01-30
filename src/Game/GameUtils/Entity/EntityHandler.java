@@ -158,8 +158,14 @@ public class EntityHandler {
     }
 
     public void removeAllProjectiles(){
-        removeProjectile(playerP, playerP);
-        removeProjectile(enemyP, enemyP);
+        for(Projectile act:playerP){
+            root.getChildren().remove(act.getBody());
+        }
+        playerP.clear();
+        for(Projectile act:enemyP){
+            root.getChildren().remove(act.getBody());
+        }
+        enemyP.clear();
     }
 
     private void removeProjectile(List<Projectile> removeFrom, List<Projectile> remove){
@@ -174,7 +180,10 @@ public class EntityHandler {
 
     public IntegerProperty getPoints(){return points;}
 
-    public void resetPoints(){points.setValue(0);}
+    public void reset(){
+        points.setValue(0);
+        player.resetHp();
+    }
 
     public boolean isPlayerWasHit(){return playerWasHit; }
 
