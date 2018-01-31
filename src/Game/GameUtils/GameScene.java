@@ -47,6 +47,7 @@ public class GameScene extends Scene {
     private Image enemyImage;
     private Image projectileImage;
     private Image backgroundImage;
+    private Image explosion[] = new Image[5];
 
     private GameLoop gameLoop;
 
@@ -66,11 +67,8 @@ public class GameScene extends Scene {
         left.setPrefSize(Helper.getWidth() / 4, Helper.getHeight());
         this.window = window;
         this.menuScene = menuScene;
-        playerImage = loadImage("Assets/MirrorFighter_no1.png");
-        playerImageKaputt = loadImage("Assets/MirrorFighter_no1-red.png");
-        enemyImage = loadImage("Assets/Triwing_no1.png");
-        projectileImage = loadImage("Assets/ProjektilFüller.png");
-        entityHandler = new EntityHandler(game, playerImage, playerImageKaputt, enemyImage, projectileImage);
+        initImages();
+        entityHandler = new EntityHandler(game, playerImage, playerImageKaputt, enemyImage, projectileImage, explosion);
         gameInfos = new LeftGamePane(player, entityHandler);
         gameInfos.setPrefSize(Helper.getWidth() / 4, Helper.getHeight());
     }
@@ -148,6 +146,16 @@ public class GameScene extends Scene {
         entityHandler.getPlayer().setPos(new Vector2D(8 - (entityHandler.getPlayer().getWidth() / 2), 16 - (entityHandler.getPlayer().getHeight() /2)));
         mp3Player.changePlaylist(playlistManager.getPlaylist("titlesong"));
         mp3Player.play(0);
+    }
+
+    private void initImages(){
+        playerImage = loadImage("Assets/MirrorFighter_no1.png");
+        playerImageKaputt = loadImage("Assets/MirrorFighter_no1-red.png");
+        enemyImage = loadImage("Assets/Triwing_no1.png");
+        projectileImage = loadImage("Assets/ProjektilFüller.png");
+        for(int i = 0; i < explosion.length; i++){
+            explosion[i] = loadImage("Assets/Explo" + (i+1) + ".png");
+        }
     }
 
     private Image loadImage(String name){

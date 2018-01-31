@@ -41,6 +41,7 @@ public class GameLoop extends AnimationTimer {
             frameToShoot++;
 
             entityHandler.updateEntitys();
+            entityHandler.enemyExplosion();
 
             background.setY(background.getY() + Helper.getAbsoluteHeight(0.05));
         }

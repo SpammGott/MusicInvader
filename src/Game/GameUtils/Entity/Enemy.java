@@ -8,11 +8,14 @@ import javafx.scene.image.ImageView;
 public class Enemy extends Ship {
 
     private Spawnpoint homeSpawnPoint;
+    private Image explosion[];
+    private int framesForExp = 60;
 
-    public Enemy(Spawnpoint homeSpawnPoint, Image image){
+    public Enemy(Spawnpoint homeSpawnPoint, Image image, Image explosion[]){
         this.homeSpawnPoint = homeSpawnPoint;
         this.pos = new Vector2D(this.homeSpawnPoint.getPos());
         this.direction = new Vector2D(this.homeSpawnPoint.getRandomDirection());
+        this.explosion = explosion;
         height = 0.6;
         width = 0.6;
         body = new ImageView(image);
@@ -20,6 +23,24 @@ public class Enemy extends Ship {
         speed = defSpeed;
         init();
         hitbox = new Hitbox(pos, 3, height, width);
+    }
+
+    public boolean explosion(){
+        if(framesForExp == 60){
+            body.setImage(explosion[0]);
+        }else if(framesForExp == 48){
+            body.setImage(explosion[1]);
+        } else if(framesForExp == 36){
+            body.setImage(explosion[2]);
+        } else if(framesForExp == 24){
+            body.setImage(explosion[3]);
+        } else if(framesForExp == 12){
+            body.setImage(explosion[4]);
+        } else if(framesForExp == 0){
+            return true;
+        }
+        framesForExp--;
+        return false;
     }
 
     @Override
@@ -49,4 +70,12 @@ public class Enemy extends Ship {
     }
 
     public ImageView getBody(){return this.body;}
+
+    public void changeImage(Image image){
+        body.setImage(image);
+    }
+
+    public int getFramesForExp(){return framesForExp;}
+
+    public void decFrameForExp(){framesForExp--;}
 }

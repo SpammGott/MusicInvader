@@ -18,7 +18,9 @@ public class EntityHandler {
     private Image playerImageKaputt;
     private Image enemyImage;
     private Image projectileImage;
+    private Image explosion[];
     private List<Enemy> enemyList = new ArrayList<>();
+    private List<Enemy> enemyExp = new ArrayList<>();
     private Pane root;
     private Player player;
     private List<Projectile> playerP = new ArrayList<>();
@@ -31,15 +33,17 @@ public class EntityHandler {
     private SoundPlayer playerSound = new SoundPlayer(System.getProperty("user.dir") + "/res/Sounds/playerShot1.mp3");
     private SoundPlayer enemeySound = new SoundPlayer(System.getProperty("user.dir") + "/res/Sounds/enemyShot1.mp3");
 
-    public EntityHandler(Pane root, Image playerImageHeil, Image playerImageKaputt, Image enemyImage, Image projectileImage){
+    public EntityHandler(Pane root, Image playerImageHeil, Image playerImageKaputt, Image enemyImage, Image projectileImage, Image explosion[]){
         this.root = root;
         this.playerImageHeil = playerImageHeil;
         this.playerImageKaputt = playerImageKaputt;
         this.enemyImage = enemyImage;
         this.projectileImage = projectileImage;
         this.player = new Player(this.playerImageHeil);
+        this.explosion = explosion;
         root.getChildren().add(player.getBody());
-        playerSound.volume(0.2f);
+        playerSound.volume(0.3f);
+        enemeySound.volume(0.3f);
     }
 
     public void updateEntitys(){
@@ -111,6 +115,7 @@ public class EntityHandler {
                 }
             }
             if(isHit){
+                enemyExp.add(enemyList.get(i));
                 enemyList.remove(i);
                 root.getChildren().remove(act.getBody());
                 i--;
@@ -122,12 +127,12 @@ public class EntityHandler {
 
 
     public void spawnEnemy(Spawnpoint spawnpoint){
-        Enemy temp = new Enemy(spawnpoint, enemyImage);
+        Enemy temp = new Enemy(spawnpoint, enemyImage, explosion);
         enemyList.add(temp);
         root.getChildren().add(temp.getBody());
     }
 
-    public void moveAllEnemys(){
+    private void moveAllEnemys(){
         for(int i = 0; i < enemyList.size(); i++){
             enemyList.get(i).move();
         }
@@ -145,6 +150,15 @@ public class EntityHandler {
             if (!temp.getPos().xinRange(0, 16) || !temp.getPos().yinRange(0, 16)) {
                 root.getChildren().remove(temp.getBody());
                 list.remove(i);
+                i--;
+            }
+        }
+    }
+
+    public void enemyExplosion(){
+        for(int i = 0; i < enemyExp.size(); i++){
+            if(enemyExp.get(i).explosion()){
+                enemyExp.remove(i);
                 i--;
             }
         }
@@ -174,6 +188,7 @@ public class EntityHandler {
             root.getChildren().remove(act.getBody());
         }
     }
+
     public Player getPlayer(){return player;}
 
     public IntegerProperty getHp(){return player.getHp();}
@@ -190,9 +205,6 @@ public class EntityHandler {
     public boolean isPlayerWasHit(){return playerWasHit; }
 
     public boolean isLeer(){
-        if(enemyList.size() == 0 && enemyP.size() == 0 && playerP.size() == 0){
-            return true;
-        }
-        return false;
+        return enemyList.size() == 0 && enemyP.size() == 0 && playerP.size() == 0;
     }
 }
