@@ -4,6 +4,7 @@ import Game.GameUtils.Entity.EntityHandler;
 import Game.GameUtils.Utils.Helper;
 import Game.GameUtils.Utils.Spawnpoint;
 import javafx.animation.AnimationTimer;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -14,20 +15,24 @@ public class GameLoop extends AnimationTimer {
     private int frameToShoot = 0;
     private boolean removeAll = false;
     private boolean pause = false;
+    private int timeToPause = 120;
     private boolean stop = false;
     private ConcurrentLinkedQueue<Spawnpoint> spawnQueue = new ConcurrentLinkedQueue<>();
 
-    private ImageView background;
+    private ImageView background1;
+    private ImageView background2;
 
-    public GameLoop(EntityHandler entityHandler, ImageView background){
+    public GameLoop(EntityHandler entityHandler, ImageView background[]){
         super();
         this.entityHandler = entityHandler;
-        this.background = background;
+        this.background1 = background[0];
+        this.background2 = background[1];
+
     }
 
     @Override
     public void handle(long now) {
-        if(!pause) {
+        if(!pause && timeToPause == 0) {
             if(!spawnQueue.isEmpty())
                 entityHandler.spawnEnemy(spawnQueue.poll());
 
@@ -43,12 +48,22 @@ public class GameLoop extends AnimationTimer {
             entityHandler.updateEntitys();
             entityHandler.enemyExplosion();
 
-            background.setY(background.getY() + Helper.getAbsoluteHeight(0.05));
+        } else if(timeToPause > 0){
+            timeToPause--;
+            spawnQueue.clear();
+        } else{
+            spawnQueue.clear();
         }
+        if(background1.getY() > Helper.getAbsoluteHeight(16))
+            background1.setY(-Helper.getAbsoluteHeight(16));
+        background1.setY(background1.getY() + Helper.getAbsoluteHeight(0.02));
+        background2.setY(background1.getY() + Helper.getAbsoluteHeight(0.02));
+
         if(removeAll) {
             entityHandler.removeAllProjectiles();
             entityHandler.removeAllEnemys();
         }
+
         if(stop){
             if(entityHandler.isLeer()){
                 stop = false;
@@ -61,12 +76,16 @@ public class GameLoop extends AnimationTimer {
         spawnQueue.add(spawnpoint);
     }
 
-    private void removeAll(){
+    public void removeAll(){
         removeAll = true;
     }
 
     private void pause(){
         pause = true;
+    }
+
+    public void pause(int time){
+        timeToPause = time;
     }
 
     public void stopGameLoop(){

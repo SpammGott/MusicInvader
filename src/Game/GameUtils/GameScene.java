@@ -21,6 +21,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -42,6 +44,7 @@ public class GameScene extends Scene {
     private Stage window;
     private MenuScene menuScene;
     private ImageView background;
+    private ImageView background2;
     private SoundPlayer sp;
 
     private Image playerImage;
@@ -62,8 +65,13 @@ public class GameScene extends Scene {
         background = new ImageView(backgroundImage);
         background.setPreserveRatio(true);
         background.setFitWidth(Helper.getAbsoluteWidth(16));
-        background.setY(-(background.getFitHeight()/2));
-        game = new Pane(background);
+        background.setY(0);
+        background2 = new ImageView(backgroundImage);
+        background2.setPreserveRatio(true);
+        background2.setFitWidth(Helper.getAbsoluteWidth(16));
+        background2.setY(-Helper.getAbsoluteHeight(16));
+        System.out.println(background2.getY());
+        game = new Pane(background, background2);
         game.setPrefSize(Helper.getGameWidth(), Helper.getGameHeight());
         left.setStyle("-fx-background-color: #333333");
         left.setPrefSize(Helper.getWidth() / 4, Helper.getHeight());
@@ -77,7 +85,8 @@ public class GameScene extends Scene {
     }
 
     public void start(){
-        gameLoop = new GameLoop(entityHandler, background);
+        ImageView temp[] = {background, background2};
+        gameLoop = new GameLoop(entityHandler, temp);
         gameLoop.start();
 
         BeatDetector.FreqDetect beater = new BeatDetector.FreqDetect(System.getProperty("user.dir") + "/res/Songs/" + mp3Player.getActualTrack().getName() + ".mp3", mp3Player.getGameScene());
@@ -105,6 +114,15 @@ public class GameScene extends Scene {
 
                     System.out.println("Robot in GameScene fucked up.");
                 }
+            }
+        });
+
+        mp3Player.addPropertyChangeListenerSongInfos(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                System.out.println("empfangen");
+                gameLoop.pause(60);
+                gameLoop.removeAll();
             }
         });
 
