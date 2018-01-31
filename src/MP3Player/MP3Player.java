@@ -1,9 +1,16 @@
 package MP3Player;
 
 import Game.GameUtils.GameScene;
+import ddf.minim.AudioListener;
 import ddf.minim.ugens.TickRate;
 import de.hsrm.mi.eibo.simpleplayer.SimpleAudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleMinim;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.util.Duration;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -20,6 +27,7 @@ public class MP3Player {
     private PropertyChangeSupport playing;
     private GameScene gameScene;
     private TickRate tickRate = new TickRate(1);
+    private BooleanProperty isSkipped = new SimpleBooleanProperty(true);
 
 
     private boolean hasSong;
@@ -73,18 +81,22 @@ public class MP3Player {
             audioPlayer.play();
             System.out.println(actPlaylist.getName());
             playing.firePropertyChange("Song is now playing", !audioPlayer.isPlaying(), audioPlayer.isPlaying());
+            startAutomaticSkipper();
         }
     }
 
     public void startAutomaticSkipper(){
-        while (true){
-            try{
-                Thread.sleep(getActualTrack().getLength());
-                skip();
-            }catch (Exception e){
-
-            }
-        }
+        Timeline automaticSkip = new Timeline(new KeyFrame(Duration.millis(20), e -> {
+            if(audioPlayer.isPlaying() != isSkipped.getValue())
+                isSkipped.setValue(audioPlayer.isPlaying());
+                isSkipped.setValue(true);
+        }));
+        automaticSkip.setCycleCount(Animation.INDEFINITE);
+        automaticSkip.play();
+        isSkipped.addListener(e -> {
+            skip();
+            System.out.println("Skipped");
+        });
     }
 
     /**
@@ -262,4 +274,6 @@ public class MP3Player {
     public GameScene getGameScene() {
         return gameScene;
     }
+
+    public BooleanProperty getIsSkipped(){return isSkipped;}
 }

@@ -15,7 +15,7 @@ public class GameLoop extends AnimationTimer {
     private int frameToShoot = 0;
     private boolean removeAll = false;
     private boolean pause = false;
-    private int timeToPause = 120;
+    private int timeToPause = 0;
     private boolean stop = false;
     private ConcurrentLinkedQueue<Spawnpoint> spawnQueue = new ConcurrentLinkedQueue<>();
 
@@ -56,8 +56,8 @@ public class GameLoop extends AnimationTimer {
         }
         if(background1.getY() > Helper.getAbsoluteHeight(16))
             background1.setY(-Helper.getAbsoluteHeight(16));
-        background1.setY(background1.getY() + Helper.getAbsoluteHeight(0.02));
-        background2.setY(background1.getY() + Helper.getAbsoluteHeight(0.02));
+        background1.setY(background1.getY() + Helper.getAbsoluteHeight(0.03));
+        background2.setY(background1.getY() + Helper.getAbsoluteHeight(0.03));
 
         if(removeAll) {
             entityHandler.removeAllProjectiles();

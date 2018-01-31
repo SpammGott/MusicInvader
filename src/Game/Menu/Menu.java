@@ -31,17 +31,6 @@ public class Menu extends VBox {
             window.setScene(gameScene);
             window.setFullScreen(true);
 
-            Task task = new Task<Void>() {
-                @Override
-                protected Void call() throws Exception {
-                    player.startAutomaticSkipper();
-                    return null;
-                }
-            };
-            Thread repeater = new Thread(task);
-            repeater.setDaemon(true);
-            repeater.start();
-
             player.play(0);
             gameScene.start();
         });
