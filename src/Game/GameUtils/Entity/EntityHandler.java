@@ -42,7 +42,7 @@ public class EntityHandler {
         this.player = new Player(this.playerImageHeil);
         this.explosion = explosion;
         root.getChildren().add(player.getBody());
-        playerSound.volume(0.3f);
+        playerSound.volume(0.25f);
         enemeySound.volume(0.3f);
     }
 

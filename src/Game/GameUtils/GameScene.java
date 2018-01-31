@@ -5,6 +5,7 @@ import Game.GameUtils.Utils.Spawnpoint;
 import Game.GameUtils.Utils.*;
 import Game.Menu.MenuScene;
 import MP3Player.MP3Player;
+import MP3Player.SoundPlayer;
 import MP3Player.PlaylistManager;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
@@ -41,6 +42,7 @@ public class GameScene extends Scene {
     private Stage window;
     private MenuScene menuScene;
     private ImageView background;
+    private SoundPlayer sp;
 
     private Image playerImage;
     private Image playerImageKaputt;
@@ -51,7 +53,7 @@ public class GameScene extends Scene {
 
     private GameLoop gameLoop;
 
-    public GameScene(Pane root, Stage window, MenuScene menuScene, MP3Player player, PlaylistManager playlistManager){
+    public GameScene(Pane root, Stage window, MenuScene menuScene, MP3Player player, PlaylistManager playlistManager, SoundPlayer sp){
         super(root, Helper.getHeight(), Helper.getWidth());
         this.root = root;
         this.mp3Player = player;
@@ -60,13 +62,14 @@ public class GameScene extends Scene {
         background = new ImageView(backgroundImage);
         background.setPreserveRatio(true);
         background.setFitWidth(Helper.getAbsoluteWidth(16));
-        //background.setY(-(background.getFitHeight()/2));
+        background.setY(-(background.getFitHeight()/2));
         game = new Pane(background);
         game.setPrefSize(Helper.getGameWidth(), Helper.getGameHeight());
         left.setStyle("-fx-background-color: #333333");
         left.setPrefSize(Helper.getWidth() / 4, Helper.getHeight());
         this.window = window;
         this.menuScene = menuScene;
+        this.sp = sp;
         initImages();
         entityHandler = new EntityHandler(game, playerImage, playerImageKaputt, enemyImage, projectileImage, explosion);
         gameInfos = new LeftGamePane(player, entityHandler);
@@ -110,11 +113,13 @@ public class GameScene extends Scene {
                 reset();
                 gameLoop.stopGameLoop();
                 mp3Player.stop();
+                sp.play();
                 escClicked(window, menuScene);
             }else if(keyEvent.getCode() == KeyCode.F4){
                 reset();
                 gameLoop.stopGameLoop();
                 mp3Player.stop();
+                sp.play();
                 Pane test = new Pane();
                 DefeatScene defeat = new DefeatScene(test, window, menuScene, entityHandler);
                 window.setScene(defeat);
@@ -137,7 +142,6 @@ public class GameScene extends Scene {
     }
 
     private void escClicked(Stage window, MenuScene menuScene){
-        this.setCursor(Cursor.DEFAULT);
         window.setScene(menuScene);
         window.setFullScreen(true);
     }

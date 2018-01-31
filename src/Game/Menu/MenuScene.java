@@ -8,8 +8,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class MenuScene extends Scene {
+    BorderPane menuPane;
 
     public MenuScene (Stage window, BorderPane menuPane, MP3Player player, PlaylistManager playlistManager) {
         super(menuPane, Helper.getHeight(), Helper.getWidth());
+        this.menuPane = menuPane;
+    }
+
+    public BorderPane getMenuPane(){
+        return menuPane;
     }
 }

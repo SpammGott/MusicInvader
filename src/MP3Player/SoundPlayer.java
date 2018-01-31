@@ -41,4 +41,9 @@ public class SoundPlayer {
         audioPlayer.setGain(gain);
     }
 
+    public void loop(){
+        audioPlayer.loop();
+
+    }
+
 }

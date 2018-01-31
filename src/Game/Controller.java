@@ -6,6 +6,7 @@ import Game.Menu.Menu;
 import Game.Menu.MenuScene;
 import MP3Player.MP3Player;
 import MP3Player.PlaylistManager;
+import MP3Player.SoundPlayer;
 import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.scene.Cursor;
@@ -27,19 +28,10 @@ public class Controller extends Application{
 
         MP3Player player;
         PlaylistManager playlistManager = new PlaylistManager(System.getProperty("user.dir") + "/res/Songs");
-        player = new MP3Player(playlistManager.getPlaylist("titlesong"));
-        player.play(0);
-
-        Task task = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                player.startAutomaticSkipper();
-                return null;
-            }
-        };
-        Thread repeater = new Thread(task);
-        repeater.setDaemon(true);
-        repeater.start();
+        player = new MP3Player(playlistManager.getPlaylist("defaultPlaylist"));
+        SoundPlayer splayer = new SoundPlayer(getClass().getClassLoader().getResource("Songs/Titlesong/BoxCat_Games_-_10_-_Epic_Song.mp3").getPath());
+        splayer.loop();
+        splayer.play();
 
         BorderPane menuPane = new BorderPane();
 
@@ -48,11 +40,11 @@ public class Controller extends Application{
         menuScene.getStylesheets().add("CSS.css");
 
         Pane root = new Pane();
-        GameScene gameScene = new GameScene(root, window, menuScene, player, playlistManager);
+        GameScene gameScene = new GameScene(root, window, menuScene, player, playlistManager, splayer);
 
         player.setGameScene(gameScene);
 
-        menuPane.setCenter(new Menu(window, menuPane, menuScene, gameScene, player, playlistManager));
+        menuPane.setCenter(new Menu(window, menuPane, menuScene, gameScene, player, playlistManager, splayer));
 
         window.setHeight(Helper.getHeight());
         window.setWidth(Helper.getWidth());

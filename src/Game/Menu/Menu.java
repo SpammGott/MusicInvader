@@ -3,7 +3,9 @@ package Game.Menu;
 import Game.GameUtils.GameScene;
 import MP3Player.MP3Player;
 import MP3Player.PlaylistManager;
+import MP3Player.SoundPlayer;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -15,18 +17,31 @@ import javafx.stage.Stage;
 
 public class Menu extends VBox {
 
-    public Menu(Stage window, BorderPane menuPane, MenuScene menuScene, GameScene gameScene, MP3Player player, PlaylistManager playlistManager){
+    private SoundPlayer titlesong;
 
+    public Menu(Stage window, BorderPane menuPane, MenuScene menuScene, GameScene gameScene, MP3Player player, PlaylistManager playlistManager, SoundPlayer titlesong){
+        this.titlesong = titlesong;
         Text header = new Text("MUSIC INVADER");
         header.setId("Header");
         header.setFill(Color.WHITE);
 
         Button start = new Button("START");
         start.setOnAction(e -> {
+            this.titlesong.stop();
             window.setScene(gameScene);
             window.setFullScreen(true);
-            player.stop();
-            player.changePlaylist(playlistManager.getPlaylist("defaultPlaylist"));
+
+            Task task = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    player.startAutomaticSkipper();
+                    return null;
+                }
+            };
+            Thread repeater = new Thread(task);
+            repeater.setDaemon(true);
+            repeater.start();
+
             player.play(0);
             gameScene.start();
         });
@@ -54,6 +69,10 @@ public class Menu extends VBox {
         setAlignment(Pos.CENTER);
         getChildren().addAll(header, start, songs, leaderboards, options, exit);
         setCursor(Cursor.DEFAULT);
+    }
+
+    public void playTitlesong(){
+        this.titlesong.play();
     }
 
 
