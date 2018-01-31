@@ -118,8 +118,10 @@ public class GameScene extends Scene {
         });
 
         mp3Player.getIsSkipped().addListener(e -> {
-            gameLoop.pause(60);
-            gameLoop.removeAll();
+            if(mp3Player.getIsSkipped().getValue()) {
+                gameLoop.pause(60);
+                gameLoop.removeAll();
+            }
         });
 
         mp3Player.addPropertyChangeListenerSongInfos(new PropertyChangeListener() {

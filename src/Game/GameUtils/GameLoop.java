@@ -62,6 +62,7 @@ public class GameLoop extends AnimationTimer {
         if(removeAll) {
             entityHandler.removeAllProjectiles();
             entityHandler.removeAllEnemys();
+            removeAll = false;
         }
 
         if(stop){

@@ -27,7 +27,7 @@ public class MP3Player {
     private PropertyChangeSupport playing;
     private GameScene gameScene;
     private TickRate tickRate = new TickRate(1);
-    private BooleanProperty isSkipped = new SimpleBooleanProperty(true);
+    private BooleanProperty isSkipped = new SimpleBooleanProperty(false);
 
 
     private boolean hasSong;
@@ -87,15 +87,18 @@ public class MP3Player {
 
     public void startAutomaticSkipper(){
         Timeline automaticSkip = new Timeline(new KeyFrame(Duration.millis(20), e -> {
-            if(audioPlayer.isPlaying() != isSkipped.getValue())
-                isSkipped.setValue(audioPlayer.isPlaying());
+            if(!audioPlayer.isPlaying())
                 isSkipped.setValue(true);
+            else if(audioPlayer.isPlaying() && isSkipped.getValue())
+                isSkipped.setValue(false);
         }));
         automaticSkip.setCycleCount(Animation.INDEFINITE);
         automaticSkip.play();
         isSkipped.addListener(e -> {
-            skip();
-            System.out.println("Skipped");
+            if(isSkipped.getValue()) {
+                skip();
+                System.out.println("Skipped\n--------------------------------------------------------------------------");
+            }
         });
     }
 
