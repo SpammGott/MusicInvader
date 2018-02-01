@@ -11,6 +11,7 @@ import javafx.scene.control.ScrollPane.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import MP3Player.PlaylistManager;
+import MP3Player.SoundPlayer;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class SongsPane extends VBox {
 
     private int index = 0;
 
-    public SongsPane(BorderPane menuScene, VBox menu, Playlist list, MP3Player player, PlaylistManager playlistManager){
+    public SongsPane(BorderPane menuScene, VBox menu, Playlist list, MP3Player player, PlaylistManager playlistManager, SoundPlayer soundp){
         List<Track> tracks = list.getList();
 
         Label text = new Label("SONGS:");
@@ -37,7 +38,6 @@ public class SongsPane extends VBox {
                         pos = j;
                 }
                 player.stop();
-                //player.changePlaylist(playlistManager.getPlaylist("defaultPlaylist"));
                 player.play(pos);
             });
             buttons[i] = temp;
@@ -52,8 +52,7 @@ public class SongsPane extends VBox {
         Button back = new Button("BACK");
         back.setOnAction(e -> {
             player.stop();
-            player.changePlaylist(playlistManager.getPlaylist("titlesong"));
-            player.playOnce(0);
+            soundp.play();
             menuScene.setCenter(menu);
         });
 
