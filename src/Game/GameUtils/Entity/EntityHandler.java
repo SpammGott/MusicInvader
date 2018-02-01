@@ -119,7 +119,7 @@ public class EntityHandler {
                 enemyList.remove(i);
                 root.getChildren().remove(act.getBody());
                 i--;
-                points.setValue(points.getValue() + 1);
+                points.setValue(points.getValue() + 10);
             }
         }
         removeProjectile(playerP, tempProjectileList);

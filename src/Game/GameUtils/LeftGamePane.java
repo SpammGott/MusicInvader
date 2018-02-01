@@ -44,12 +44,12 @@ public class LeftGamePane extends Pane {
 
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> a.setValue(a.getValue() + 1)));
-        timeline.play();
         timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
         a.addListener(e -> {
             //controlls how often the player looses a point 100 = 10sec
-            if(a.get() > 100){
-                entityHandler.setPoints(entityHandler.getPoints().get() - 1);
+            if(a.get() >= 10){
+                entityHandler.getPoints().setValue(entityHandler.getPoints().getValue() -1);
                 a.set(0);
             }
         });

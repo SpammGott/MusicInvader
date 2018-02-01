@@ -91,7 +91,6 @@ public class GameLoop extends AnimationTimer {
 
     public void stopGameLoop(){
         pause();
-        entityHandler.reset();
         removeAll();
         stop = true;
     }

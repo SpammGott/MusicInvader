@@ -89,6 +89,8 @@ public class GameScene extends Scene {
         gameLoop = new GameLoop(entityHandler, temp);
         gameLoop.start();
 
+        entityHandler.getPoints().setValue(0);
+
         BeatDetector.FreqDetect beater = new BeatDetector.FreqDetect(System.getProperty("user.dir") + "/res/Songs/" + mp3Player.getActualTrack().getName() + ".mp3", mp3Player.getGameScene());
 
         Task task = new Task<Void>() {
@@ -141,14 +143,15 @@ public class GameScene extends Scene {
                 sp.play();
                 escClicked(window, menuScene);
             }else if(keyEvent.getCode() == KeyCode.F4){
-                reset();
                 gameLoop.stopGameLoop();
                 mp3Player.stop();
                 sp.play();
                 Pane test = new Pane();
+                System.out.println(entityHandler.getPoints());
                 DefeatScene defeat = new DefeatScene(test, window, menuScene, entityHandler);
                 window.setScene(defeat);
                 window.setFullScreen(true);
+                reset();
             } else {
                 entityHandler.getPlayer().changeMovement(keyEvent);
             }
@@ -173,6 +176,7 @@ public class GameScene extends Scene {
 
     private void reset(){
         entityHandler.getPlayer().setPos(new Vector2D(8 - (entityHandler.getPlayer().getWidth() / 2), 16 - (entityHandler.getPlayer().getHeight() /2)));
+        entityHandler.reset();
         mp3Player.changePlaylist(playlistManager.getPlaylist("titlesong"));
         mp3Player.play(0);
     }

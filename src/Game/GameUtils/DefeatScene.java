@@ -16,6 +16,7 @@ public class DefeatScene extends Scene {
     private MenuScene menuScene;
     private Pane root;
     private EntityHandler entityHandler;
+    private int punkte;
 
     public DefeatScene(Pane root, Stage window, MenuScene menuScene, EntityHandler entityHandler){
         super(root, Helper.getHeight(), Helper.getWidth());
@@ -23,6 +24,7 @@ public class DefeatScene extends Scene {
         this.window = window;
         this.menuScene = menuScene;
         this.entityHandler = entityHandler;
+        punkte = entityHandler.getPoints().getValue();
         start();
     }
 
@@ -37,12 +39,9 @@ public class DefeatScene extends Scene {
 
         Label points = new Label("POINTS: ");
         points.setId("SideText");
-        Label actPoints = new Label(String.valueOf(entityHandler.getPoints().get()));
+        Label actPoints = new Label(String.valueOf(punkte));
         actPoints.setId("SideText");
         HBox pointCont = new HBox(reg1, points, actPoints, reg2);
-
-        entityHandler.getPoints().setValue(0);
-        entityHandler.getHp().setValue(3);
 
         Button back = new Button("BACK TO MENU");
         back.setOnAction(e -> {
