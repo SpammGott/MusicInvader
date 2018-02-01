@@ -177,8 +177,7 @@ public class GameScene extends Scene {
     private void reset(){
         entityHandler.getPlayer().setPos(new Vector2D(8 - (entityHandler.getPlayer().getWidth() / 2), 16 - (entityHandler.getPlayer().getHeight() /2)));
         entityHandler.reset();
-        mp3Player.changePlaylist(playlistManager.getPlaylist("titlesong"));
-        mp3Player.play(0);
+
     }
 
     private void initImages(){

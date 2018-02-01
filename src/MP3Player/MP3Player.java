@@ -28,6 +28,7 @@ public class MP3Player {
     private GameScene gameScene;
     private TickRate tickRate = new TickRate(1);
     private BooleanProperty isSkipped = new SimpleBooleanProperty(false);
+    private boolean isStop = false;
 
 
     private boolean hasSong;
@@ -81,16 +82,19 @@ public class MP3Player {
             audioPlayer.play();
             System.out.println(actPlaylist.getName());
             playing.firePropertyChange("Song is now playing", !audioPlayer.isPlaying(), audioPlayer.isPlaying());
+            isStop = false;
             startAutomaticSkipper();
         }
     }
 
     public void startAutomaticSkipper(){
         Timeline automaticSkip = new Timeline(new KeyFrame(Duration.millis(20), e -> {
-            if(!audioPlayer.isPlaying())
-                isSkipped.setValue(true);
-            else if(audioPlayer.isPlaying() && isSkipped.getValue())
-                isSkipped.setValue(false);
+            if(!isStop) {
+                if (!audioPlayer.isPlaying())
+                    isSkipped.setValue(true);
+                else if (audioPlayer.isPlaying() && isSkipped.getValue())
+                    isSkipped.setValue(false);
+            }
         }));
         automaticSkip.setCycleCount(Animation.INDEFINITE);
         automaticSkip.play();
@@ -108,7 +112,6 @@ public class MP3Player {
      */
     public void play(int index){
         stop();
-        //System.out.println(actPlaylist.getTrack(index).getName());
         Track oldTrack = actPlaylist.getTrack();
         Track newTrack = actPlaylist.getTrack(index);
         if(newTrack != null) {
@@ -158,6 +161,7 @@ public class MP3Player {
      */
     public void stop() {
         audioPlayer.rewind();
+        isStop = true;
         pause();
     }
 
