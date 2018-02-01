@@ -91,6 +91,16 @@ public class Playlist {
         return list.get(temp);
     }
 
+    public Track getPrevTrackWithoutChangingIndex(){
+        int temp = actTrack;
+        if(actTrack <= 0) {
+            temp = listSize-1;
+        } else {
+            temp--;
+        }
+        return list.get(temp);
+    }
+
     /**
      * Gets the previous track, or the last if current track is the first
      * @return previous track

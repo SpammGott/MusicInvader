@@ -4,7 +4,6 @@ import Game.GameUtils.Entity.EntityHandler;
 import Game.GameUtils.Utils.Helper;
 import Game.GameUtils.Utils.Spawnpoint;
 import javafx.animation.AnimationTimer;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -14,7 +13,6 @@ public class GameLoop extends AnimationTimer {
     private EntityHandler entityHandler;
     private int frameToShoot = 0;
     private int timeToPause = 0;
-    private int oneSecond = 0;
     private boolean removeAll = false;
     private boolean pause = false;
     private boolean stop = false;
@@ -50,11 +48,11 @@ public class GameLoop extends AnimationTimer {
             entityHandler.enemyExplosion();
 
             if (background1.getY() > Helper.getAbsoluteHeight(16))
-                background1.setY(-background1.getImage().getHeight()/4);
+                background1.setY(-background1.getImage().getHeight()/2);
             if (background2.getY() > Helper.getAbsoluteHeight(16))
-                background2.setY(-background2.getImage().getHeight()/4);
+                background2.setY(-background2.getImage().getHeight()/2);
             background1.setY(background1.getY() + Helper.getAbsoluteHeight(0.03));
-            background2.setY(background1.getY() + Helper.getAbsoluteHeight(0.03));
+            background2.setY(background2.getY() + Helper.getAbsoluteHeight(0.03));
 
         } else if(timeToPause > 0){
             timeToPause--;

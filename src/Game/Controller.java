@@ -24,7 +24,11 @@ public class Controller extends Application{
 
     @Override
     public void start(Stage window){
-        //Font.loadFont(Controller.class.getResource("../PIXELED.TTF").toExternalForm(), 10);
+        try {
+            Font.loadFont(getClass().getClassLoader().getResource("PIXELED.TTF").getPath(), 10);
+        }catch(Exception e){
+            System.out.println("File konnte nicht geladen werden\n" + e.getMessage());
+        }
 
         MP3Player player;
         PlaylistManager playlistManager = new PlaylistManager(System.getProperty("user.dir") + "/res/Songs");

@@ -200,6 +200,7 @@ public class EntityHandler {
     public void reset(){
         points.setValue(0);
         player.resetHp();
+        player.reset();
     }
 
     public boolean isPlayerWasHit(){return playerWasHit; }
