@@ -25,7 +25,7 @@ public class Controller extends Application{
     @Override
     public void start(Stage window){
         try {
-            Font.loadFont(getClass().getClassLoader().getResource("PIXELED.TTF").getPath(), 10);
+            Font.loadFont(Controller.class.getResource("../PIXELED.TTF").toExternalForm(), 10);
         }catch(Exception e){
             System.out.println("File konnte nicht geladen werden\n" + e.getMessage());
         }
