@@ -120,7 +120,7 @@ public class EntityHandler {
                 }
             }
             if(isHit){
-               // enemyList.remove(i);
+                //enemyList.remove(i);
                 //root.getChildren().remove(act.getBody());
                 //disable lines above this and enable line below this to enable explosion animations (WARNING: buggy)
                 explode(enemyList.get(i), i);
@@ -135,7 +135,7 @@ public class EntityHandler {
         enemyList.remove(i);
         Timeline explo = new Timeline(new KeyFrame(Duration.millis(100), e -> {
             enemy.body.setImage(explosion[incIndex()]);
-            if (getIndex() == 4){
+            if (getIndex() >= 4){
                 setIndex(0);
                 root.getChildren().remove(enemy.getBody());
             }
