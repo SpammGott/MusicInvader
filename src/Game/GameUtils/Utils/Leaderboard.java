@@ -73,7 +73,7 @@ public class Leaderboard {
             RandomAccessFile raf = new RandomAccessFile("res/highscore.txt", "rw");
             for (String actLine : leaderboard) {
                 if(actLine != null) {
-                    actLine = actLine.replace("\n", "").replace("\r", "");
+                    actLine = actLine.replace("\n", "").replace("\r", "");//.replace("\0", "");
                     raf.writeChars(actLine + "\n");
                 }
             }

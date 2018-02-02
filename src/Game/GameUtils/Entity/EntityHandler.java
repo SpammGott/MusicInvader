@@ -16,6 +16,7 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class EntityHandler {
     private Image playerImageHeil;
@@ -23,12 +24,16 @@ public class EntityHandler {
     private Image enemyImage;
     private Image projectileImage;
     private Image explosion[];
+
     private List<Enemy> enemyList = new ArrayList<>();
     private List<Enemy> enemyExp = new ArrayList<>();
-    private Pane root;
-    private Player player;
     private List<Projectile> playerP = new ArrayList<>();
     private List<Projectile> enemyP = new ArrayList<>();
+    private ConcurrentLinkedQueue<Enemy> deleteEnemy = new ConcurrentLinkedQueue<>();
+
+    private Pane root;
+    private Player player;
+
     private boolean playerWasHit = false;
     private int frameToRespawn = 0;
     private int index = 0;
@@ -52,9 +57,16 @@ public class EntityHandler {
     }
 
     public void updateEntitys(){
+        Enemy temp;
         player.move();
         moveAllProjectiles();
         moveAllEnemys();
+        moveExplosions();
+
+        while((temp = deleteEnemy.poll()) != null){
+            enemyExp.remove(temp);
+        }
+
         if(!playerWasHit){
             if(playerIsHit()) {
                 playerWasHit = true;
@@ -90,6 +102,7 @@ public class EntityHandler {
                 root.getChildren().add(actPro.getBody());
             }
             enemeySound.play();
+
         }
     }
 
@@ -120,10 +133,9 @@ public class EntityHandler {
                 }
             }
             if(isHit){
-               // enemyList.remove(i);
-                //root.getChildren().remove(act.getBody());
-                //disable lines above this and enable line below this to enable explosion animations (WARNING: buggy)
-                explode(enemyList.get(i), i);
+                explode(enemyList.get(i));
+                enemyExp.add(enemyList.get(i));
+                enemyList.remove(i);
                 i--;
                 points.setValue(points.getValue() + 10);
             }
@@ -131,13 +143,12 @@ public class EntityHandler {
         removeProjectile(playerP, tempProjectileList);
     }
 
-    public void explode(Enemy enemy, int i){
-        enemyList.remove(i);
+    public void explode(Enemy enemy){
         Timeline explo = new Timeline(new KeyFrame(Duration.millis(100), e -> {
-            enemy.body.setImage(explosion[incIndex()]);
-            if (getIndex() == 4){
-                setIndex(0);
+            enemy.body.setImage(explosion[enemy.incExplosionIndex()]);
+            if (enemy.getExplosionIndex() == 4){
                 root.getChildren().remove(enemy.getBody());
+                deleteEnemy.add(enemy);
             }
         }));
         explo.setCycleCount(4);
@@ -145,7 +156,7 @@ public class EntityHandler {
     }
 
     public void spawnEnemy(Spawnpoint spawnpoint){
-        Enemy temp = new Enemy(spawnpoint, enemyImage, explosion);
+        Enemy temp = new Enemy(spawnpoint, enemyImage);
         enemyList.add(temp);
         root.getChildren().add(temp.getBody());
     }
@@ -173,22 +184,9 @@ public class EntityHandler {
         }
     }
 
-    public void enemyExplosion(){
-        for(int i = 0; i < enemyExp.size(); i++){
-            /*
-            if(enemyExp.get(i).explosion()){
-                enemyExp.remove(i);
-                i--;
-            }
-            */
-            /*
-            Timeline explo = new Timeline(new KeyFrame(Duration.millis(16), e -> {
-                System.out.println("INDEX: " + getIndex());
-                enemyExp.get(i).body.setImage(explosion[incIndex()]);
-            }));
-            explo.setCycleCount(5);
-            explo.play();
-            */
+    private void moveExplosions(){
+        for(Enemy actEnemy: enemyExp){
+            actEnemy.move();
         }
     }
 
