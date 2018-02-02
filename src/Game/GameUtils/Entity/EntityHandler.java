@@ -120,12 +120,10 @@ public class EntityHandler {
                 }
             }
             if(isHit){
-
-                enemyExp.add(enemyList.get(i));
-                enemyList.remove(i);
-                root.getChildren().remove(act.getBody());
+               // enemyList.remove(i);
+                //root.getChildren().remove(act.getBody());
                 //disable lines above this and enable line below this to enable explosion animations (WARNING: buggy)
-                //explode(enemyList.get(i), i);
+                explode(enemyList.get(i), i);
                 i--;
                 points.setValue(points.getValue() + 10);
             }
@@ -134,12 +132,12 @@ public class EntityHandler {
     }
 
     public void explode(Enemy enemy, int i){
+        enemyList.remove(i);
         Timeline explo = new Timeline(new KeyFrame(Duration.millis(25), e -> {
             enemy.body.setImage(explosion[incIndex()]);
             if (getIndex() == 4){
                 setIndex(0);
                 root.getChildren().remove(enemy.getBody());
-                enemyList.remove(i);
             }
         }));
         explo.setCycleCount(4);
