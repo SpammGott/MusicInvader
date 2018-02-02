@@ -42,7 +42,10 @@ public class Controller extends Application{
         dir = dir.substring(1, dir.length()-1);
         PlaylistManager playlistManager = new PlaylistManager("res/Songs/");
         player = new MP3Player(playlistManager.getPlaylist("defaultPlaylist"));
-        SoundPlayer splayer = new SoundPlayer(getClass().getClassLoader().getResource("Songs/Titlesong/BoxCat_Games_-_10_-_Epic_Song.mp3").getPath());
+        //System.out.println(getClass().getClassLoader().getResource("Songs/Titlesong/BoxCat_Games_-_10_-_Epic_Song.mp3").getPath());
+        //SoundPlayer splayer = new SoundPlayer(getClass().getClassLoader().getResource("Songs/Titlesong/BoxCat_Games_-_10_-_Epic_Song.mp3").getPath());
+        System.out.println(System.getProperty("user.dir") + "\\res\\Songs\\Titlesong\\BoxCat_Games_-_10_-_Epic_Song.mp3");
+        SoundPlayer splayer = new SoundPlayer(System.getProperty("user.dir") + "\\res\\Songs\\Titlesong\\BoxCat_Games_-_10_-_Epic_Song.mp3");
         splayer.loop();
         splayer.play();
 
