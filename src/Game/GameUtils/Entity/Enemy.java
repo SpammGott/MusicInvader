@@ -1,11 +1,9 @@
 package Game.GameUtils.Entity;
 
 import Game.GameUtils.Utils.*;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.util.Duration;
+
 
 
 public class Enemy extends Ship {
@@ -13,7 +11,7 @@ public class Enemy extends Ship {
     private Spawnpoint homeSpawnPoint;
     private int explosionIndex = 0;
 
-    public Enemy(Spawnpoint homeSpawnPoint, Image image){
+    Enemy(Spawnpoint homeSpawnPoint, Image image){
         this.homeSpawnPoint = homeSpawnPoint;
         this.pos = new Vector2D(this.homeSpawnPoint.getPos());
         this.direction = new Vector2D(this.homeSpawnPoint.getRandomDirection());

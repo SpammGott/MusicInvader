@@ -15,7 +15,6 @@ public class Hitbox{
             viereck(pos, null);
         else if(anzahlPoints == 3)
             dreieck(pos, null);
-        //throws exception?
     }
 
     public Hitbox(Vector2D pos, int anzahlPoints, double height, double width, Vector2D direction){
@@ -25,7 +24,6 @@ public class Hitbox{
             viereck(pos, direction);
         else if(anzahlPoints == 3)
             dreieck(pos, direction);
-        //throws exception?
     }
 
     private void viereck(Vector2D pos, Vector2D direction){
@@ -156,11 +154,7 @@ public class Hitbox{
         return ret;
     }
 
-    public void ausgabeHitbox(){
-        System.out.println("Punkt1: " + point[0].toString());
-    }
+    private Vector2D[] getPoints(){return point;}
 
-    public Vector2D[] getPoints(){return point;}
-
-    public Vector2D[] getAxis() {return axis;}
+    private Vector2D[] getAxis() {return axis;}
 }

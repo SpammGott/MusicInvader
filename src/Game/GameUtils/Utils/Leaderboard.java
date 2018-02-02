@@ -3,8 +3,6 @@ package Game.GameUtils.Utils;
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Leaderboard {
 
@@ -12,6 +10,7 @@ public class Leaderboard {
     private String path = System.getProperty("user.dir") + "res/highscore.txt";
     private File dir;
     private String leaderboard[] = new String[10];
+    private String username = "XXX";
 
     public Leaderboard(){
         dir = new File(System.getProperty("user.dir") + "res/highscore.txt");
@@ -33,6 +32,8 @@ public class Leaderboard {
 
 
     public void addHighscore(int punkte, String playername) {
+        if(playername.equals(""))
+            playername = username;
         int tempPoints;
         int i = 0;
         String temp = (playername + ";" + punkte + ";");

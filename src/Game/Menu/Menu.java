@@ -18,7 +18,7 @@ public class Menu extends VBox {
 
     private SoundPlayer titlesong;
 
-    public Menu(Stage window, BorderPane menuPane, MenuScene menuScene, GameScene gameScene, MP3Player player, PlaylistManager playlistManager, SoundPlayer titlesong){
+    public Menu(Stage window, BorderPane menuPane, GameScene gameScene, MP3Player player, PlaylistManager playlistManager, SoundPlayer titlesong){
         this.titlesong = titlesong;
         Text header = new Text("MUSIC INVADER");
         header.setId("Header");

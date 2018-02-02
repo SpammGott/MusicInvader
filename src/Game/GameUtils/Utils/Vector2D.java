@@ -66,11 +66,6 @@ public class Vector2D{
         return new Vector2D(-y, x);
     }
 
-    public void mult(double a){
-        x = x * a;
-        y = y * a;
-    }
-
     public Vector2D getInverted(){
         return new Vector2D(-x, -y);
     }

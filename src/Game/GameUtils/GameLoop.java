@@ -96,8 +96,4 @@ public class GameLoop extends AnimationTimer {
         removeAll();
         stop = true;
     }
-
-    public void continueLoop(){
-        pause = false;
-    }
 }

@@ -74,30 +74,6 @@ public class M3UParser {
     }
 
     /**
-     * Creates a default playlist (contains all songs in a directory)
-     * @param path where the default playlist should be created
-     */
-    public static void titleSongPlaylist(String path){
-        System.out.println("defaultPlaylistCreator");
-        Mp3File temp;
-        try {
-            PrintWriter writer = new PrintWriter(path + "/titlesong.m3u", "UTF-8");
-            ArrayList<Track> tracks = getSongs(path + "/Titlesong");
-            for (int i = 0; i < tracks.size(); i++){
-                temp = tracks.get(i).getMp3file();
-                //checks for empty entrys (happens when track can't be created)
-                if(temp != null)
-                    writer.println(temp.getFilename());
-            }
-            writer.close();
-            System.out.println("Got it");
-        }catch (Exception e){
-            System.out.println("File couldn't be created.");
-            //e.printStackTrace();
-        }
-    }
-
-    /**
      * Writes all songs in a directory in a ArrayList
      * @param path the directory
      * @return Arraylist of tracks

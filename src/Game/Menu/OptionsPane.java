@@ -7,9 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
-public class OptionsPane extends VBox {
+class OptionsPane extends VBox {
 
-    public OptionsPane(BorderPane menuScene, VBox menu){
+    OptionsPane(BorderPane menuScene, VBox menu){
         Label text = new Label("CONTROLS:");
         Button wasd = new Button("WASD");
         Button arrows = new Button("ARROW KEYS");

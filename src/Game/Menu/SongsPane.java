@@ -57,9 +57,6 @@ public class SongsPane extends VBox {
         });
 
         getChildren().addAll(text, sp);
-        //for(Button temp:buttons){
-        //    getChildren().add(temp);
-        //}
         getChildren().addAll(back);
         setStyle("-fx-background-color: black");
         setAlignment(Pos.CENTER);
@@ -71,13 +68,5 @@ public class SongsPane extends VBox {
 
     public void setIndex(int index) {
         this.index = index;
-    }
-
-    public void incIndex(){
-        setIndex(getIndex() + 1);
-    }
-
-    public void decIndex(){
-        setIndex(getIndex() - 1);
     }
 }

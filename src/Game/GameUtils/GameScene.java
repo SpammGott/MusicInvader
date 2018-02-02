@@ -30,8 +30,7 @@ public class GameScene extends Scene {
     private PlaylistManager playlistManager;
 
     private EntityHandler entityHandler;
-    //first spawn is top left, to the right slightly downwards
-    //second spawn as first just inverted
+
     private Spawnpoint spawnpoint[] = { new Spawnpoint(new Vector2D(-0.75, 1), new Vector2D(1, 0.1)),
                                         new Spawnpoint(new Vector2D(-0.75, 0), new Vector2D(1, 0.2)),
                                         new Spawnpoint(new Vector2D(16.75, 1), new Vector2D(-1, 0.1)),
@@ -112,8 +111,6 @@ public class GameScene extends Scene {
         beatDet.start();
 
         entityHandler.getHp().addListener(e -> {
-            //mp3Player.setTickrate(1 + 0.25f * entityHandler.getHp().get());
-            mp3Player.setTickrate(2);
             if (entityHandler.getHp().get() <= 0){
                 try{
                     Robot r = new Robot();

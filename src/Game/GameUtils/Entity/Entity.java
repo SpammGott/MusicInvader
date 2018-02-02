@@ -8,21 +8,20 @@ import javafx.scene.image.ImageView;
 
 public abstract class Entity {
 
-    protected double defSpeed;
-    protected double speed;
-    protected Vector2D pos;
-    protected Vector2D direction;
-    protected Vector2D center;
-    protected double height;
-    protected double width;
+    double defSpeed;
+    double speed;
+    Vector2D direction;
+    double height;
+    double width;
+    Hitbox hitbox;
+
     protected ImageView body;
-    protected Hitbox hitbox;
+    protected Vector2D center;
+    protected Vector2D pos;
 
     public abstract void move();
 
-    //public abstract void changeSpeed(double x);
-
-    protected void init(){
+    void init(){
         body.setPreserveRatio(true);
         body.setFitWidth(Helper.getAbsoluteWidth(width));
         body.setFitHeight(Helper.getAbsoluteHeight(height));
@@ -30,13 +29,6 @@ public abstract class Entity {
         body.setY(Helper.getAbsoluteHeight(pos.getY()));
         center = new Vector2D(pos.getX() + width/2, pos.getY() + height/2);
     }
-
-
-    public double getDefSpeed() {return defSpeed;}
-
-    public double getSpeed() {return speed;}
-
-    public void setSpeed(double speed) {this.speed = speed;}
 
     public Vector2D getPos() {return pos;}
 
@@ -50,15 +42,9 @@ public abstract class Entity {
 
     public double getHeight() {return height;}
 
-    //public void setHeight(double height) {this.height = height;}
-
     public double getWidth() {return width;}
 
-    //public void setWidth(double width) {this.width = width;}
-
     public ImageView getBody() {return body;}
-
-    //public void setBody(ImageView body) {this.body = body;}
 
     public Hitbox getHitbox() {return hitbox;}
 

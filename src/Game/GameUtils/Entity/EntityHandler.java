@@ -8,7 +8,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.concurrent.Task;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
@@ -36,7 +35,6 @@ public class EntityHandler {
 
     private boolean playerWasHit = false;
     private int frameToRespawn = 0;
-    private int index = 0;
 
     private IntegerProperty points = new SimpleIntegerProperty();
 
@@ -143,7 +141,7 @@ public class EntityHandler {
         removeProjectile(playerP, tempProjectileList);
     }
 
-    public void explode(Enemy enemy){
+    private void explode(Enemy enemy){
         Timeline explo = new Timeline(new KeyFrame(Duration.millis(100), e -> {
             enemy.body.setImage(explosion[enemy.incExplosionIndex()]);
             if (enemy.getExplosionIndex() == 4){
@@ -234,10 +232,4 @@ public class EntityHandler {
     public boolean isLeer(){
         return enemyList.size() == 0 && enemyP.size() == 0 && playerP.size() == 0;
     }
-
-    public void setIndex(int x){index = x;}
-
-    public int incIndex(){return index++;}
-
-    public int getIndex(){return index;}
 }

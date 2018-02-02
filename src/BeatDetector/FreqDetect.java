@@ -25,14 +25,6 @@ public class FreqDetect {
 		while (true) {
 			beatDetect.detect(input.mix);
 
-			/*
-			if(beatDetect.isHat()) {
-				System.out.println("HAT");
-			}
-			if(beatDetect.isSnare()) {
-				System.out.println("SNARE");
-			}
-			*/
 			if (beatDetect.isKick()) {
 				Platform.runLater(new Runnable() {
 					@Override
@@ -40,9 +32,7 @@ public class FreqDetect {
 						gameScene.spawnEnemy();
 					}
 				});
-
 			}
-
 		}
 	}
 }
