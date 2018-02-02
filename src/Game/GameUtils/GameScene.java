@@ -112,12 +112,11 @@ public class GameScene extends Scene {
         entityHandler.getHp().addListener(e -> {
             //mp3Player.setTickrate(1 + 0.25f * entityHandler.getHp().get());
             mp3Player.setTickrate(2);
-            if (entityHandler.getHp().get() == 0){
+            if (entityHandler.getHp().get() <= 0){
                 try{
                     Robot r = new Robot();
                     r.keyPress(KeyEvent.VK_F4);
                 }catch (Exception ex){
-
                     System.out.println("Robot in GameScene fucked up.");
                 }
             }

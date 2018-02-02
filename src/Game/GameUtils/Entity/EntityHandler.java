@@ -55,8 +55,7 @@ public class EntityHandler {
                 playerWasHit = true;
                 frameToRespawn = 120;
                 player.changeImage(playerImageKaputt);
-                if (player.getHp().get() > 0)
-                    player.decHp();
+                player.decHp();
             }
         } else{
             if(frameToRespawn-- == 0){
