@@ -133,7 +133,7 @@ public class EntityHandler {
 
     public void explode(Enemy enemy, int i){
         enemyList.remove(i);
-        Timeline explo = new Timeline(new KeyFrame(Duration.millis(25), e -> {
+        Timeline explo = new Timeline(new KeyFrame(Duration.millis(100), e -> {
             enemy.body.setImage(explosion[incIndex()]);
             if (getIndex() == 4){
                 setIndex(0);
