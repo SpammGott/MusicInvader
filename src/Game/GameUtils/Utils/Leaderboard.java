@@ -1,17 +1,19 @@
-package Game.GameUtils.Entity;
+package Game.GameUtils.Utils;
 
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Leaderboard {
 
     //private static File dir = new File("res/highscore.txt");
+    private String path = System.getProperty("user.dir") + "res/highscore.txt";
     private File dir;
-    private String leaderboard[];
+    private String leaderboard[] = new String[10];
 
     public Leaderboard(){
-        System.out.println(System.getProperty("user.dir") + "res/highscore.txt");
         dir = new File(System.getProperty("user.dir") + "res/highscore.txt");
         String actLine;
         int i = 0;
@@ -33,11 +35,16 @@ public class Leaderboard {
     public void addHighscore(int punkte, String playername) {
         int tempPoints;
         int i = 0;
-        String temp = (playername + ";" + punkte);
-        System.out.println(temp.split(";")[1]);
-        if (leaderboard != null) {
+        String temp = (playername + ";" + punkte + ";");
+        if (leaderboard[0] != null) {
             for (String actLine : leaderboard) {
-                tempPoints = Integer.valueOf(actLine.split(";")[1]);
+                if(actLine == null)
+                    break;
+                System.out.println(actLine);
+                String tempLine[] = actLine.split(";");
+                tempLine[1] = tempLine[1].replace("\0", "");
+                System.out.println(tempLine[1]);
+                tempPoints = Integer.parseInt(tempLine[1]);
                 if (punkte > tempPoints) {
                     break;
                 }
@@ -63,10 +70,12 @@ public class Leaderboard {
         }
 
         try {
-            RandomAccessFile raf = new RandomAccessFile(dir, "rw");
+            RandomAccessFile raf = new RandomAccessFile("res/highscore.txt", "rw");
             for (String actLine : leaderboard) {
-                System.out.println(actLine);
-                raf.writeChars(actLine);
+                if(actLine != null) {
+                    actLine = actLine.replace("\n", "").replace("\r", "");
+                    raf.writeChars(actLine + "\n");
+                }
             }
             raf.close();
         } catch (IOException e) {
