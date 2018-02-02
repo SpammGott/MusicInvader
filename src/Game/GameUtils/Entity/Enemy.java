@@ -1,8 +1,11 @@
 package Game.GameUtils.Entity;
 
 import Game.GameUtils.Utils.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 
 public class Enemy extends Ship {
@@ -10,6 +13,7 @@ public class Enemy extends Ship {
     private Spawnpoint homeSpawnPoint;
     private Image explosion[];
     private int framesForExp = 60;
+    private int index;
 
     public Enemy(Spawnpoint homeSpawnPoint, Image image, Image explosion[]){
         this.homeSpawnPoint = homeSpawnPoint;
@@ -26,6 +30,20 @@ public class Enemy extends Ship {
     }
 
     public boolean explosion(){
+        /*
+        Timeline explo = new Timeline(new KeyFrame(Duration.millis(16), e -> {
+            System.out.println("INDEX: " + getIndex());
+            body.setImage(explosion[incIndex()]);
+        }));
+        explo.setCycleCount(5);
+        explo.play();
+        if(getIndex() >= 4){
+            setIndex(0);
+            System.out.println("FALSE");
+            return false;
+        }
+        System.out.println("TRUE");
+        */
         if(framesForExp == 60){
             body.setImage(explosion[0]);
         }else if(framesForExp == 48){
@@ -78,4 +96,6 @@ public class Enemy extends Ship {
     public int getFramesForExp(){return framesForExp;}
 
     public void decFrameForExp(){framesForExp--;}
+
+
 }

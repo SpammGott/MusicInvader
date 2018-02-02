@@ -61,4 +61,6 @@ public abstract class Entity {
     //public void setBody(ImageView body) {this.body = body;}
 
     public Hitbox getHitbox() {return hitbox;}
+
+    public void delHitbox(){hitbox.update(new Vector2D(-1000, -1000));}
 }
