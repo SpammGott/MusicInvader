@@ -21,8 +21,11 @@ public class LeaderboardsPane extends VBox {
         VBox rechts = new VBox();
 
         for (int i = 0; i < s.length; i++){
-            if (s[i] != null)
-                s[i].replace(";", " ");
+            try{
+                s[i] = s[i].replace(";", "\t");
+            }catch (Exception e){
+                System.out.println("Couldn't replace semicolons");
+            }
             Label temp = new Label(s[i]);
             temp.setId("SideText");
             if (i % 2 == 0){
