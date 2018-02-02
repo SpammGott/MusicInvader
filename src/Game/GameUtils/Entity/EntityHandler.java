@@ -120,12 +120,12 @@ public class EntityHandler {
                 }
             }
             if(isHit){
-                explode(enemyList.get(i), i);
                 /*
                 enemyExp.add(enemyList.get(i));
                 enemyList.remove(i);
                 root.getChildren().remove(act.getBody());
                 */
+                explode(enemyList.get(i), i);
                 i--;
                 points.setValue(points.getValue() + 10);
             }
@@ -134,9 +134,7 @@ public class EntityHandler {
     }
 
     public void explode(Enemy enemy, int i){
-        System.out.println("Got this far");
         Timeline explo = new Timeline(new KeyFrame(Duration.millis(25), e -> {
-            System.out.println("INDEX: " + getIndex());
             enemy.body.setImage(explosion[incIndex()]);
             if (getIndex() == 4){
                 setIndex(0);

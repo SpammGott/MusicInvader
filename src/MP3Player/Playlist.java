@@ -102,35 +102,10 @@ public class Playlist {
     }
 
     /**
-     * Gets the previous track, or the last if current track is the first
-     * @return previous track
-     */
-    public Track getPreviousTrack() {
-        if((actTrack - 1) >= 0) {
-            actTrack--;
-        } else {
-            actTrack = listSize-1;
-        }
-        return list.get(actTrack);
-    }
-
-    /**
      * Gets the name of the MP3Player.Playlist
      * @return playlist name
      */
     public String getName() {return name;}
-
-    /**
-     * Returns state of shuffle
-     * @return shuffle state
-     */
-    public boolean isShuffle() {return shuffle;}
-
-    /**
-     * Sets shuffle state
-     * @param shuffle shuffle state
-     */
-    public void setShuffle(boolean shuffle){this.shuffle = shuffle;}
 
     /**
      * Gets list of tracks
