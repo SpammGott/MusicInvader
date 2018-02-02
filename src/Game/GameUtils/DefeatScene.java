@@ -12,11 +12,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-/**
- * Scene shows up after the player is dropped to zero hit points
- * Allows User to enter name for the leaderboards
- */
-public class DefeatScene extends Scene {
+class DefeatScene extends Scene {
 
     private Stage window;
     private MenuScene menuScene;
@@ -26,7 +22,7 @@ public class DefeatScene extends Scene {
     private String userName = "";
     private Leaderboard leaderboard = new Leaderboard();
 
-    public DefeatScene(Pane root, Stage window, MenuScene menuScene, EntityHandler entityHandler){
+    DefeatScene(Pane root, Stage window, MenuScene menuScene, EntityHandler entityHandler){
         super(root, Helper.getHeight(), Helper.getWidth());
         this.root = root;
         this.window = window;
@@ -36,7 +32,7 @@ public class DefeatScene extends Scene {
         start();
     }
 
-    public void start(){
+    private void start(){
         Label defeated = new Label("YOU DIED");
         defeated.setId("Header");
 

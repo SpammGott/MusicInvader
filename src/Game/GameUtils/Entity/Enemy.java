@@ -1,26 +1,20 @@
 package Game.GameUtils.Entity;
 
 import Game.GameUtils.Utils.*;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.util.Duration;
 
-/**
- * Enemy class
- * Contains almost everything related to an enemy like spawnpoint, image, size, direction, usw
- */
+
+
 public class Enemy extends Ship {
 
     private Spawnpoint homeSpawnPoint;
-    private Image explosion[];
+    private int explosionIndex = 0;
 
-    public Enemy(Spawnpoint homeSpawnPoint, Image image, Image explosion[]){
+    Enemy(Spawnpoint homeSpawnPoint, Image image){
         this.homeSpawnPoint = homeSpawnPoint;
         this.pos = new Vector2D(this.homeSpawnPoint.getPos());
         this.direction = new Vector2D(this.homeSpawnPoint.getRandomDirection());
-        this.explosion = explosion;
         height = 0.6;
         width = 0.6;
         body = new ImageView(image);
@@ -57,4 +51,8 @@ public class Enemy extends Ship {
     }
 
     public ImageView getBody(){return this.body;}
+
+    public int getExplosionIndex(){return explosionIndex;}
+
+    public int incExplosionIndex(){return explosionIndex++;}
 }

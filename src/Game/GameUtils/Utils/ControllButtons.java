@@ -9,30 +9,29 @@ public enum ControllButtons {
     UP, DOWN, LEFT, RIGHT;
 
     public KeyCode getKeyCode(){
-        KeyCode key;
         if(this == UP){
             if(Helper.getControls())
-                return key = KeyCode.W;
+                return KeyCode.W;
             else
-                return key = KeyCode.UP;
+                return KeyCode.UP;
         }
         if(this == DOWN){
             if(Helper.getControls())
-                return key = KeyCode.S;
+                return KeyCode.S;
             else
-                return key = KeyCode.DOWN;
+                return KeyCode.DOWN;
         }
         if(this == LEFT){
             if(Helper.getControls())
-                return key = KeyCode.A;
+                return KeyCode.A;
             else
-                return key = KeyCode.LEFT;
+                return KeyCode.LEFT;
         }
         if(this == RIGHT){
             if(Helper.getControls())
-                return key = KeyCode.D;
+                return KeyCode.D;
             else
-                return key = KeyCode.RIGHT;
+                return KeyCode.RIGHT;
         }
         return null;
     }

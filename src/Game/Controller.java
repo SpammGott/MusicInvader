@@ -8,7 +8,6 @@ import MP3Player.MP3Player;
 import MP3Player.PlaylistManager;
 import MP3Player.SoundPlayer;
 import javafx.application.Application;
-import javafx.concurrent.Task;
 import javafx.scene.Cursor;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
@@ -53,7 +52,7 @@ public class Controller extends Application{
 
         player.setGameScene(gameScene);
 
-        menuPane.setCenter(new Menu(window, menuPane, menuScene, gameScene, player, playlistManager, splayer));
+        menuPane.setCenter(new Menu(window, menuPane, gameScene, player, playlistManager, splayer));
 
         window.setHeight(Helper.getHeight());
         window.setWidth(Helper.getWidth());

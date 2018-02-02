@@ -18,6 +18,8 @@ import javafx.util.Duration;
  */
 public class LeftGamePane extends Pane {
 
+    private Timeline timeline;
+
     public LeftGamePane(MP3Player player, EntityHandler entityHandler){
         IntegerProperty a = new SimpleIntegerProperty(0);
         setStyle("-fx-background-color: #333333");
@@ -40,11 +42,8 @@ public class LeftGamePane extends Pane {
 
         Label actSong = new Label(player.getActualTrack().getName());
         Label actNextSong = new Label(player.getActPlaylist().getNextTrackWithoutChangingIndex().getName());
-        player.getIsSkipped().addListener(e -> {
 
-        });
-
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> a.setValue(a.getValue() + 1)));
+        timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> a.setValue(a.getValue() + 1)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
         a.addListener(e -> {
@@ -73,5 +72,9 @@ public class LeftGamePane extends Pane {
         cont.setSpacing(50);
 
         getChildren().add(cont);
+    }
+
+    public void stop(){
+        timeline.stop();
     }
 }

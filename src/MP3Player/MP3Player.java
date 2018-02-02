@@ -1,7 +1,6 @@
 package MP3Player;
 
 import Game.GameUtils.GameScene;
-import ddf.minim.AudioListener;
 import ddf.minim.ugens.TickRate;
 import de.hsrm.mi.eibo.simpleplayer.SimpleAudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleMinim;
@@ -12,7 +11,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.util.Duration;
 
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 
@@ -54,11 +52,6 @@ public class MP3Player {
         hasSong = true;
         this.changes = new PropertyChangeSupport(actPlaylist.getTrack().getMp3file());
         this.playing = new PropertyChangeSupport(audioPlayer.isPlaying());
-    }
-
-    public void setTickrate(float f){
-        tickRate.setSampleRate(f);
-        tickRate.setInterpolation(true);
     }
 
     /**

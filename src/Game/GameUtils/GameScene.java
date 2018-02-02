@@ -34,8 +34,7 @@ public class GameScene extends Scene {
     private PlaylistManager playlistManager;
 
     private EntityHandler entityHandler;
-    //first spawn is top left, to the right slightly downwards
-    //second spawn as first just inverted
+
     private Spawnpoint spawnpoint[] = { new Spawnpoint(new Vector2D(-0.75, 1), new Vector2D(1, 0.1)),
                                         new Spawnpoint(new Vector2D(-0.75, 0), new Vector2D(1, 0.2)),
                                         new Spawnpoint(new Vector2D(16.75, 1), new Vector2D(-1, 0.1)),
@@ -45,7 +44,7 @@ public class GameScene extends Scene {
     private HBox mainPane;
     private Pane game;
     private Pane left  = new Pane();
-    private Pane gameInfos;
+    private LeftGamePane gameInfos;
     private Stage window;
     private MenuScene menuScene;
     private ImageView background;
@@ -60,6 +59,8 @@ public class GameScene extends Scene {
     private Image explosion[] = new Image[5];
 
     private GameLoop gameLoop;
+
+    private Thread beatDet;
 
     public GameScene(Pane root, Stage window, MenuScene menuScene, MP3Player player, PlaylistManager playlistManager, SoundPlayer sp){
         super(root, Helper.getHeight(), Helper.getWidth());
@@ -101,7 +102,7 @@ public class GameScene extends Scene {
 
         BeatDetector.FreqDetect beater = new BeatDetector.FreqDetect(System.getProperty("user.dir") + "/res/Songs/" + mp3Player.getActualTrack().getName() + ".mp3", mp3Player.getGameScene());
 
-        Task task = new Task<Void>() {
+        Task taskBeat = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
                 System.out.println("BeatDetect started");
@@ -109,13 +110,11 @@ public class GameScene extends Scene {
                 return null;
             }
         };
-        Thread beatDet = new Thread(task);
+        beatDet = new Thread(taskBeat);
         beatDet.setDaemon(true);
         beatDet.start();
 
         entityHandler.getHp().addListener(e -> {
-            //mp3Player.setTickrate(1 + 0.25f * entityHandler.getHp().get());
-            mp3Player.setTickrate(2);
             if (entityHandler.getHp().get() <= 0){
                 try{
                     Robot r = new Robot();
@@ -161,6 +160,7 @@ public class GameScene extends Scene {
                 window.setScene(defeat);
                 window.setFullScreen(true);
                 reset();
+
             } else {
                 entityHandler.getPlayer().changeMovement(keyEvent);
             }
@@ -187,6 +187,8 @@ public class GameScene extends Scene {
         entityHandler.getPlayer().setPos(new Vector2D(8 - (entityHandler.getPlayer().getWidth() / 2), 16 - (entityHandler.getPlayer().getHeight() /2)));
         entityHandler.reset();
 
+        beatDet.interrupt();
+        gameInfos.stop();
     }
 
     private void initImages(){

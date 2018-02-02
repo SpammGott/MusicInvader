@@ -23,19 +23,20 @@ public class LeaderboardsPane extends VBox {
         VBox links = new VBox();
         VBox rechts = new VBox();
 
+        String tempString[];
         for (int i = 0; i < s.length; i++){
-            try{
-                s[i] = s[i].replace(";", "\t");
-            }catch (Exception e){
-                System.out.println("Couldn't replace semicolons");
+            if(s[i] != null) {
+                tempString = s[i].split(";");
+                System.out.println(tempString.length);
+                Label temp = new Label(tempString[0] + " " + tempString[1]);
+                temp.setId("SideText");
+                if (i % 2 == 0){
+                    links.getChildren().add(temp);
+                }else {
+                    rechts.getChildren().add(temp);
+                }
             }
-            Label temp = new Label(s[i]);
-            temp.setId("SideText");
-            if (i % 2 == 0){
-                links.getChildren().add(temp);
-            }else {
-                rechts.getChildren().add(temp);
-            }
+
         }
 
         HBox blubb = new HBox(links, rechts);

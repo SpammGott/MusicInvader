@@ -49,7 +49,6 @@ public class GameLoop extends AnimationTimer {
             frameToShoot++;
 
             entityHandler.updateEntitys();
-            entityHandler.enemyExplosion();
 
             if (background1.getY() > Helper.getAbsoluteHeight(16))
                 background1.setY(-background1.getImage().getHeight()/2);
@@ -100,9 +99,5 @@ public class GameLoop extends AnimationTimer {
         pause();
         removeAll();
         stop = true;
-    }
-
-    public void continueLoop(){
-        pause = false;
     }
 }

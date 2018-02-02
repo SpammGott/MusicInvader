@@ -15,6 +15,4 @@ public abstract class Ship extends Entity{
     protected boolean isHit(Hitbox hitbox2){
         return hitbox.isHit(hitbox2);
     }
-
-    //public abstract boolean isHit(Hitbox enemyHitbox);
 }
