@@ -38,16 +38,16 @@ public class LeftGamePane extends Pane {
         Label actSong = new Label(player.getActualTrack().getName());
         Label actNextSong = new Label(player.getActPlaylist().getNextTrackWithoutChangingIndex().getName());
         player.getIsSkipped().addListener(e -> {
-            actSong.setText(player.getActualTrack().getName());
-            actNextSong.setText(player.getActPlaylist().getNextTrackWithoutChangingIndex().getName());
-        });
 
+        });
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> a.setValue(a.getValue() + 1)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
         a.addListener(e -> {
-            //controlls how often the player looses a point 100 = 10sec
+            //controlls how often the player looses a point 10 = 1sec
+            actSong.setText(player.getActualTrack().getName());
+            actNextSong.setText(player.getActPlaylist().getNextTrackWithoutChangingIndex().getName());
             if(a.get() >= 10){
                 entityHandler.getPoints().setValue(entityHandler.getPoints().getValue() -1);
                 a.set(0);

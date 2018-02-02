@@ -4,6 +4,7 @@ import java.io.*;
 
 public class FileWriter {
 
+    /*
     private int i = 100;
     private String file = "highscore.txt";
     private String playername = "ABC";
@@ -17,4 +18,5 @@ public class FileWriter {
         wr.write(insertScore);
         wr.close();
     //}
+    */
 }
