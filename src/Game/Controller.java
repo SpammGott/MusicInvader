@@ -31,6 +31,7 @@ public class Controller extends Application{
     @Override
     public void start(Stage window){
         try {
+            System.out.println("PATH: " + Controller.class.getResource("PIXELED.TTF").getPath());
             Font.loadFont(Controller.class.getResource("PIXELED.TTF").toExternalForm(), 10);
         }catch(Exception e){
             System.out.println("Font konnte nicht geladen werden\n");
@@ -39,8 +40,7 @@ public class Controller extends Application{
         MP3Player player;
         PlaylistManager playlistManager = new PlaylistManager("res/Songs/");
         player = new MP3Player(playlistManager.getPlaylist("defaultPlaylist"));
-        System.out.println(getClass().getClassLoader().getResource("Songs/Titlesong/BoxCat_Games_-_10_-_Epic_Song.mp3").getPath());
-        SoundPlayer splayer = new SoundPlayer(getClass().getClassLoader().getResource("Songs/Titlesong/BoxCat_Games_-_10_-_Epic_Song.mp3").getPath());
+        SoundPlayer splayer = new SoundPlayer(System.getProperty("user.dir") + "\\res\\songs\\Titlesong\\BoxCat_Games_-_10_-_Epic_Song.mp3");
         splayer.loop();
         splayer.play();
 
