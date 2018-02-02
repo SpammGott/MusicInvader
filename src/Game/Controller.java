@@ -30,7 +30,6 @@ public class Controller extends Application{
 
     @Override
     public void start(Stage window){
-        CodeSource codeSource = Controller.class.getProtectionDomain().getCodeSource();
         try {
             Font.loadFont(Controller.class.getResource("PIXELED.TTF").toExternalForm(), 10);
         }catch(Exception e){
@@ -38,14 +37,10 @@ public class Controller extends Application{
         }
 
         MP3Player player;
-        String dir = codeSource.getLocation().getPath();
-        dir = dir.substring(1, dir.length()-1);
         PlaylistManager playlistManager = new PlaylistManager("res/Songs/");
         player = new MP3Player(playlistManager.getPlaylist("defaultPlaylist"));
-        //System.out.println(getClass().getClassLoader().getResource("Songs/Titlesong/BoxCat_Games_-_10_-_Epic_Song.mp3").getPath());
-        //SoundPlayer splayer = new SoundPlayer(getClass().getClassLoader().getResource("Songs/Titlesong/BoxCat_Games_-_10_-_Epic_Song.mp3").getPath());
-        System.out.println(System.getProperty("user.dir") + "\\res\\Songs\\Titlesong\\BoxCat_Games_-_10_-_Epic_Song.mp3");
-        SoundPlayer splayer = new SoundPlayer(System.getProperty("user.dir") + "\\res\\Songs\\Titlesong\\BoxCat_Games_-_10_-_Epic_Song.mp3");
+        System.out.println(getClass().getClassLoader().getResource("Songs/Titlesong/BoxCat_Games_-_10_-_Epic_Song.mp3").getPath());
+        SoundPlayer splayer = new SoundPlayer(getClass().getClassLoader().getResource("Songs/Titlesong/BoxCat_Games_-_10_-_Epic_Song.mp3").getPath());
         splayer.loop();
         splayer.play();
 

@@ -59,6 +59,8 @@ public class M3UParser {
         System.out.println("defaultPlaylistCreator");
         System.out.println(path);
         Mp3File temp;
+        File f = new File(path + "defaultPlaylist.m3u");
+        System.out.println(f.getAbsolutePath());
         try {
             PrintWriter writer = new PrintWriter(path + "defaultPlaylist.m3u", "UTF-8");
             ArrayList<Track> tracks = getSongs(path);
