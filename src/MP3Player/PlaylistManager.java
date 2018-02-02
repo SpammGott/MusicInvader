@@ -42,18 +42,6 @@ public class PlaylistManager {
     }
 
     /**
-     * Adds a single playlist
-     * @param playlist a playlist
-     */
-    public void addPlaylists(Playlist playlist){
-        if(playlist != null) {
-            ArrayList<Playlist> old = getPlaylistList();
-            playlisten.put(playlist.getName(), playlist);
-            changes.firePropertyChange("MP3Player.Playlist added", old, getPlaylistList());
-        }
-    }
-
-    /**
      * Gets a playlist by name
      * @param name  of a playlist
      * @return playlist
@@ -82,9 +70,4 @@ public class PlaylistManager {
     public Playlist getAllSongs(String playlist) {
         return playlisten.get(playlist);
     }
-
-    public void addPropertyChangeListener(PropertyChangeListener propChngListn){
-        changes.addPropertyChangeListener(propChngListn);
-    }
-
 }

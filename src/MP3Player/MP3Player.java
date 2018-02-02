@@ -121,29 +121,6 @@ public class MP3Player {
         changes.firePropertyChange(oldTrack.getFilename(), oldTrack, newTrack);
     }
 
-    public void playOnce(int index){
-        stop();
-        Track oldTrack = actPlaylist.getTrack();
-        Track newTrack = actPlaylist.getTrack(index);
-        if(newTrack != null) {
-            audioPlayer = minim.loadMP3File(newTrack.getFilename());
-        }
-        if(hasSong) {
-            audioPlayer.play();
-            System.out.println(actPlaylist.getName());
-            playing.firePropertyChange("Song is now playing", !audioPlayer.isPlaying(), audioPlayer.isPlaying());
-        }
-        changes.firePropertyChange(oldTrack.getFilename(), oldTrack, newTrack);
-    }
-
-    /**
-     * Sets the song to a certain position, doesn't affect playstate
-     * @param time in miliseconds
-     */
-    public void cue(int time){
-        audioPlayer.cue(time);
-    }
-
     /**
      * Pauses current song
      */
@@ -177,98 +154,12 @@ public class MP3Player {
     }
 
     /**
-     * Plays the previous song of the playlist
-     */
-    public void previous(){
-        stop();
-        Track oldTrack = actPlaylist.getTrack();
-        play(actPlaylist.getPreviousTrack().getFilename());
-        changes.firePropertyChange(oldTrack.getFilename(), oldTrack, actPlaylist.getTrack());
-    }
-
-    /**
-     * Sets the volume (actually just sets gain, may lower sound quality)
-     * @param newVolume value between 0 and 1
-     */
-    public void volume(float newVolume){
-        float gain;
-        if(newVolume < 0f || newVolume > 1f){
-            return;
-        }
-
-        if(newVolume == 0)
-            gain = -100f;
-        else
-            gain = -30 * ((newVolume-1)*(newVolume-1)) + 6;
-        audioPlayer.setGain(gain);
-    }
-
-    /**
-     * Activates or deactivates the shuffel functionality
-     */
-    public void shuffel(){
-        if(actPlaylist.isShuffle())
-            actPlaylist.setShuffle(false);
-        else
-            actPlaylist.setShuffle(true);
-    }
-
-    /**
-     * Gets the position of the current song in seconds
-     * @return position of the current song in seconds
-     */
-    public int getPosition(){
-        return audioPlayer.position() / 1000;
-    }
-
-    /**
-     * Changes the active playlist
-     * @param newPlaylist playlist that will be set to active
-     */
-    public void changePlaylist(Playlist newPlaylist){
-        if(newPlaylist != null) {
-            Track oldTrack = getActualTrack();
-            Track newTrack = newPlaylist.getTrack(0);
-            changes.firePropertyChange(oldTrack.getFilename(), oldTrack, newTrack);
-            actPlaylist = newPlaylist;
-        }
-    }
-
-    /**
-     * Return if the player shuffles or not
-     * @return if shuffle is active or not
-     */
-    public boolean isShuffle(){return actPlaylist.isShuffle();}
-
-    /**
-     * Change listener, needed to update current song infos
-     * @param propChngListn a property Change Listener
-     */
-    public void addPropertyChangeListenerSongInfos(PropertyChangeListener propChngListn){
-        System.out.println("CHANGE FIRED!");
-        changes.addPropertyChangeListener(propChngListn);
-    }
-    /**
-     * Change listener, needed to update play button according to the play status
-     * @param propChngListn a property Change Listener
-     */
-    public void addPropertyChangeListenerPlayInfo(PropertyChangeListener propChngListn){
-        playing.addPropertyChangeListener(propChngListn);
-    }
-
-    /**
      * Gets the currently active track from the currently active playlist
      * @return the currently playing track
      */
     public Track getActualTrack(){
         return actPlaylist.getTrack();
     }
-
-    /**
-     * To check if song is playing
-     * @return playing status
-     */
-    public boolean isPlaying(){return audioPlayer.isPlaying();}
 
     public Playlist getActPlaylist() {
         return actPlaylist;

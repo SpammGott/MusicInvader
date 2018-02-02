@@ -4,10 +4,14 @@ package Game.GameUtils.Entity;
 import Game.GameUtils.Utils.Spawnpoint;
 import Game.GameUtils.Utils.Vector2D;
 import MP3Player.SoundPlayer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.concurrent.Task;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -27,6 +31,7 @@ public class EntityHandler {
     private List<Projectile> enemyP = new ArrayList<>();
     private boolean playerWasHit = false;
     private int frameToRespawn = 0;
+    private int index = 0;
 
     private IntegerProperty points = new SimpleIntegerProperty();
 
@@ -111,12 +116,16 @@ public class EntityHandler {
                 if(act.isHit(actPro.getHitbox())){
                     tempProjectileList.add(actPro);
                     isHit = true;
+                    actPro.delHitbox();
                 }
             }
             if(isHit){
+                /*
                 enemyExp.add(enemyList.get(i));
                 enemyList.remove(i);
                 root.getChildren().remove(act.getBody());
+                */
+                explode(enemyList.get(i), i);
                 i--;
                 points.setValue(points.getValue() + 10);
             }
@@ -124,6 +133,18 @@ public class EntityHandler {
         removeProjectile(playerP, tempProjectileList);
     }
 
+    public void explode(Enemy enemy, int i){
+        Timeline explo = new Timeline(new KeyFrame(Duration.millis(25), e -> {
+            enemy.body.setImage(explosion[incIndex()]);
+            if (getIndex() == 4){
+                setIndex(0);
+                enemyList.remove(i);
+                root.getChildren().remove(enemy.getBody());
+            }
+        }));
+        explo.setCycleCount(4);
+        explo.play();
+    }
 
     public void spawnEnemy(Spawnpoint spawnpoint){
         Enemy temp = new Enemy(spawnpoint, enemyImage, explosion);
@@ -156,10 +177,20 @@ public class EntityHandler {
 
     public void enemyExplosion(){
         for(int i = 0; i < enemyExp.size(); i++){
+            /*
             if(enemyExp.get(i).explosion()){
                 enemyExp.remove(i);
                 i--;
             }
+            */
+            /*
+            Timeline explo = new Timeline(new KeyFrame(Duration.millis(16), e -> {
+                System.out.println("INDEX: " + getIndex());
+                enemyExp.get(i).body.setImage(explosion[incIndex()]);
+            }));
+            explo.setCycleCount(5);
+            explo.play();
+            */
         }
     }
 
@@ -207,4 +238,10 @@ public class EntityHandler {
     public boolean isLeer(){
         return enemyList.size() == 0 && enemyP.size() == 0 && playerP.size() == 0;
     }
+
+    public void setIndex(int x){index = x;}
+
+    public int incIndex(){return index++;}
+
+    public int getIndex(){return index;}
 }

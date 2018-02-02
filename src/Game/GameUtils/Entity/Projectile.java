@@ -64,6 +64,4 @@ public class Projectile extends Entity {
         body.setY(Helper.getAbsoluteHeight(pos.getY()));
         center.add(tempDirection);
     }
-
-    public boolean isFromPlayer(){return this.isFromPlayer;}
 }

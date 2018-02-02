@@ -1,8 +1,11 @@
 package Game.GameUtils.Entity;
 
 import Game.GameUtils.Utils.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 
 public class Enemy extends Ship {
@@ -23,24 +26,6 @@ public class Enemy extends Ship {
         speed = defSpeed;
         init();
         hitbox = new Hitbox(pos, 3, height, width);
-    }
-
-    public boolean explosion(){
-        if(framesForExp == 60){
-            body.setImage(explosion[0]);
-        }else if(framesForExp == 48){
-            body.setImage(explosion[1]);
-        } else if(framesForExp == 36){
-            body.setImage(explosion[2]);
-        } else if(framesForExp == 24){
-            body.setImage(explosion[3]);
-        } else if(framesForExp == 12){
-            body.setImage(explosion[4]);
-        } else if(framesForExp == 0){
-            return true;
-        }
-        framesForExp--;
-        return false;
     }
 
     @Override
@@ -70,12 +55,4 @@ public class Enemy extends Ship {
     }
 
     public ImageView getBody(){return this.body;}
-
-    public void changeImage(Image image){
-        body.setImage(image);
-    }
-
-    public int getFramesForExp(){return framesForExp;}
-
-    public void decFrameForExp(){framesForExp--;}
 }
