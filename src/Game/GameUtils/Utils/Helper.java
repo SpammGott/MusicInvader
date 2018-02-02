@@ -3,6 +3,9 @@ package Game.GameUtils.Utils;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 
+/**
+ * Static Helper class, handles controltype and knows how large the screen is
+ */
 public class Helper {
 
     private static boolean controls = false;

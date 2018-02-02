@@ -14,6 +14,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/**
+ * The main menu
+ *
+ */
 public class Menu extends VBox {
 
     private SoundPlayer titlesong;

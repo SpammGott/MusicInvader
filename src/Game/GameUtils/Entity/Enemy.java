@@ -7,12 +7,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-
+/**
+ * Enemy class
+ * Contains almost everything related to an enemy like spawnpoint, image, size, direction, usw
+ */
 public class Enemy extends Ship {
 
     private Spawnpoint homeSpawnPoint;
     private Image explosion[];
-    private int framesForExp = 60;
 
     public Enemy(Spawnpoint homeSpawnPoint, Image image, Image explosion[]){
         this.homeSpawnPoint = homeSpawnPoint;

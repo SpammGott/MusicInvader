@@ -3,7 +3,10 @@ package MP3Player;
 import de.hsrm.mi.eibo.simpleplayer.SimpleAudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleMinim;
 
-
+/**
+ * Basically the same as MP3Player
+ * loops the menu song
+ */
 public class SoundPlayer {
 
     private SimpleMinim minim;

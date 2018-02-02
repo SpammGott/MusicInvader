@@ -1,5 +1,8 @@
 package Game.GameUtils.Utils;
 
+/**
+ * Math utils which are needed to move and aim projectiles and other entitys
+ */
 public class MathUtils {
 
     public static Vector2D getEinheitsvektor(Vector2D vec){

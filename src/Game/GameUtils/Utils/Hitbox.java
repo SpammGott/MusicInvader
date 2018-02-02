@@ -1,5 +1,10 @@
 package Game.GameUtils.Utils;
 
+/**
+ * The Hitbox class
+ * Two different kinds of hitboxes, triangles and squares
+ * Also updates hitboxes and detects hits
+ */
 public class Hitbox{
 
     private double height;

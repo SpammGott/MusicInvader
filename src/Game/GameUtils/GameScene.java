@@ -24,7 +24,11 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-
+/**
+ * The scene which shows the actual game
+ * starts a new GameLoop and the FreqDetect function
+ * ends the game if player HP fall under one
+ */
 public class GameScene extends Scene {
     private MP3Player mp3Player;
     private PlaylistManager playlistManager;

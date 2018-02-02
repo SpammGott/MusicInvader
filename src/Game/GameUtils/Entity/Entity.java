@@ -5,7 +5,10 @@ import Game.GameUtils.Utils.Hitbox;
 import Game.GameUtils.Utils.Vector2D;
 import javafx.scene.image.ImageView;
 
-
+/**
+ * The Entity class is a abstract class to handle entitys.
+ * Things like speed, pos, size and direction
+ */
 public abstract class Entity {
 
     protected double defSpeed;

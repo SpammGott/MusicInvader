@@ -12,6 +12,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+/**
+ * Scene shows up after the player is dropped to zero hit points
+ * Allows User to enter name for the leaderboards
+ */
 public class DefeatScene extends Scene {
 
     private Stage window;

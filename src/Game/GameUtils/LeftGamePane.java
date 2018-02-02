@@ -13,6 +13,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
+/**
+ * shows hp, points and song infos during the game
+ */
 public class LeftGamePane extends Pane {
 
     public LeftGamePane(MP3Player player, EntityHandler entityHandler){

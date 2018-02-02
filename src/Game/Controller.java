@@ -16,6 +16,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+/**
+ * Loads the font
+ * Starts the MP3Player and the soundPlayer
+ * Creates the game and menu scenes
+ */
 public class Controller extends Application{
 
     public static void main(String[] args){

@@ -2,6 +2,10 @@ package Game.GameUtils.Utils;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * a Spawnpoint has a direction and position
+ * The direction defines the direction of the entitys being spawned
+ */
 public class Spawnpoint {
 
     private Vector2D pos;

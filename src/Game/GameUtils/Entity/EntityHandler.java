@@ -17,6 +17,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Handles all the entitys including the player
+ * It updates entitys when they move, it handles firing, getting hit and spawning new enemies
+ */
 public class EntityHandler {
     private Image playerImageHeil;
     private Image playerImageKaputt;

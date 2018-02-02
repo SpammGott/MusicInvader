@@ -9,7 +9,9 @@ import MP3Player.SoundPlayer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-
+/**
+ * Projectiles which are used by every other entity
+ */
 public class Projectile extends Entity {
 
     private boolean isFromPlayer;

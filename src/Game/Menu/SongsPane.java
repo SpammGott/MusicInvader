@@ -15,6 +15,10 @@ import MP3Player.SoundPlayer;
 
 import java.util.List;
 
+/**
+ * shows the songs which are played inGame
+ * allows to listen to specific songs and to start the game with the selected song
+ */
 public class SongsPane extends VBox {
 
     private int index = 0;

@@ -8,6 +8,10 @@ import javafx.scene.image.ImageView;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+/**
+ * The GameLoop is an AnimationTimer
+ * It periodically updates entities and triggers shots
+ */
 public class GameLoop extends AnimationTimer {
 
     private EntityHandler entityHandler;

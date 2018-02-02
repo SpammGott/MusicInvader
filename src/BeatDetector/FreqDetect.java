@@ -6,6 +6,9 @@ import ddf.minim.analysis.*;
 import de.hsrm.mi.eibo.simpleplayer.MinimHelper;
 import javafx.application.Platform;
 
+/**
+ * Handles Frequence Detection of the Song
+ */
 public class FreqDetect {
 
 	private String path;

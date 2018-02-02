@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Creates a leaderboard file to save Leaderboards and to display them
+ */
 public class Leaderboard {
 
     //private static File dir = new File("res/highscore.txt");

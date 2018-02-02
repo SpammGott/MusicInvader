@@ -8,6 +8,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+/**
+ * shows the data from the leaderboards txt file
+ */
 public class LeaderboardsPane extends VBox {
 
     public LeaderboardsPane(BorderPane menuScene, VBox menu){

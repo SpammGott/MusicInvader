@@ -2,6 +2,9 @@ package Game.GameUtils.Utils;
 
 import javafx.scene.input.KeyCode;
 
+/**
+ * Allows easier handling of different control patterns
+ */
 public enum ControllButtons {
     UP, DOWN, LEFT, RIGHT;
 

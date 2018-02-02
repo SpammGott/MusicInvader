@@ -7,6 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
+/**
+ * Lets the player choose between different control types
+ */
 public class OptionsPane extends VBox {
 
     public OptionsPane(BorderPane menuScene, VBox menu){

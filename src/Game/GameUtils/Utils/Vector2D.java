@@ -1,5 +1,8 @@
 package Game.GameUtils.Utils;
 
+/**
+ * A simple 2D vector with a few additional math functions
+ */
 public class Vector2D{
 
     private double x;

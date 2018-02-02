@@ -9,7 +9,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 
-
+/**
+ * The player character has two different movement modes, HP and it can fire
+ */
 public class Player extends Ship {
 
     private IntegerProperty hp = new SimpleIntegerProperty();
