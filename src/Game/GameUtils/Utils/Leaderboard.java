@@ -82,4 +82,8 @@ public class Leaderboard {
             System.out.println("Error 404: File not found!");
         }
     }
+
+    public String[] getLeaderboard() {
+        return leaderboard;
+    }
 }
