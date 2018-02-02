@@ -7,6 +7,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -17,6 +19,7 @@ public class DefeatScene extends Scene {
     private Pane root;
     private EntityHandler entityHandler;
     private int punkte;
+    private String userName = "";
 
     public DefeatScene(Pane root, Stage window, MenuScene menuScene, EntityHandler entityHandler){
         super(root, Helper.getHeight(), Helper.getWidth());
@@ -37,19 +40,27 @@ public class DefeatScene extends Scene {
         HBox.setHgrow(reg1, Priority.ALWAYS);
         HBox.setHgrow(reg2, Priority.ALWAYS);
 
+        Label enter = new Label("YOUR NAME: ");
+        enter.setId("SideText");
+        TextField input = new TextField();
+        HBox userInput = new HBox(reg1, enter, input, reg2);
+        userInput.setAlignment(Pos.CENTER);
+
+        setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER || e.getCode() == KeyCode.ESCAPE){
+                userName = input.getText();
+                window.setScene(menuScene);
+                window.setFullScreen(true);
+            }
+        });
+
         Label points = new Label("POINTS: ");
         points.setId("SideText");
         Label actPoints = new Label(String.valueOf(punkte));
         actPoints.setId("SideText");
         HBox pointCont = new HBox(reg1, points, actPoints, reg2);
 
-        Button back = new Button("BACK TO MENU");
-        back.setOnAction(e -> {
-            window.setScene(menuScene);
-            window.setFullScreen(true);
-        });
-
-        VBox vBox = new VBox(defeated, pointCont, back);
+        VBox vBox = new VBox(defeated, userInput, pointCont);
 
         Pane pane = new Pane(vBox);
         pane.setPrefSize(Helper.getWidth(), Helper.getHeight());
@@ -61,4 +72,6 @@ public class DefeatScene extends Scene {
         getStylesheets().add("CSS.css");
         root.getChildren().add(pane);
     }
+
+    public String getInput(){return userName;}
 }
