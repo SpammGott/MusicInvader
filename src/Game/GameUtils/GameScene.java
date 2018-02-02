@@ -21,8 +21,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -34,7 +32,10 @@ public class GameScene extends Scene {
     private EntityHandler entityHandler;
     //first spawn is top left, to the right slightly downwards
     //second spawn as first just inverted
-    private Spawnpoint spawnpoint[] = {new Spawnpoint(new Vector2D(-0.75, 1), new Vector2D(1, 0.1)), new Spawnpoint(new Vector2D(17, 1), new Vector2D(-1, 0.1))};
+    private Spawnpoint spawnpoint[] = { new Spawnpoint(new Vector2D(-0.75, 1), new Vector2D(1, 0.1)),
+                                        new Spawnpoint(new Vector2D(-0.75, 0), new Vector2D(1, 0.2)),
+                                        new Spawnpoint(new Vector2D(16.75, 1), new Vector2D(-1, 0.1)),
+                                        new Spawnpoint(new Vector2D(16.75, 0), new Vector2D(-1, 0.2))};
 
     private Pane root;
     private HBox mainPane;
@@ -61,6 +62,7 @@ public class GameScene extends Scene {
         this.root = root;
         this.mp3Player = player;
         this.playlistManager = playlistManager;
+
         backgroundImage = loadImage("Stars1.png");
         background = new ImageView(backgroundImage);
         background.setPreserveRatio(true);
@@ -69,15 +71,17 @@ public class GameScene extends Scene {
         background2 = new ImageView(backgroundImage);
         background2.setPreserveRatio(true);
         background2.setFitWidth(Helper.getAbsoluteWidth(16));
-        background2.setY(-Helper.getAbsoluteHeight(16));
-        System.out.println(background2.getY());
+        background2.setY(-background2.getImage().getHeight()/2);
+
         game = new Pane(background, background2);
         game.setPrefSize(Helper.getGameWidth(), Helper.getGameHeight());
         left.setStyle("-fx-background-color: #333333");
         left.setPrefSize(Helper.getWidth() / 4, Helper.getHeight());
+
         this.window = window;
         this.menuScene = menuScene;
         this.sp = sp;
+
         initImages();
         entityHandler = new EntityHandler(game, playerImage, playerImageKaputt, enemyImage, projectileImage, explosion);
         gameInfos = new LeftGamePane(player, entityHandler);
@@ -89,14 +93,14 @@ public class GameScene extends Scene {
         gameLoop = new GameLoop(entityHandler, temp);
         gameLoop.start();
 
-        entityHandler.getPoints().setValue(0);
+        entityHandler.setPoints(0);
 
         BeatDetector.FreqDetect beater = new BeatDetector.FreqDetect(System.getProperty("user.dir") + "/res/Songs/" + mp3Player.getActualTrack().getName() + ".mp3", mp3Player.getGameScene());
 
         Task task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                System.out.println("Task started");
+                System.out.println("BeatDetect started");
                 beater.run();
                 return null;
             }
@@ -123,15 +127,17 @@ public class GameScene extends Scene {
             if(mp3Player.getIsSkipped().getValue()) {
                 gameLoop.pause(60);
                 gameLoop.removeAll();
-            }
-        });
-
-        mp3Player.addPropertyChangeListenerSongInfos(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                System.out.println("empfangen");
-                gameLoop.pause(60);
-                gameLoop.removeAll();
+                long time = mp3Player.getActPlaylist().getPrevTrackWithoutChangingIndex().getLength()/1000;
+                int points = entityHandler.getPoints().getValue();
+                if(time < 120){
+                    points *= 1.25;
+                } else if(time < 180){
+                    points *= 1.5;
+                } else if(time < 240){
+                    points *= 1.75;
+                }
+                entityHandler.setPoints(points);
+                entityHandler.getPlayer().incHp();
             }
         });
 
@@ -177,8 +183,7 @@ public class GameScene extends Scene {
     private void reset(){
         entityHandler.getPlayer().setPos(new Vector2D(8 - (entityHandler.getPlayer().getWidth() / 2), 16 - (entityHandler.getPlayer().getHeight() /2)));
         entityHandler.reset();
-        mp3Player.changePlaylist(playlistManager.getPlaylist("titlesong"));
-        mp3Player.play(0);
+
     }
 
     private void initImages(){
@@ -205,7 +210,4 @@ public class GameScene extends Scene {
         gameLoop.spawnEnemy(spawnpoint[(int)(Math.random() * spawnpoint.length)]);
     }
 
-    public EntityHandler getEntityHandler() {
-        return entityHandler;
-    }
 }

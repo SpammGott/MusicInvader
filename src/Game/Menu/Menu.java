@@ -5,7 +5,6 @@ import MP3Player.MP3Player;
 import MP3Player.PlaylistManager;
 import MP3Player.SoundPlayer;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -31,15 +30,16 @@ public class Menu extends VBox {
             window.setScene(gameScene);
             window.setFullScreen(true);
 
-            player.play(0);
+            player.play();
             gameScene.start();
         });
 
         Button songs = new Button("SONGS");
         songs.setOnAction(e -> {
-            menuPane.setCenter(new SongsPane(menuPane, this, playlistManager.getAllSongs("defaultPlaylist"), player, playlistManager));
+            titlesong.stop();
+            menuPane.setCenter(new SongsPane(menuPane, this, playlistManager.getAllSongs("defaultPlaylist"), player, playlistManager, titlesong));
             player.stop();
-            player.changePlaylist(playlistManager.getPlaylist("defaultPlaylist"));
+            //player.changePlaylist(playlistManager.getPlaylist("defaultPlaylist"));
         });
 
         Button leaderboards = new Button("LEADERBOARDS");

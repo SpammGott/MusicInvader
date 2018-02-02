@@ -4,7 +4,6 @@ import Game.GameUtils.Entity.EntityHandler;
 import Game.GameUtils.Utils.Helper;
 import Game.GameUtils.Utils.Spawnpoint;
 import javafx.animation.AnimationTimer;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -13,9 +12,9 @@ public class GameLoop extends AnimationTimer {
 
     private EntityHandler entityHandler;
     private int frameToShoot = 0;
+    private int timeToPause = 0;
     private boolean removeAll = false;
     private boolean pause = false;
-    private int timeToPause = 0;
     private boolean stop = false;
     private ConcurrentLinkedQueue<Spawnpoint> spawnQueue = new ConcurrentLinkedQueue<>();
 
@@ -48,16 +47,20 @@ public class GameLoop extends AnimationTimer {
             entityHandler.updateEntitys();
             entityHandler.enemyExplosion();
 
+            if (background1.getY() > Helper.getAbsoluteHeight(16))
+                background1.setY(-background1.getImage().getHeight()/2);
+            if (background2.getY() > Helper.getAbsoluteHeight(16))
+                background2.setY(-background2.getImage().getHeight()/2);
+            background1.setY(background1.getY() + Helper.getAbsoluteHeight(0.03));
+            background2.setY(background2.getY() + Helper.getAbsoluteHeight(0.03));
+
         } else if(timeToPause > 0){
             timeToPause--;
             spawnQueue.clear();
-        } else{
+        } else {
             spawnQueue.clear();
         }
-        if(background1.getY() > Helper.getAbsoluteHeight(16))
-            background1.setY(-Helper.getAbsoluteHeight(16));
-        background1.setY(background1.getY() + Helper.getAbsoluteHeight(0.03));
-        background2.setY(background1.getY() + Helper.getAbsoluteHeight(0.03));
+
 
         if(removeAll) {
             entityHandler.removeAllProjectiles();

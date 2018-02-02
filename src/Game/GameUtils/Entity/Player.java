@@ -105,7 +105,19 @@ public class Player extends Ship {
 
     public void decHp(){hp.setValue(hp.get() - 1);}
 
+    public void incHp(){
+        if(hp.getValue() < 3)
+            hp.setValue(hp.getValue() + 1);
+    }
+
     public void resetHp(){hp.setValue(3);}
+
+    public void reset(){
+        up.setValue(false);
+        down.setValue(false);
+        left.setValue(false);
+        right.setValue(false);
+    }
 
     public void changeImage(Image image){
         body.setImage(image);

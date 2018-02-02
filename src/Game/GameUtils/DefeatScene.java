@@ -24,7 +24,7 @@ public class DefeatScene extends Scene {
         this.window = window;
         this.menuScene = menuScene;
         this.entityHandler = entityHandler;
-        punkte = entityHandler.getPoints().getValue();
+        punkte = this.entityHandler.getPoints().getValue();
         start();
     }
 
