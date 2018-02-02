@@ -48,6 +48,7 @@ public class MP3Player {
     public MP3Player(Playlist actPlaylist){
         minim  = new SimpleMinim(true);
         this.actPlaylist = actPlaylist;
+        System.out.println(actPlaylist.getTrack().getFilename());
         audioPlayer = minim.loadMP3File(actPlaylist.getTrack().getFilename());
         hasSong = true;
         this.changes = new PropertyChangeSupport(actPlaylist.getTrack().getMp3file());

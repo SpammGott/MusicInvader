@@ -11,9 +11,9 @@ import javafx.scene.layout.VBox;
 /**
  * shows the data from the leaderboards txt file
  */
-public class LeaderboardsPane extends VBox {
+class LeaderboardsPane extends VBox {
 
-    public LeaderboardsPane(BorderPane menuScene, VBox menu){
+    LeaderboardsPane(BorderPane menuScene, VBox menu){
         Leaderboard leaderboard = new Leaderboard();
         String[] s = leaderboard.getLeaderboard();
 
@@ -27,7 +27,6 @@ public class LeaderboardsPane extends VBox {
         for (int i = 0; i < s.length; i++){
             if(s[i] != null) {
                 tempString = s[i].split(";");
-                System.out.println(tempString.length);
                 Label temp = new Label(tempString[0] + " " + tempString[1]);
                 temp.setId("SideText");
                 if (i % 2 == 0){

@@ -1,6 +1,5 @@
 package Game.GameUtils.Utils;
 
-import java.io.File;
 import java.io.RandomAccessFile;
 import java.io.IOException;
 
@@ -9,14 +8,11 @@ import java.io.IOException;
  */
 public class Leaderboard {
 
-    //private static File dir = new File("res/highscore.txt");
-    private String path = System.getProperty("user.dir") + "res/highscore.txt";
-    private File dir;
+
     private String leaderboard[] = new String[10];
     private String username = "XXX";
 
     public Leaderboard(){
-        dir = new File(System.getProperty("user.dir") + "res/highscore.txt");
         String actLine;
         int i = 0;
         try{

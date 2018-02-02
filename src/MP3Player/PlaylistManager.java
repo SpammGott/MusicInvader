@@ -24,6 +24,7 @@ public class PlaylistManager {
      */
     public PlaylistManager(String dir) {
         System.out.println("PlaylistManager");
+        System.out.println(dir);
         M3UParser.defaultPlaylist(dir);
         addPlaylists(M3UParser.getPlaylist(dir));
         this.changes = new PropertyChangeSupport(getPlaylistList());

@@ -39,11 +39,13 @@ public class M3UParser {
 
         while((actLine = raf.readLine()) != null){
             if(!actLine.equals("") && actLine.charAt(0) != '#'){
-                if(actLine.charAt(1) == ':' && actLine.charAt(2) == '\\' || actLine.substring(1, 5).equals("home")){
-                    newPlaylist.addTrack(actLine);
-                } else {
-                    newPlaylist.addTrack(f.getPath().replace(f.getName(), "") + File.separatorChar + actLine);
-                }
+                System.out.println("test"+f.getPath());
+                newPlaylist.addTrack(actLine);
+                //if(actLine.charAt(1) == ':' && actLine.charAt(2) == '\\' || actLine.substring(1, 5).equals("home")){
+                //    newPlaylist.addTrack(actLine);
+                //} else {
+                //    newPlaylist.addTrack(f.getPath().replace(f.getName(), "") + File.separatorChar + actLine);
+                //}
             }
         }
         return newPlaylist;
@@ -55,9 +57,10 @@ public class M3UParser {
      */
     public static void defaultPlaylist(String path){
         System.out.println("defaultPlaylistCreator");
+        System.out.println(path);
         Mp3File temp;
         try {
-            PrintWriter writer = new PrintWriter(path + "/defaultPlaylist.m3u", "UTF-8");
+            PrintWriter writer = new PrintWriter(path + "defaultPlaylist.m3u", "UTF-8");
             ArrayList<Track> tracks = getSongs(path);
             for (int i = 0; i < tracks.size(); i++){
                 temp = tracks.get(i).getMp3file();
@@ -112,6 +115,7 @@ public class M3UParser {
             }
         }catch (Exception e){
             System.out.println("Sorry but we can't find any music here :(");
+            System.out.println(path);
         }
 
         return playlist;

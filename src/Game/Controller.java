@@ -15,6 +15,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.security.CodeSource;
+
 /**
  * Loads the font
  * Starts the MP3Player and the soundPlayer
@@ -28,14 +30,17 @@ public class Controller extends Application{
 
     @Override
     public void start(Stage window){
+        CodeSource codeSource = Controller.class.getProtectionDomain().getCodeSource();
         try {
-            Font.loadFont(Controller.class.getResource("../PIXELED.TTF").toExternalForm(), 10);
+            Font.loadFont(Controller.class.getResource("/PIXELED.TTF").toExternalForm(), 10);
         }catch(Exception e){
-            System.out.println("File konnte nicht geladen werden\n" + e.getMessage());
+            System.out.println("Font konnte nicht geladen werden\n");
         }
 
         MP3Player player;
-        PlaylistManager playlistManager = new PlaylistManager(System.getProperty("user.dir") + "/res/Songs");
+        String dir = codeSource.getLocation().getPath();
+        dir = dir.substring(1, dir.length()-1);
+        PlaylistManager playlistManager = new PlaylistManager("res/Songs/");
         player = new MP3Player(playlistManager.getPlaylist("defaultPlaylist"));
         SoundPlayer splayer = new SoundPlayer(getClass().getClassLoader().getResource("Songs/Titlesong/BoxCat_Games_-_10_-_Epic_Song.mp3").getPath());
         splayer.loop();
