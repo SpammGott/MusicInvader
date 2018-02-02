@@ -32,7 +32,7 @@ public class Controller extends Application{
     public void start(Stage window){
         CodeSource codeSource = Controller.class.getProtectionDomain().getCodeSource();
         try {
-            Font.loadFont(Controller.class.getResource("/PIXELED.TTF").toExternalForm(), 10);
+            Font.loadFont(Controller.class.getResource("PIXELED.TTF").toExternalForm(), 10);
         }catch(Exception e){
             System.out.println("Font konnte nicht geladen werden\n");
         }
