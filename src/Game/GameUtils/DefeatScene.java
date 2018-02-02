@@ -1,6 +1,7 @@
 package Game.GameUtils;
 
 import Game.GameUtils.Entity.EntityHandler;
+import Game.GameUtils.Entity.Leaderboard;
 import Game.GameUtils.Utils.Helper;
 import Game.Menu.MenuScene;
 import javafx.geometry.Pos;
@@ -20,6 +21,7 @@ public class DefeatScene extends Scene {
     private EntityHandler entityHandler;
     private int punkte;
     private String userName = "";
+    private Leaderboard leaderboard = new Leaderboard();
 
     public DefeatScene(Pane root, Stage window, MenuScene menuScene, EntityHandler entityHandler){
         super(root, Helper.getHeight(), Helper.getWidth());
@@ -27,7 +29,7 @@ public class DefeatScene extends Scene {
         this.window = window;
         this.menuScene = menuScene;
         this.entityHandler = entityHandler;
-        punkte = this.entityHandler.getPoints().getValue();
+        this.punkte = this.entityHandler.getPoints().getValue();
         start();
     }
 
@@ -49,6 +51,7 @@ public class DefeatScene extends Scene {
         setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ENTER || e.getCode() == KeyCode.ESCAPE){
                 userName = input.getText();
+                leaderboard.addHighscore(punkte, userName);
                 window.setScene(menuScene);
                 window.setFullScreen(true);
             }
