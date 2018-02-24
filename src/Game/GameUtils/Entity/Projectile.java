@@ -16,6 +16,10 @@ public class Projectile extends Entity {
     private boolean isFromPlayer;
     private double rotate;
 
+    /**
+     * Konstruktor für Projectile,
+     *
+     */
     public Projectile(Vector2D pos, Vector2D direction, Image image){
         this.pos = pos.clone();
         this.direction = MathUtils.getEinheitsvektor(direction);

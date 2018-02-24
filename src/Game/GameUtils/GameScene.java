@@ -59,7 +59,6 @@ public class GameScene extends Scene {
     private Image explosion[] = new Image[5];
 
     private GameLoop gameLoop;
-
     private Thread beatDet;
 
     public GameScene(Pane root, Stage window, MenuScene menuScene, MP3Player player, PlaylistManager playlistManager, SoundPlayer sp){

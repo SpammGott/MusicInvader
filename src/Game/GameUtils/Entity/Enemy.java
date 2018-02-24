@@ -5,12 +5,21 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 
-
+/**
+ * Klasse für die Gegner Objekte.
+ * Gegner kann sich bewegen und feuern
+ */
 public class Enemy extends Ship {
 
     private Spawnpoint homeSpawnPoint;
     private int explosionIndex = 0;
 
+    /**
+     * Konstruktor für ein Gegnerobjekt.
+     * Benötigt einen Spawnoounkt für den Startpunkt des Gegners und für das zurückporten beim aus dem bildschirm fliegen
+     * @param homeSpawnPoint der Spawnpunkt des Gegnerobjektes.
+     * @param image das Bild für den Gegner.
+     */
     Enemy(Spawnpoint homeSpawnPoint, Image image){
         this.homeSpawnPoint = homeSpawnPoint;
         this.pos = new Vector2D(this.homeSpawnPoint.getPos());

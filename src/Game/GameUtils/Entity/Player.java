@@ -63,6 +63,10 @@ public class Player extends Ship {
         center.add(direction);
     }
 
+    /**
+     * checkt ein Tastenevent ob sich die Richtung des Schiffes ändert
+     * @param keyEvent
+     */
     public void changeMovement(KeyEvent keyEvent){
         if(keyEvent.getEventType().equals(KeyEvent.KEY_RELEASED)){
             if(keyEvent.getCode() == ControllButtons.UP.getKeyCode()){

@@ -22,8 +22,14 @@ public abstract class Entity {
     protected Vector2D center;
     protected Vector2D pos;
 
+    /**
+     * Bewegt das Objekt
+     */
     public abstract void move();
 
+    /**
+     * Hilfsmethode für das initalisieren def Objekte. Skaliert das ImagView
+     */
     void init(){
         body.setPreserveRatio(true);
         body.setFitWidth(Helper.getAbsoluteWidth(width));
@@ -50,6 +56,4 @@ public abstract class Entity {
     public ImageView getBody() {return body;}
 
     public Hitbox getHitbox() {return hitbox;}
-
-    public void delHitbox(){hitbox.update(new Vector2D(-1000, -1000));}
 }

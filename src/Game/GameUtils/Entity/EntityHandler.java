@@ -131,7 +131,6 @@ public class EntityHandler {
                 if(act.isHit(actPro.getHitbox())){
                     tempProjectileList.add(actPro);
                     isHit = true;
-                    actPro.delHitbox();
                 }
             }
             if(isHit){

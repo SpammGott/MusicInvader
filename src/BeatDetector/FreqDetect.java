@@ -14,11 +14,20 @@ public class FreqDetect {
 	private String path;
 	private GameScene gameScene;
 
+	/**
+	 * Konstruktor von der BeatDetection
+	 * @param path der filepath vom Song
+	 * @param scene die Spielscene
+	 */
 	public FreqDetect(String path, GameScene scene){
 		this.path = path;
 		this.gameScene = scene;
 	}
 
+	/**
+	 * Startet die BeatDetection.
+	 * Sollte in einem eigenen Thread sein, sonst Endlosschleife
+	 */
 	public void run() {
 		Minim minim = new Minim(new MinimHelper());
 		minim.loadFile(path, 1024);

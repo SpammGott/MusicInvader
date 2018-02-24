@@ -15,6 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.security.CodeSource;
 
 /**
@@ -40,7 +41,10 @@ public class Controller extends Application{
         MP3Player player;
         PlaylistManager playlistManager = new PlaylistManager("res/Songs/");
         player = new MP3Player(playlistManager.getPlaylist("defaultPlaylist"));
-        SoundPlayer splayer = new SoundPlayer(System.getProperty("user.dir") + "\\res\\songs\\Titlesong\\BoxCat_Games_-_10_-_Epic_Song.mp3");
+        String seperator = String.valueOf(File.separatorChar);
+        if(seperator.equals("\\"))
+            seperator = seperator + seperator;
+        SoundPlayer splayer = new SoundPlayer(System.getProperty("user.dir") + seperator +"res"+seperator +"songs"+seperator +"Titlesong"+seperator +"BoxCat_Games_-_10_-_Epic_Song.mp3");
         splayer.loop();
         splayer.play();
 
